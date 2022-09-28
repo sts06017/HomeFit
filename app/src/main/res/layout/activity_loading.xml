@@ -9,10 +9,58 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:src="@drawable/basic_background"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.33">
+
+        <ImageView
+            android:id="@+id/loading_iv_icon"
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/loading_iv_icon"/>
+
+        <TextView
+            android:id="@+id/loading_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/loading_iv_icon"
+            android:text="HomeFit"
+            android:textSize="32sp"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/eulyoo1945_semibold"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/loading_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:text="홈 핏"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/eulyoo1945_semibold"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
