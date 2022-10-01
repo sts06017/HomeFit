@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WOActivity">
+
+    <!-- 카메라 위젯 위치 -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="296dp"
+        android:layout_height="match_parent"
+        android:paddingVertical="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wo_cl_result"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/wo_iv_result"
+                android:layout_width="0dp"
+                android:layout_height="102dp"
+                android:src="@drawable/wo_iv_result"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/wo_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/eulyoo1945_regular"
+                android:includeFontPadding="false"
+                android:text="턱걸이"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/wo_tv_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:includeFontPadding="false"
+                android:text="세트"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/wo_tv_title"
+                app:layout_constraintTop_toBottomOf="@id/wo_tv_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="2 / 3"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/wo_tv_set_title"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_set_title"
+                app:layout_constraintTop_toTopOf="@id/wo_tv_set_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_count_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:includeFontPadding="false"
+                android:text="횟수"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/wo_tv_title"
+                app:layout_constraintTop_toBottomOf="@id/wo_tv_set_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="1 / 10"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/wo_tv_count_title"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_count_title"
+                app:layout_constraintTop_toTopOf="@id/wo_tv_count_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_elap_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginStart="85dp"
+                android:includeFontPadding="false"
+                android:text="진행시간"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_title"
+                app:layout_constraintTop_toBottomOf="@id/wo_tv_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_elap_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="00:03:30"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/wo_tv_elap_time_title"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_elap_time_title"
+                app:layout_constraintTop_toTopOf="@id/wo_tv_elap_time_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_remain_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginStart="85dp"
+                android:includeFontPadding="false"
+                android:text="남은시간"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_title"
+                app:layout_constraintTop_toBottomOf="@id/wo_tv_elap_time_title" />
+
+            <TextView
+                android:id="@+id/wo_tv_remain_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="00:01:30"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/wo_tv_remain_time_title"
+                app:layout_constraintStart_toEndOf="@id/wo_tv_remain_time_title"
+                app:layout_constraintTop_toTopOf="@id/wo_tv_remain_time_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wo_cl_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/wo_btn_pause"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/wo_btn_pause"/>
+
+            <Button
+                android:id="@+id/wo_btn_stop"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@id/wo_btn_pause"
+                app:layout_constraintTop_toTopOf="@id/wo_btn_pause"
+                app:layout_constraintBottom_toBottomOf="@id/wo_btn_pause"
+                android:background="@drawable/wo_btn_stop"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

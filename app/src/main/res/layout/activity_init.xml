@@ -195,7 +195,9 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- margin 추후 조정 -->
             <Button
+                android:id="@+id/init_btn_register"
                 android:layout_width="312dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="314dp"

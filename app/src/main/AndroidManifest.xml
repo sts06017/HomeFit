@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeFit">
         <activity
+            android:name=".WOReportActivity"
+            android:exported="true" />
+        <activity
+            android:name=".WOActivity"
+            android:exported="true" />
+        <activity
             android:name=".WODetailActivity"
             android:exported="true" />
         <activity
