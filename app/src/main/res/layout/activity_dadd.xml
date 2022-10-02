@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DAddActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dadd_cl_top"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dadd_btn_back"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:src="@drawable/basic_icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/dadd_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dadd_tv_title" />
+
+        <TextView
+            android:id="@+id/dadd_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/eulyoo1945_regular"
+            android:includeFontPadding="false"
+            android:text="식단정보 추가"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/dadd_btn_back" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dadd_cl_top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dadd_cl_bot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp">
+
+                <TextView
+                    android:id="@+id/dadd_tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:includeFontPadding="false"
+                    android:text="앨범이나 촬영을 통해 식단 사진을 입력하면, 자동으로 식단정보가 추가됩니다.\n직접 메뉴를 선택해 정보를 입력할 수도 있습니다."
+                    android:textColor="@color/lightGray"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_select_food"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_comment">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/dadd_cl_album"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/dadd_btn_album"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/dadd_btn_album" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:includeFontPadding="false"
+                            android:text="앨범"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
+                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/dadd_cl_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/dadd_cl_album">
+
+                        <Button
+                            android:id="@+id/dadd_btn_album"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/dadd_btn_camera" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:includeFontPadding="false"
+                            android:text="촬영"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
+                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/dadd_cl_dropdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/dadd_cl_camera">
+
+                        <!-- 드롭다운 라이브러리 -->
+                        <View
+                            android:id="@+id/dadd_btn_album"
+                            android:layout_width="176dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/dadd_iv_dropdown" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:includeFontPadding="false"
+                            android:text="직접선택"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
+                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_selected_food"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_select_food">
+
+                    <ImageView
+                        android:id="@+id/dadd_iv_selected_food"
+                        android:layout_width="150dp"
+                        android:layout_height="200dp"
+                        android:src="@drawable/dadd_iv_temp" />
+
+                    <TextView
+                        android:id="@+id/dadd_tv_selected_food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="샌드위치"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
+                        app:layout_constraintTop_toTopOf="@id/dadd_iv_selected_food" />
+
+                    <!-- 다중 레이블 분류 구현 시 ListView 형태로 변경 -->
+                    <TextView
+                        android:id="@+id/dadd_tv_selected_food_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="1개"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
+                        app:layout_constraintTop_toBottomOf="@id/dadd_tv_selected_food" />
+                    
+                    <EditText
+                        android:id="@+id/dadd_et_selected_food_calorie"
+                        android:layout_width="93dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/dadd_et_small"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="0"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:paddingEnd="44dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/dadd_tv_selected_food_count"
+                        app:layout_constraintStart_toEndOf="@id/dadd_tv_selected_food_count"
+                        app:layout_constraintTop_toTopOf="@id/dadd_tv_selected_food_count" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="kcal"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_selected_food_calorie"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_selected_food_calorie"
+                        app:layout_constraintTop_toTopOf="@id/dadd_et_selected_food_calorie" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/dadd_tv_fix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/eulyoo1945_regular"
+                    android:includeFontPadding="false"
+                    android:text="상세정보 입력"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_selected_food" />
+                
+                <!-- 임시 항목 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_fix_food_count"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_fix">
+
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_food_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="음식 수"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/dadd_et_fix_food_count"
+                        android:layout_width="53dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_et_num"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:gravity="center_horizontal"
+                        android:hint="0"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/dadd_btn_fix_food_count_add"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/dadd_btn_fix_food_count_sub"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_btn_sub"
+                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_fix_food_count"
+                        app:layout_constraintEnd_toStartOf="@id/dadd_et_fix_food_count"
+                        app:layout_constraintTop_toTopOf="@id/dadd_et_fix_food_count" />
+
+                    <Button
+                        android:id="@+id/dadd_btn_fix_food_count_add"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_btn_add"
+                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_fix_food_count"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/dadd_et_fix_food_count" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                
+                <!-- 임시 항목 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_fix_total_calorie"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_food_count">
+
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_total_calorie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="총 칼로리"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/dadd_et_fix_total_calorie"
+                        android:layout_width="106dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/init_et_small"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="칼로리"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:paddingEnd="44dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="kcal"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_total_calorie"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/dadd_btn_add_diet"
+                android:layout_width="312dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/init_btn_basic"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="식단정보 추가"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/dadd_cl_bot"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
