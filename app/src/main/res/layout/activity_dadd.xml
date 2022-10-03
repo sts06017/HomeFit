@@ -207,7 +207,7 @@
                         android:textSize="16sp"
                         app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
                         app:layout_constraintTop_toBottomOf="@id/dadd_tv_selected_food" />
-                    
+
                     <EditText
                         android:id="@+id/dadd_et_selected_food_calorie"
                         android:layout_width="93dp"
@@ -251,7 +251,7 @@
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     app:layout_constraintTop_toBottomOf="@id/dadd_cl_selected_food" />
-                
+
                 <!-- 임시 항목 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/dadd_cl_fix_food_count"
@@ -311,7 +311,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/dadd_et_fix_food_count" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                
+
                 <!-- 임시 항목 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/dadd_cl_fix_total_calorie"
@@ -363,7 +363,7 @@
                         app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_total_calorie"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
@@ -378,7 +378,7 @@
                 android:text="식단정보 추가"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/dadd_cl_bot"/>
+                app:layout_constraintTop_toBottomOf="@id/dadd_cl_bot" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

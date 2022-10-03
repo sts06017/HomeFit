@@ -5,10 +5,16 @@
       <map>
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/font/pretendard.xml" value="0.5135416666666667" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_dadd.xml" value="0.487962962962963" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_dcamera.xml" value="0.4166666666666667" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_dhistory.xml" value="0.4166666666666667" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_dreport.xml" value="0.487962962962963" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_init.xml" value="0.46770833333333334" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_loading.xml" value="0.42685185185185187" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_main.xml" value="0.46770833333333334" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_profile.xml" value="0.4166666666666667" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_routine.xml" value="0.4166666666666667" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_routine_list.xml" value="0.4166666666666667" />
+        <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_setting.xml" value="0.4166666666666667" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_wo.xml" value="0.487962962962963" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_woactivity.xml" value="0.4787037037037037" />
         <entry key="..\:/Users/chiho/AndroidStudio4Projects/homefit/app/src/main/res/layout/activity_wodetail.xml" value="0.42685185185185187" />

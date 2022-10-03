@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DHistoryActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dhistory_cl_top"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dhistory_btn_back"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:src="@drawable/basic_icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/dhistory_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dhistory_tv_title" />
+
+        <TextView
+            android:id="@+id/dhistory_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/eulyoo1945_regular"
+            android:includeFontPadding="false"
+            android:text="식단정보 목록"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/dhistory_btn_back" />
+
+        <!-- 캘린더 라이브러리 -->
+        <View
+            android:id="@+id/dhistory_v_calendar"
+            android:layout_width="312dp"
+            android:layout_height="245dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/wohistory_iv_temp"
+            app:layout_constraintTop_toBottomOf="@id/dhistory_tv_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/dhistory_lv_foods"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dhistory_cl_top" />
+</androidx.constraintlayout.widget.ConstraintLayout>
