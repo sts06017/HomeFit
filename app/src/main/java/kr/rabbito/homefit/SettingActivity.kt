@@ -2,10 +2,15 @@ package kr.rabbito.homefit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kr.rabbito.homefit.databinding.ActivitySettingBinding
 
 class SettingActivity : AppCompatActivity() {
+    private var mBinding: ActivitySettingBinding? = null
+    private val binding get() = mBinding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
+        mBinding = ActivitySettingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

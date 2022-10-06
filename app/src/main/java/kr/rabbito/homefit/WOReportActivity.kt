@@ -1,11 +1,21 @@
 package kr.rabbito.homefit
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kr.rabbito.homefit.databinding.ActivityWoreportBinding
 
 class WOReportActivity : AppCompatActivity() {
+    private var mBinding: ActivityWoreportBinding? = null
+    private val binding get() = mBinding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_woreport)
+        mBinding = ActivityWoreportBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.woreportBtnHistory.setOnClickListener {
+            startActivity(Intent(this, WOHistoryActivity::class.java))
+        }
     }
 }

@@ -44,7 +44,8 @@
             android:text="턱걸이"
             android:textColor="@color/white"
             android:textSize="32sp"
-            app:layout_constraintStart_toEndOf="@id/wodetail_btn_back" />
+            app:layout_constraintStart_toEndOf="@id/wodetail_btn_back"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/wodetail_tv_sub_title"
@@ -62,29 +63,36 @@
 
     <ScrollView
         android:layout_width="312dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scrollbars="none"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wodetail_cl_top">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:paddingTop="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/wodetail_cl_bot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp">
+                android:paddingHorizontal="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/wodetail_iv_wo"
                     android:layout_width="296dp"
                     android:layout_height="338dp"
-                    android:src="@drawable/wodetail_iv_temp" />
+                    android:src="@drawable/wodetail_iv_temp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/wodetail_tv_detail"
@@ -96,6 +104,8 @@
                     android:text="턱걸이는 운동의 종류 중 하나입니다.\n일반적으로 철봉에 매달려 턱이 철봉의 높이에 올 때까지 몸을 끌어 올리는 것을 말합니다."
                     android:textColor="@color/lightGray"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/wodetail_iv_wo" />
 
 
@@ -109,6 +119,7 @@
                     android:text="세트 설정"
                     android:textColor="@color/white"
                     android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/wodetail_tv_detail" />
 
                 <Button
@@ -261,6 +272,8 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wodetail_cl_bot" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

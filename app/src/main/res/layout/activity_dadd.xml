@@ -44,13 +44,16 @@
             android:text="식단정보 추가"
             android:textColor="@color/white"
             android:textSize="32sp"
-            app:layout_constraintStart_toEndOf="@id/dadd_btn_back" />
+            app:layout_constraintStart_toEndOf="@id/dadd_btn_back"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="312dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dadd_cl_top">
@@ -58,14 +61,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:paddingTop="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dadd_cl_bot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp">
+                android:paddingHorizontal="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/dadd_tv_comment"
@@ -76,6 +81,8 @@
                     android:text="앨범이나 촬영을 통해 식단 사진을 입력하면, 자동으로 식단정보가 추가됩니다.\n직접 메뉴를 선택해 정보를 입력할 수도 있습니다."
                     android:textColor="@color/lightGray"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,18 +90,25 @@
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_tv_comment">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/dadd_cl_album"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <Button
                             android:id="@+id/dadd_btn_album"
                             android:layout_width="44dp"
                             android:layout_height="44dp"
-                            android:background="@drawable/dadd_btn_album" />
+                            android:background="@drawable/dadd_btn_album"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -115,13 +129,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_cl_album">
+                        app:layout_constraintStart_toEndOf="@id/dadd_cl_album"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <Button
-                            android:id="@+id/dadd_btn_album"
+                            android:id="@+id/dadd_btn_camera"
                             android:layout_width="44dp"
                             android:layout_height="44dp"
-                            android:background="@drawable/dadd_btn_camera" />
+                            android:background="@drawable/dadd_btn_camera"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -132,9 +150,9 @@
                             android:text="촬영"
                             android:textColor="@color/white"
                             android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
-                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
-                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
+                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_camera"
+                            app:layout_constraintStart_toStartOf="@id/dadd_btn_camera"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_camera" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,14 +160,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_cl_camera">
+                        app:layout_constraintStart_toEndOf="@id/dadd_cl_camera"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <!-- 드롭다운 라이브러리 -->
                         <View
-                            android:id="@+id/dadd_btn_album"
+                            android:id="@+id/dadd_v_dropdown"
                             android:layout_width="176dp"
                             android:layout_height="44dp"
-                            android:background="@drawable/dadd_iv_dropdown" />
+                            android:background="@drawable/dadd_iv_dropdown"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -160,9 +182,9 @@
                             android:text="직접선택"
                             android:textColor="@color/white"
                             android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
-                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
-                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
+                            app:layout_constraintEnd_toEndOf="@id/dadd_v_dropdown"
+                            app:layout_constraintStart_toStartOf="@id/dadd_v_dropdown"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_v_dropdown" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -171,13 +193,17 @@
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_cl_select_food">
 
                     <ImageView
                         android:id="@+id/dadd_iv_selected_food"
                         android:layout_width="150dp"
                         android:layout_height="200dp"
-                        android:src="@drawable/dadd_iv_temp" />
+                        android:src="@drawable/dadd_iv_temp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/dadd_tv_selected_food"
@@ -250,6 +276,7 @@
                     android:text="상세정보 입력"
                     android:textColor="@color/white"
                     android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_cl_selected_food" />
 
                 <!-- 임시 항목 -->
@@ -258,6 +285,7 @@
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_tv_fix">
 
                     <TextView
@@ -318,6 +346,7 @@
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_food_count">
 
                     <TextView
@@ -378,6 +407,9 @@
                 android:text="식단정보 추가"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dadd_cl_bot" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
