@@ -8,6 +8,7 @@
     <color name="black">#FF191919</color>
     <color name="white">#FFFEFEFE</color>
 
+    <color name="dark">#FF221D19</color>
     <color name="lightGray">#FFCCCCCC</color>
     <color name="gray">#FFAAAAAA</color>
 </resources>
