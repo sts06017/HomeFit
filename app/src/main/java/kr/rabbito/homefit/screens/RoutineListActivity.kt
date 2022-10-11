@@ -1,4 +1,4 @@
-package kr.rabbito.homefit
+package kr.rabbito.homefit.screens
 
 import android.content.Intent
 import android.os.Bundle

@@ -4,9 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WOActivity">
+    tools:context=".screens.WOActivity">
 
-    <!-- 카메라 위젯 위치 -->
+    <kr.rabbito.homefit.poseDetection.CameraSourcePreview
+        android:id="@+id/wo_pv_preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.example.posedetctor.GraphicOverlay
+        android:id="@+id/wo_go_graphic_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="296dp"

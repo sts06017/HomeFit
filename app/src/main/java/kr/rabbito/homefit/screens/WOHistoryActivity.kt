@@ -1,21 +1,21 @@
-package kr.rabbito.homefit
+package kr.rabbito.homefit.screens
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kr.rabbito.homefit.databinding.ActivityDcameraBinding
+import kr.rabbito.homefit.databinding.ActivityWohistoryBinding
 
-class DCameraActivity : AppCompatActivity() {
-    private var mBinding: ActivityDcameraBinding? = null
+class WOHistoryActivity : AppCompatActivity() {
+    private var mBinding: ActivityWohistoryBinding? = null
     private val binding get() = mBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityDcameraBinding.inflate(layoutInflater)
+        mBinding = ActivityWohistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 임시
-        binding.dcameraBtnCancel.setOnClickListener {
+        binding.wohistoryVCalendar.setOnClickListener {
             startActivity(Intent(this, DReportActivity::class.java))
         }
     }
