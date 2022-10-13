@@ -176,7 +176,7 @@ class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
         synchronized(lock) {
             this.imageWidth = imageWidth
             this.imageHeight = imageHeight
-            this.isImageFlipped = isFlipped
+            this.isImageFlipped = true //isFlipped -> true 카메라 반전
             needUpdateTransformation = true
         }
         postInvalidate()
