@@ -28,7 +28,7 @@ class WOActivity : AppCompatActivity() {
         createCameraSource(selectedModel)
 
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
-        binding.woGoGraphicOverlay.scaleX = -1f
+        binding.woGoGraphicOverlay.scaleX = 1f
 
         binding.woPvPreviewView.stop()
         startCameraSource()
