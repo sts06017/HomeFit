@@ -27,11 +27,6 @@ class WOActivity : AppCompatActivity() {
 
         createCameraSource(selectedModel)
 
-        cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
-        binding.woGoGraphicOverlay.scaleX = 1f
-
-        binding.woPvPreviewView.stop()
-        startCameraSource()
         // 임시
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
@@ -42,7 +37,7 @@ class WOActivity : AppCompatActivity() {
         Log.d("debug","createCameraSorce")
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
-            cameraSource = binding.woGoGraphicOverlay.let { CameraSource(this, it) }
+            cameraSource = CameraSource(this, binding.woGoGraphicOverlay)
         }
         try {
 
