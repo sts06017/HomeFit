@@ -118,6 +118,8 @@ class PoseDetectorProcessor(
         poseWithClassification.classificationResult
       )
     )
+    //여기서 좌표 정보 넘겨주면 될 듯?
+
   }
 
   override fun onFailure(e: Exception) {

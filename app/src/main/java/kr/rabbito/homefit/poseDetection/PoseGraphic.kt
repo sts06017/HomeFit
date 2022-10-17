@@ -19,6 +19,7 @@ package kr.rabbito.homefit.poseDetection
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import com.google.common.primitives.Ints
 import com.example.posedetctor.GraphicOverlay
 import com.google.mlkit.vision.pose.Pose
@@ -75,6 +76,7 @@ class PoseGraphic internal constructor(
                   POSE_CLASSIFICATION_TEXT_SIZE * 1.5f * (poseClassification.size - i).toFloat()
                   )
       )
+
       if (classificationY != null) {
         canvas.drawText(
           poseClassification[i],
@@ -86,6 +88,7 @@ class PoseGraphic internal constructor(
     }
 
     // Draw all the points
+
     for (landmark in landmarks) {
       if (canvas != null) {
         drawPoint(canvas, landmark, whitePaint)
@@ -131,6 +134,7 @@ class PoseGraphic internal constructor(
     val rightHeel = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL)
     val leftFootIndex = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX)
     val rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX)
+
 
     // Face
     drawLine(canvas!!, nose, lefyEyeInner, whitePaint)
