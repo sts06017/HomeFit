@@ -26,7 +26,10 @@ class WOActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         createCameraSource(selectedModel)
+        cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
+        binding.woPvPreviewView.stop()
+        startCameraSource()
         // 임시
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
