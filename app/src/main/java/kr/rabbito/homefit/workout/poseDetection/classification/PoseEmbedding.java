@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection.classification;
+package kr.rabbito.homefit.workout.poseDetection.classification;
 
-import static kr.rabbito.homefit.poseDetection.classification.Utils.average;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.l2Norm2D;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.multiplyAll;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.subtract;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.subtractAll;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.average;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.l2Norm2D;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.multiplyAll;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.subtract;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.subtractAll;
 
 import com.google.mlkit.vision.common.PointF3D;
 import com.google.mlkit.vision.pose.PoseLandmark;

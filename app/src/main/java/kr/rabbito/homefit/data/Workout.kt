@@ -1,5 +1,7 @@
 package kr.rabbito.homefit.data
 
+// 임시
+
 import com.google.mlkit.vision.pose.Pose
 
 class PushUp(name: String, Set: Set, pose: Pose) : woAbstract(name, Set, pose) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection
+package kr.rabbito.homefit.workout.poseDetection
 
 import android.app.ActivityManager
 import android.content.Context
@@ -124,9 +124,9 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
   // -----------------Code for processing live preview frame from Camera1 API-----------------------
   @Synchronized
   override fun processByteBuffer(
-    data: ByteBuffer?,
-    frameMetadata: FrameMetadata?,
-    graphicOverlay: GraphicOverlay
+      data: ByteBuffer?,
+      frameMetadata: FrameMetadata?,
+      graphicOverlay: GraphicOverlay
   ) {
     latestImage = data
     latestImageMetaData = frameMetadata
@@ -147,9 +147,9 @@ abstract class VisionProcessorBase<T>(context: Context) : VisionImageProcessor {
   }
 
   private fun processImage(
-    data: ByteBuffer,
-    frameMetadata: FrameMetadata,
-    graphicOverlay: GraphicOverlay
+      data: ByteBuffer,
+      frameMetadata: FrameMetadata,
+      graphicOverlay: GraphicOverlay
   ) {
     val frameStartMs = SystemClock.elapsedRealtime()
     // If live viewport is on (that is the underneath surface view takes care of the camera preview

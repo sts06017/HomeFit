@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection;
+package kr.rabbito.homefit.workout.poseDetection;
 
 /** Describing a frame info. */
 public class FrameMetadata {

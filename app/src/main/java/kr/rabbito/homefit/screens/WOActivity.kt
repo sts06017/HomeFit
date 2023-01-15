@@ -7,9 +7,9 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.posedetctor.PoseDetectorProcessor
-import kr.rabbito.homefit.poseDetection.PreferenceUtils
+import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.poseDetection.CameraSource
+import kr.rabbito.homefit.workout.poseDetection.CameraSource
 import java.io.IOException
 
 class WOActivity : AppCompatActivity() {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.rabbito.homefit.poseDetection
+package kr.rabbito.homefit.workout.poseDetection
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -29,7 +29,7 @@ import android.view.SurfaceHolder
 import android.view.WindowManager
 import androidx.annotation.RequiresPermission
 import com.example.posedetctor.GraphicOverlay
-import kr.rabbito.homefit.poseDetection.PreferenceUtils.getCameraPreviewSizePair
+import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils.getCameraPreviewSizePair
 import com.google.android.gms.common.images.Size
 import java.io.IOException
 import java.nio.ByteBuffer

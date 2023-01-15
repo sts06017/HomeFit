@@ -25,9 +25,9 @@ import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
-import kr.rabbito.homefit.poseDetection.PoseGraphic
-import kr.rabbito.homefit.poseDetection.VisionProcessorBase
-import kr.rabbito.homefit.poseDetection.classification.PoseClassifierProcessor
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
+import kr.rabbito.homefit.workout.poseDetection.VisionProcessorBase
+import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors

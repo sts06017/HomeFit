@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection.classification;
+package kr.rabbito.homefit.workout.poseDetection.classification;
 
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static kr.rabbito.homefit.poseDetection.classification.PoseEmbedding.getPoseEmbedding;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.maxAbs;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.multiply;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.multiplyAll;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.subtract;
-import static kr.rabbito.homefit.poseDetection.classification.Utils.sumAbs;
+import static kr.rabbito.homefit.workout.poseDetection.classification.PoseEmbedding.getPoseEmbedding;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.maxAbs;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.multiply;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.multiplyAll;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.subtract;
+import static kr.rabbito.homefit.workout.poseDetection.classification.Utils.sumAbs;
 
 import android.util.Pair;
 

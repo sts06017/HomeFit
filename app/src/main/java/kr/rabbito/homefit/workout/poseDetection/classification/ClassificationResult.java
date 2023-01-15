@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection.classification;
+package kr.rabbito.homefit.workout.poseDetection.classification;
 
 import static java.util.Collections.max;
 

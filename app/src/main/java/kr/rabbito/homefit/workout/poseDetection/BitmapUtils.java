@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.rabbito.homefit.poseDetection;
+package kr.rabbito.homefit.workout.poseDetection;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;

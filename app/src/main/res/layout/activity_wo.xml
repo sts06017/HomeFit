@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".screens.WOActivity">
 
-    <kr.rabbito.homefit.poseDetection.CameraSourcePreview
+    <kr.rabbito.homefit.workout.poseDetection.CameraSourcePreview
         android:id="@+id/wo_pv_preview_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

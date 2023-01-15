@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kr.rabbito.homefit.poseDetection
+package kr.rabbito.homefit.workout.poseDetection
 
 //import com.google.mlkit.vision.face.FaceDetectorOptions
 //import com.google.mlkit.vision.objects.ObjectDetectorOptionsBase.DetectorMode
@@ -27,7 +27,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.camera.core.CameraSelector
 import com.google.common.base.Preconditions
-import kr.rabbito.homefit.poseDetection.CameraSource.SizePair
+import kr.rabbito.homefit.workout.poseDetection.CameraSource.SizePair
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
