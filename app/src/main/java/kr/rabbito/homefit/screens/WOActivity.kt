@@ -10,6 +10,9 @@ import com.example.posedetctor.PoseDetectorProcessor
 import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.PullUpView
+import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.workout.WorkoutData
+import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
 import java.io.IOException
 
@@ -110,7 +113,13 @@ class WOActivity : AppCompatActivity() {
         val workoutView = workoutViews[workoutIdx]
         workoutView.generateWidgets(binding)
 
-
+        binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
+        binding.woTvSet.text = WorkoutState.set.toString()
+        binding.woTvCount.text = WorkoutState.count.toString()
+        val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
+        binding.woTvElapTime.text = String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+        val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
+        binding.woTvRemainTime.text = String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
     }
 
 

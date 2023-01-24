@@ -320,7 +320,7 @@ object PreferenceUtils {
     fun shouldPoseDetectionVisualizeZ(context: Context): Boolean {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val prefKey = context.getString(R.string.pref_key_pose_detector_visualize_z)
-        return sharedPreferences.getBoolean(prefKey, true)
+        return sharedPreferences.getBoolean(prefKey, false)
     }
 
     fun shouldPoseDetectionRescaleZForVisualization(context: Context): Boolean {

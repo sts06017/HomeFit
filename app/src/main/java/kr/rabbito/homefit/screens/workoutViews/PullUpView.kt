@@ -2,7 +2,6 @@ package kr.rabbito.homefit.screens.workoutViews
 
 import android.content.Context
 import android.widget.ImageView
-import androidx.viewbinding.ViewBinding
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 
