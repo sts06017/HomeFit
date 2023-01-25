@@ -40,9 +40,38 @@ class PoseGraphic internal constructor(
   private var zMin = java.lang.Float.MAX_VALUE
   private var zMax = java.lang.Float.MIN_VALUE
   private val classificationTextPaint: Paint
-  private val leftPaint: Paint
-  private val rightPaint: Paint
-  private val whitePaint: Paint
+
+  companion object {
+    private val DOT_RADIUS = 8.0f
+    private val IN_FRAME_LIKELIHOOD_TEXT_SIZE = 30.0f
+    private val STROKE_WIDTH = 10.0f
+    private val POSE_CLASSIFICATION_TEXT_SIZE = 60.0f
+
+    val whitePaint = Paint()
+    val greenPaint = Paint()
+    val yellowPaint = Paint()
+    val redPaint = Paint()
+
+    /*
+    <구상>
+    외부에서 PoseGraphic 호출하면서, leftShoulderToLeftElbowPaint를 변경 -> 화면에 출력되는 안내선 색상 변경
+    ex) 자세가 잘못되었으면 leftShoulderToLeftElbowPaint = redPaint로 변경
+     */
+
+    // left paint
+    val leftShoulderToLeftElbowPaint = whitePaint
+    val leftElbowToLeftWristPaint = whitePaint
+    val leftShoulderToLeftHipPaint = whitePaint
+    val leftHipToLeftKneePaint = whitePaint
+    val leftKneeToLeftAnklePaint = whitePaint
+
+    // right paint
+    val rightShoulderToRightElbowPaint = whitePaint
+    val rightElbowToRightWristPaint = whitePaint
+    val rightShoulderToRightHipPaint = whitePaint
+    val rightHipToRightKneePaint = whitePaint
+    val rightKneeToRightAnklePaint = whitePaint
+  }
 
   init {
     classificationTextPaint = Paint()
@@ -50,16 +79,18 @@ class PoseGraphic internal constructor(
     classificationTextPaint.textSize = POSE_CLASSIFICATION_TEXT_SIZE
     classificationTextPaint.setShadowLayer(5.0f, 0f, 0f, Color.BLACK)
 
-    whitePaint = Paint()
     whitePaint.strokeWidth = STROKE_WIDTH
     whitePaint.color = Color.WHITE
     whitePaint.textSize = IN_FRAME_LIKELIHOOD_TEXT_SIZE
-    leftPaint = Paint()
-    leftPaint.strokeWidth = STROKE_WIDTH
-    leftPaint.color = Color.GREEN
-    rightPaint = Paint()
-    rightPaint.strokeWidth = STROKE_WIDTH
-    rightPaint.color = Color.YELLOW
+
+    greenPaint.strokeWidth = STROKE_WIDTH
+    greenPaint.color = Color.GREEN
+
+    yellowPaint.strokeWidth = STROKE_WIDTH
+    yellowPaint.color = Color.YELLOW
+
+    redPaint.strokeWidth = STROKE_WIDTH * 1.3f
+    redPaint.color = Color.RED
   }
 
   override fun draw(canvas: Canvas?) {
@@ -91,7 +122,7 @@ class PoseGraphic internal constructor(
 
     for (landmark in landmarks) {
       if (canvas != null) {
-        drawPoint(canvas, landmark, whitePaint)
+        if (landmark.landmarkType > 10) drawPoint(canvas, landmark, whitePaint)
       }
       if (visualizeZ && rescaleZForVisualization) {
         zMin = min(zMin, landmark.position3D.z)
@@ -136,45 +167,49 @@ class PoseGraphic internal constructor(
     val rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX)
 
 
-    // Face
-    /*drawLine(canvas!!, nose, lefyEyeInner, whitePaint)
-    drawLine(canvas, lefyEyeInner, lefyEye, whitePaint)
-    drawLine(canvas, lefyEye, leftEyeOuter, whitePaint)
-    drawLine(canvas, leftEyeOuter, leftEar, whitePaint)
-    drawLine(canvas, nose, rightEyeInner, whitePaint)
-    drawLine(canvas, rightEyeInner, rightEye, whitePaint)
-    drawLine(canvas, rightEye, rightEyeOuter, whitePaint)
-    drawLine(canvas, rightEyeOuter, rightEar, whitePaint)
-    drawLine(canvas, leftMouth, rightMouth, whitePaint)*/
+//    // Face
+//    drawLine(canvas!!, nose, lefyEyeInner, whitePaint)
+//    drawLine(canvas, lefyEyeInner, lefyEye, whitePaint)
+//    drawLine(canvas, lefyEye, leftEyeOuter, whitePaint)
+//    drawLine(canvas, leftEyeOuter, leftEar, whitePaint)
+//    drawLine(canvas, nose, rightEyeInner, whitePaint)
+//    drawLine(canvas, rightEyeInner, rightEye, whitePaint)
+//    drawLine(canvas, rightEye, rightEyeOuter, whitePaint)
+//    drawLine(canvas, rightEyeOuter, rightEar, whitePaint)
+//    drawLine(canvas, leftMouth, rightMouth, whitePaint)
 
     drawLine(canvas!!, leftShoulder, rightShoulder, whitePaint)
     drawLine(canvas, leftHip, rightHip, whitePaint)
 
+    /*
+    구상: 루프 돌 때마다 변경된 leftShoulderToLeftElbowPaint가 적용되도록 구현
+     */
+
     // Left body
-    drawLine(canvas, leftShoulder, leftElbow, leftPaint)
-    drawLine(canvas, leftElbow, leftWrist, leftPaint)
-    drawLine(canvas, leftShoulder, leftHip, leftPaint)
-    drawLine(canvas, leftHip, leftKnee, leftPaint)
-    drawLine(canvas, leftKnee, leftAnkle, leftPaint)
-    drawLine(canvas, leftWrist, leftThumb, leftPaint)
-    drawLine(canvas, leftWrist, leftPinky, leftPaint)
-    drawLine(canvas, leftWrist, leftIndex, leftPaint)
-    drawLine(canvas, leftIndex, leftPinky, leftPaint)
-    drawLine(canvas, leftAnkle, leftHeel, leftPaint)
-    drawLine(canvas, leftHeel, leftFootIndex, leftPaint)
+    drawLine(canvas, leftShoulder, leftElbow, leftShoulderToLeftElbowPaint)
+    drawLine(canvas, leftElbow, leftWrist, leftElbowToLeftWristPaint)
+    drawLine(canvas, leftShoulder, leftHip, leftShoulderToLeftHipPaint)
+    drawLine(canvas, leftHip, leftKnee, leftHipToLeftKneePaint)
+    drawLine(canvas, leftKnee, leftAnkle, leftKneeToLeftAnklePaint)
+    drawLine(canvas, leftWrist, leftThumb, whitePaint)
+    drawLine(canvas, leftWrist, leftPinky, whitePaint)
+    drawLine(canvas, leftWrist, leftIndex, whitePaint)
+    drawLine(canvas, leftIndex, leftPinky, whitePaint)
+    drawLine(canvas, leftAnkle, leftHeel, whitePaint)
+    drawLine(canvas, leftHeel, leftFootIndex, whitePaint)
 
     // Right body
-    drawLine(canvas, rightShoulder, rightElbow, rightPaint)
-    drawLine(canvas, rightElbow, rightWrist, rightPaint)
-    drawLine(canvas, rightShoulder, rightHip, rightPaint)
-    drawLine(canvas, rightHip, rightKnee, rightPaint)
-    drawLine(canvas, rightKnee, rightAnkle, rightPaint)
-    drawLine(canvas, rightWrist, rightThumb, rightPaint)
-    drawLine(canvas, rightWrist, rightPinky, rightPaint)
-    drawLine(canvas, rightWrist, rightIndex, rightPaint)
-    drawLine(canvas, rightIndex, rightPinky, rightPaint)
-    drawLine(canvas, rightAnkle, rightHeel, rightPaint)
-    drawLine(canvas, rightHeel, rightFootIndex, rightPaint)
+    drawLine(canvas, rightShoulder, rightElbow, rightShoulderToRightElbowPaint)
+    drawLine(canvas, rightElbow, rightWrist, rightElbowToRightWristPaint)
+    drawLine(canvas, rightShoulder, rightHip, rightShoulderToRightHipPaint)
+    drawLine(canvas, rightHip, rightKnee, rightHipToRightKneePaint)
+    drawLine(canvas, rightKnee, rightAnkle, rightKneeToRightAnklePaint)
+    drawLine(canvas, rightWrist, rightThumb, whitePaint)
+    drawLine(canvas, rightWrist, rightPinky, whitePaint)
+    drawLine(canvas, rightWrist, rightIndex, whitePaint)
+    drawLine(canvas, rightIndex, rightPinky, whitePaint)
+    drawLine(canvas, rightAnkle, rightHeel, whitePaint)
+    drawLine(canvas, rightHeel, rightFootIndex, whitePaint)
 
     // Draw inFrameLikelihood for all points
     if (showInFrameLikelihood) {
@@ -258,13 +293,5 @@ class PoseGraphic internal constructor(
       v = Ints.constrainToRange(v, 0, 255)
       paint.setARGB(255, 255 - v, 255 - v, 255)
     }
-  }
-
-  companion object {
-
-    private val DOT_RADIUS = 8.0f
-    private val IN_FRAME_LIKELIHOOD_TEXT_SIZE = 30.0f
-    private val STROKE_WIDTH = 10.0f
-    private val POSE_CLASSIFICATION_TEXT_SIZE = 60.0f
   }
 }

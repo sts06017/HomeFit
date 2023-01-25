@@ -3,7 +3,6 @@ package kr.rabbito.homefit.screens
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.posedetctor.PoseDetectorProcessor
@@ -11,6 +10,7 @@ import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.PullUpView
 import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
@@ -26,6 +26,8 @@ class WOActivity : AppCompatActivity() {
 
     private val workoutViews = arrayListOf(PullUpView(this))
 
+    private var tts: PoseAdviceTTS? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
@@ -33,6 +35,13 @@ class WOActivity : AppCompatActivity() {
 
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
+
+        // tts 출력 위한 부분 - 추후 로직 검사 파일로 이동시킬 수도 있음
+        tts = PoseAdviceTTS(this)
+
+        /*
+        구상: 특정 운동 타일 선택해 넘어오면, intent 이용해서 운동 인덱스 전달됨 -> 해당 인덱스로 initView 호출
+         */
 
         val workoutIdx = 0   // 임시
         // 운동에 맞게 화면 초기화, 위젯 제시
@@ -42,6 +51,9 @@ class WOActivity : AppCompatActivity() {
         startCameraSource()
 
         // 임시
+        binding.woBtnPause.setOnClickListener {
+            tts!!.raiseArmTTS() // tts 출력 테스트
+        }
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
         }
@@ -109,6 +121,10 @@ class WOActivity : AppCompatActivity() {
     }
 
     private fun initView(workoutIdx: Int) {
+        /*
+        구상: 운동 선택 -> 선택한 운동에 해당하는 위젯들을 생성하는 함수(generateWidgets) 실행
+         */
+
         // 선택한 운동에 맞게 위젯 로드
         val workoutView = workoutViews[workoutIdx]
         workoutView.generateWidgets(binding)
