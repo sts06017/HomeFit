@@ -34,6 +34,10 @@ class WOActivity : AppCompatActivity() {
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
+        /*
+        구상: 특정 운동 타일 선택해 넘어오면, intent 이용해서 운동 인덱스 전달됨 -> 해당 인덱스로 initView 호출
+         */
+
         val workoutIdx = 0   // 임시
         // 운동에 맞게 화면 초기화, 위젯 제시
         initView(workoutIdx)
@@ -109,6 +113,10 @@ class WOActivity : AppCompatActivity() {
     }
 
     private fun initView(workoutIdx: Int) {
+        /*
+        구상: 운동 선택 -> 선택한 운동에 해당하는 위젯들을 생성하는 함수(generateWidgets) 실행
+         */
+
         // 선택한 운동에 맞게 위젯 로드
         val workoutView = workoutViews[workoutIdx]
         workoutView.generateWidgets(binding)
