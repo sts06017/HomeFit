@@ -137,7 +137,7 @@ class PoseGraphic internal constructor(
 
 
     // Face
-    drawLine(canvas!!, nose, lefyEyeInner, whitePaint)
+    /*drawLine(canvas!!, nose, lefyEyeInner, whitePaint)
     drawLine(canvas, lefyEyeInner, lefyEye, whitePaint)
     drawLine(canvas, lefyEye, leftEyeOuter, whitePaint)
     drawLine(canvas, leftEyeOuter, leftEar, whitePaint)
@@ -145,9 +145,9 @@ class PoseGraphic internal constructor(
     drawLine(canvas, rightEyeInner, rightEye, whitePaint)
     drawLine(canvas, rightEye, rightEyeOuter, whitePaint)
     drawLine(canvas, rightEyeOuter, rightEar, whitePaint)
-    drawLine(canvas, leftMouth, rightMouth, whitePaint)
+    drawLine(canvas, leftMouth, rightMouth, whitePaint)*/
 
-    drawLine(canvas, leftShoulder, rightShoulder, whitePaint)
+    drawLine(canvas!!, leftShoulder, rightShoulder, whitePaint)
     drawLine(canvas, leftHip, rightHip, whitePaint)
 
     // Left body
