@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.posedetctor.PoseDetectorProcessor
 import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
+import kr.rabbito.homefit.screens.workoutViews.PullUpView
+import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.workout.WorkoutData
+import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
 import java.io.IOException
 
@@ -20,6 +24,8 @@ class WOActivity : AppCompatActivity() {
     private var selectedModel = POSE_DETECTION
     private lateinit var mat: android.opengl.Matrix
 
+    private val workoutViews = arrayListOf(PullUpView(this))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
@@ -28,8 +34,13 @@ class WOActivity : AppCompatActivity() {
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
+        val workoutIdx = 0   // 임시
+        // 운동에 맞게 화면 초기화, 위젯 제시
+        initView(workoutIdx)
+
         binding.woPvPreviewView.stop()
         startCameraSource()
+
         // 임시
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
@@ -95,6 +106,20 @@ class WOActivity : AppCompatActivity() {
                 cameraSource = null
             }
         }
+    }
+
+    private fun initView(workoutIdx: Int) {
+        // 선택한 운동에 맞게 위젯 로드
+        val workoutView = workoutViews[workoutIdx]
+        workoutView.generateWidgets(binding)
+
+        binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
+        binding.woTvSet.text = WorkoutState.set.toString()
+        binding.woTvCount.text = WorkoutState.count.toString()
+        val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
+        binding.woTvElapTime.text = String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+        val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
+        binding.woTvRemainTime.text = String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
     }
 
 

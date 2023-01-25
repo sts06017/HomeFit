@@ -36,7 +36,7 @@ public class InferenceInfoGraphic extends GraphicOverlay.Graphic {
 
   // Only valid when a stream of input images is being processed. Null for single image mode.
   @Nullable private final Integer framesPerSecond;
-  private boolean showLatencyInfo = true;
+  private boolean showLatencyInfo = false;
 
   public InferenceInfoGraphic(
       GraphicOverlay overlay,
@@ -66,12 +66,14 @@ public class InferenceInfoGraphic extends GraphicOverlay.Graphic {
     float x = TEXT_SIZE * 0.5f;
     float y = TEXT_SIZE * 1.5f;
 
-    canvas.drawText(
-        "InputImage size: " + overlay.getImageHeight() + "x" + overlay.getImageWidth(),
-        x,
-        y,
-        textPaint);
+    // 화면 크기 정보 출력
+//    canvas.drawText(
+//        "InputImage size: " + overlay.getImageHeight() + "x" + overlay.getImageWidth(),
+//        x,
+//        y,
+//        textPaint);
 
+    // 지연 정보 출력
     if (!showLatencyInfo) {
       return;
     }

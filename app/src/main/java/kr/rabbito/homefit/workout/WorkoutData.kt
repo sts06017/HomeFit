@@ -1,5 +1,12 @@
 package kr.rabbito.homefit.workout
 
 class WorkoutData {
-    // 운동 이름, 사진 등 정보
+    companion object {
+        // 운동 이름
+        val workoutNamesENG = arrayListOf("Pull Up")
+        val workoutNamesKOR = arrayListOf("풀 업")
+
+        // 운동 사진
+        val workoutImages = {}
+    }
 }
