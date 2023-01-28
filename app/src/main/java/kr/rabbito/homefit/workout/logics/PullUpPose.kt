@@ -1,4 +1,4 @@
-package kr.rabbito.homefit.workout
+package kr.rabbito.homefit.workout.logics
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import com.google.mlkit.vision.pose.PoseLandmark
 import kotlin.math.abs
 import kotlin.math.atan2
 
-class PoseTest {
+class PullUpPose {
         lateinit var pose : Pose
         lateinit var context : Context
 

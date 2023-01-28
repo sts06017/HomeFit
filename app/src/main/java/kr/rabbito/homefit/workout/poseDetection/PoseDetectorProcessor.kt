@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.posedetctor
+package kr.rabbito.homefit.workout.poseDetection
 
 import android.content.Context
 import android.util.Log
+import com.example.posedetctor.GraphicOverlay
 import com.google.android.gms.tasks.Task
 import com.google.android.odml.image.MlImage
 import com.google.mlkit.vision.common.InputImage
@@ -25,9 +26,7 @@ import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
-import kr.rabbito.homefit.workout.PoseTest
-import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
-import kr.rabbito.homefit.workout.poseDetection.VisionProcessorBase
+import kr.rabbito.homefit.workout.logics.PullUpPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
 import java.util.concurrent.Executor
@@ -119,7 +118,7 @@ class PoseDetectorProcessor(
         poseWithClassification.classificationResult
       )
     )
-    val kneeD = PoseTest()
+    val kneeD = PullUpPose()
     kneeD.calcKneeDrive(poseWithClassification.pose)
     //kneeD.calcKneeDrive(poseWithClassification.pose.getPoseLandmark())
     //여기서 좌표 정보 넘겨주면 될 듯?
