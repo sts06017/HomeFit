@@ -19,6 +19,7 @@ package kr.rabbito.homefit.workout.poseDetection
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import com.google.common.primitives.Ints
 import com.example.posedetctor.GraphicOverlay
 import com.google.mlkit.vision.pose.Pose

@@ -25,6 +25,7 @@ import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
+import kr.rabbito.homefit.workout.PoseTest
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.VisionProcessorBase
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
@@ -64,7 +65,7 @@ class PoseDetectorProcessor(
   }
 
   override fun detectInImage(image: InputImage): Task<PoseWithClassification> {
-    //Log.d("test","detectInImage_input")
+    //Log.d("Detect test","detectInImage_input")
     return detector
       .process(image)
       .continueWith(
@@ -84,30 +85,30 @@ class PoseDetectorProcessor(
   }
 
   override fun detectInImage(image: MlImage): Task<PoseWithClassification> {
-    //Log.d("test","detectInImage_MlImage")
+    //Log.d("Detect test","detectInImage_MlImage")
     return detector
       .process(image)
       .continueWith(
-        classificationExecutor,
-        { task ->
-          val pose = task.getResult()
-          var classificationResult: List<String> = ArrayList()
-          if (runClassification) {
-            if (poseClassifierProcessor == null) {
-              poseClassifierProcessor = PoseClassifierProcessor(context, isStreamMode)
-            }
-            classificationResult = poseClassifierProcessor!!.getPoseResult(pose)
+        classificationExecutor
+      ) { task ->
+        val pose = task.getResult()
+        var classificationResult: List<String> = ArrayList()
+        if (runClassification) {
+          if (poseClassifierProcessor == null) {
+            poseClassifierProcessor = PoseClassifierProcessor(context, isStreamMode)
           }
-          PoseWithClassification(pose, classificationResult)
+          classificationResult = poseClassifierProcessor!!.getPoseResult(pose)
         }
-      )
+        PoseWithClassification(pose, classificationResult)
+      }
+
   }
 
   override fun onSuccess(
     poseWithClassification: PoseWithClassification,
-    graphicOverlay: GraphicOverlay
+    graphicOverlay: GraphicOverlay,
   ) {
-    //Log.d("test","success")
+    Log.d("Detect test","success")
     graphicOverlay.add(
       PoseGraphic(
         graphicOverlay,
@@ -118,8 +119,10 @@ class PoseDetectorProcessor(
         poseWithClassification.classificationResult
       )
     )
+    val kneeD = PoseTest()
+    kneeD.calcKneeDrive(poseWithClassification.pose)
+    //kneeD.calcKneeDrive(poseWithClassification.pose.getPoseLandmark())
     //여기서 좌표 정보 넘겨주면 될 듯?
-
   }
 
   override fun onFailure(e: Exception) {
