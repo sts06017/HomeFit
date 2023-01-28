@@ -5,6 +5,9 @@ import android.util.Log
 import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseLandmark
 import kr.rabbito.homefit.workout.WorkoutState
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.greenPaint
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 
 class PullUpPose {
     lateinit var pose: Pose
@@ -23,15 +26,20 @@ class PullUpPose {
 
         // 자세 검사
         try {
-            var rightArmAngle = getAngle(rightHand!!, rightElbow!!, rightShoulder!!)
+            //----오른쪽 팔의 각도를 계산----
+            val rightArmAngle = getAngle(rightHand, rightElbow, rightShoulder)
             //Log.d("Angle test","$rightArmAngle")
-            if (rightArmAngle > 90) {
+            if (rightArmAngle > 90 ) {
+                //----각도가 90' 보다 큼
+                PoseGraphic.rightShoulderToRightElbowPaint = redPaint // 90보다 크면 빨간색으로 변경
+                PoseGraphic.rightElbowToRightWristPaint = redPaint
 
-            } else {
-                Log.d("Angle test", "under 90`")
+            } else if (rightArmAngle < 90) {
+                //----각도가 90' 보다 작음
+                PoseGraphic.rightShoulderToRightElbowPaint = greenPaint //90보다 작으면 초록색으로 변경
+                PoseGraphic.rightElbowToRightWristPaint = greenPaint
             }
-        } catch (e: NullPointerException) {
-            return
+        } catch (_: NullPointerException) {
         }
 
         // 횟수 카운트
@@ -48,7 +56,7 @@ class PullUpPose {
                 (getAngle(leftHand, leftElbow, leftShoulder) <= 90)
                 && (getAngle(rightHand, rightElbow, rightShoulder) <= 90)
                 && !WorkoutState.isUp
-            ){
+            ) {
                 Log.d("pull_up","up")
                 WorkoutState.isUp = true
             }

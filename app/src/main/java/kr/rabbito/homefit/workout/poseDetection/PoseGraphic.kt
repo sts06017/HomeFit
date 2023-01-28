@@ -66,8 +66,8 @@ class PoseGraphic internal constructor(
     val leftKneeToLeftAnklePaint = whitePaint
 
     // right paint
-    val rightShoulderToRightElbowPaint = whitePaint
-    val rightElbowToRightWristPaint = whitePaint
+    var rightShoulderToRightElbowPaint = whitePaint
+    var rightElbowToRightWristPaint = whitePaint
     val rightShoulderToRightHipPaint = whitePaint
     val rightHipToRightKneePaint = whitePaint
     val rightKneeToRightAnklePaint = whitePaint
