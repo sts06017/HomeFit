@@ -11,6 +11,9 @@ class WorkoutState {
         var rest = false
         var finished = true
 
+        // 현재 운동 플래그
+        var isUp = false
+
         // 현재 운동 진행 상태
         var set = 1 // 몇 번째 세트인지
         var count = 2   // 몇 개 했는지

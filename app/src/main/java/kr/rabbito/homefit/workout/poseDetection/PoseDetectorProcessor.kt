@@ -26,6 +26,8 @@ import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
+import kr.rabbito.homefit.databinding.ActivityWoBinding
+import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.logics.PullUpPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
@@ -40,7 +42,8 @@ class PoseDetectorProcessor(
   private val visualizeZ: Boolean,
   private val rescaleZForVisualization: Boolean,
   private val runClassification: Boolean,
-  private val isStreamMode: Boolean
+  private val isStreamMode: Boolean,
+  private val binding: ActivityWoBinding
 ) : VisionProcessorBase<PoseDetectorProcessor.PoseWithClassification>(context) {
 
   private val detector: PoseDetector
@@ -119,7 +122,8 @@ class PoseDetectorProcessor(
       )
     )
     val kneeD = PullUpPose()
-    kneeD.calcKneeDrive(poseWithClassification.pose)
+    kneeD.calcPullUp(poseWithClassification.pose)
+    binding.woTvCount.text = WorkoutState.count.toString()
     //kneeD.calcKneeDrive(poseWithClassification.pose.getPoseLandmark())
     //여기서 좌표 정보 넘겨주면 될 듯?
   }

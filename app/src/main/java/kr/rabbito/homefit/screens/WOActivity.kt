@@ -84,7 +84,8 @@ class WOActivity : AppCompatActivity() {
                     visualizeZ,
                     rescaleZ,
                     runClassification,
-                    /* isStreamMode = */ true
+                    /* isStreamMode = */ true,
+                    binding
                 )
             )
             //}
