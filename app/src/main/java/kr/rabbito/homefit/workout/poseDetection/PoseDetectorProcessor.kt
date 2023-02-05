@@ -121,11 +121,9 @@ class PoseDetectorProcessor(
         poseWithClassification.classificationResult
       )
     )
-    val kneeD = PullUpPose()
-    kneeD.calcPullUp(poseWithClassification.pose)
+    val pose = PullUpPose()
+    pose.calcPullUp(poseWithClassification.pose)
     binding.woTvCount.text = WorkoutState.count.toString()
-    //kneeD.calcKneeDrive(poseWithClassification.pose.getPoseLandmark())
-    //여기서 좌표 정보 넘겨주면 될 듯?
   }
 
   override fun onFailure(e: Exception) {
