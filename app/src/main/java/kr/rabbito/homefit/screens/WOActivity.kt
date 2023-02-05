@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kr.rabbito.homefit.workout.poseDetection.PoseDetectorProcessor
-import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.screens.workoutViews.PullUpView
 import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
+import kr.rabbito.homefit.workout.poseDetection.PoseDetectorProcessor
+import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
+import kotlin.concurrent.timer
 
 class WOActivity : AppCompatActivity() {
     private var mBinding: ActivityWoBinding? = null
@@ -47,6 +47,8 @@ class WOActivity : AppCompatActivity() {
         // 운동에 맞게 화면 초기화, 위젯 제시
         initView(workoutIdx)
 
+        startTimer()
+
         binding.woPvPreviewView.stop()
         startCameraSource()
 
@@ -60,7 +62,7 @@ class WOActivity : AppCompatActivity() {
     }
 
     private fun createCameraSource(model: String) {
-        Log.d("debug","createCameraSorce")
+        Log.d("debug", "createCameraSorce")
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = CameraSource(this, binding.woGoGraphicOverlay)
@@ -84,7 +86,8 @@ class WOActivity : AppCompatActivity() {
                     visualizeZ,
                     rescaleZ,
                     runClassification,
-                    /* isStreamMode = */ true,
+                    /* isStreamMode = */
+                    true,
                     binding,
                     workoutIdx,
                 )
@@ -106,6 +109,7 @@ class WOActivity : AppCompatActivity() {
                 .show()
         }
     }
+
     /**
      * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
      * (e.g., because onResume was called before the camera source was created), this will be called
@@ -138,22 +142,42 @@ class WOActivity : AppCompatActivity() {
         binding.woTvSet.text = WorkoutState.set.toString()
         binding.woTvCount.text = WorkoutState.count.toString()
         val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
-        binding.woTvElapTime.text = String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+        binding.woTvElapTime.text =
+            String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
         val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
-        binding.woTvRemainTime.text = String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
+        binding.woTvRemainTime.text =
+            String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
     }
 
+    private fun startTimer() {
+        timer(period = 1000) {
+            runOnUiThread {
+                WorkoutState.remainSec -= 1
+                WorkoutState.elapSec += 1
+
+                val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
+                binding.woTvElapTime.text =
+                    String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+                val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
+                binding.woTvRemainTime.text =
+                    String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
+            }
+        }
+    }
 
     public override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume")
         createCameraSource(selectedModel)
         startCameraSource()
-    }/** Stops the camera. */
+    }
+
+    /** Stops the camera. */
     override fun onPause() {
         super.onPause()
         binding.woPvPreviewView.stop()
     }
+
     public override fun onDestroy() {
         super.onDestroy()
         if (cameraSource != null) {
