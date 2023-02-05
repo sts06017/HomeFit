@@ -27,8 +27,11 @@ import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import kr.rabbito.homefit.databinding.ActivityWoBinding
+import kr.rabbito.homefit.screens.workoutViews.WorkoutView
+import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.logics.PullUpPose
+import kr.rabbito.homefit.workout.logics.WorkoutPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
 import java.util.concurrent.Executor
@@ -43,7 +46,8 @@ class PoseDetectorProcessor(
   private val rescaleZForVisualization: Boolean,
   private val runClassification: Boolean,
   private val isStreamMode: Boolean,
-  private val binding: ActivityWoBinding
+  private val binding: ActivityWoBinding,
+  private val workoutIdx: Int
 ) : VisionProcessorBase<PoseDetectorProcessor.PoseWithClassification>(context) {
 
   private val detector: PoseDetector
@@ -54,10 +58,16 @@ class PoseDetectorProcessor(
   /** Internal class to hold Pose and classification results. */
   class PoseWithClassification(val pose: Pose, val classificationResult: List<String>)
 
+  private val workoutPose: WorkoutPose
+  private val workoutView: WorkoutView
+
   init {
     Log.d("test","init")
     detector = PoseDetection.getClient(options)
     classificationExecutor = Executors.newSingleThreadExecutor()
+
+    workoutPose = WorkoutCore.workoutPoses[workoutIdx]
+    workoutView = WorkoutCore(context, binding).workoutViews[workoutIdx]
   }
 
   override fun stop() {
@@ -106,6 +116,7 @@ class PoseDetectorProcessor(
 
   }
 
+  // 실시간으로 호출됨
   override fun onSuccess(
     poseWithClassification: PoseWithClassification,
     graphicOverlay: GraphicOverlay,
@@ -121,9 +132,9 @@ class PoseDetectorProcessor(
         poseWithClassification.classificationResult
       )
     )
-    val pose = PullUpPose()
-    pose.calcPullUp(poseWithClassification.pose)
-    binding.woTvCount.text = WorkoutState.count.toString()
+
+    workoutPose.calcCount(poseWithClassification.pose)
+    workoutView.refreshValues()
   }
 
   override fun onFailure(e: Exception) {

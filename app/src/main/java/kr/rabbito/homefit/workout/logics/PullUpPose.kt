@@ -8,11 +8,11 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.greenPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 
-class PullUpPose {
+class PullUpPose: WorkoutPose() {
     lateinit var pose: Pose
     lateinit var context: Context
 
-    fun calcPullUp(pose: Pose) {
+    override fun calcCount(pose: Pose) {
         Log.d("pose test", "call calcKneeDrive")
 
         val c = PoseCoordinate(pose)

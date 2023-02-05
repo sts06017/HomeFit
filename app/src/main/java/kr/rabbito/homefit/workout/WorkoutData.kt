@@ -1,6 +1,9 @@
 package kr.rabbito.homefit.workout
 
-class WorkoutData {
+import android.content.Context
+import kr.rabbito.homefit.screens.workoutViews.PullUpView
+
+class WorkoutData(val context: Context){
     companion object {
         // 운동 이름
         val workoutNamesENG = arrayListOf("Pull Up")

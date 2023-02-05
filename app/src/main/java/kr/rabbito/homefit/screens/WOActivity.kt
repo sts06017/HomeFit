@@ -10,10 +10,11 @@ import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.PullUpView
 import kr.rabbito.homefit.utils.calc.TimeCalc
-import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
+import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
+import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
 
 class WOActivity : AppCompatActivity() {
@@ -24,9 +25,9 @@ class WOActivity : AppCompatActivity() {
     private var selectedModel = POSE_DETECTION
     private lateinit var mat: android.opengl.Matrix
 
-    private val workoutViews = arrayListOf(PullUpView(this))
-
     private var tts: PoseAdviceTTS? = null
+
+    private var workoutIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,6 @@ class WOActivity : AppCompatActivity() {
         구상: 특정 운동 타일 선택해 넘어오면, intent 이용해서 운동 인덱스 전달됨 -> 해당 인덱스로 initView 호출
          */
 
-        val workoutIdx = 0   // 임시
         // 운동에 맞게 화면 초기화, 위젯 제시
         initView(workoutIdx)
 
@@ -85,9 +85,11 @@ class WOActivity : AppCompatActivity() {
                     rescaleZ,
                     runClassification,
                     /* isStreamMode = */ true,
-                    binding
+                    binding,
+                    workoutIdx,
                 )
             )
+
             //}
             /*SELFIE_SEGMENTATION -> {
                 cameraSource!!.setMachineLearningFrameProcessor(SegmenterProcessor(this))
@@ -121,15 +123,17 @@ class WOActivity : AppCompatActivity() {
         }
     }
 
+    // 최초 화면 초기화
     private fun initView(workoutIdx: Int) {
         /*
         구상: 운동 선택 -> 선택한 운동에 해당하는 위젯들을 생성하는 함수(generateWidgets) 실행
          */
 
         // 선택한 운동에 맞게 위젯 로드
-        val workoutView = workoutViews[workoutIdx]
-        workoutView.generateWidgets(binding)
+        val workoutView = WorkoutCore(this, binding).workoutViews[workoutIdx]
+        workoutView.generateWidgets()
 
+        // 기본 위젯 로드
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
         binding.woTvSet.text = WorkoutState.set.toString()
         binding.woTvCount.text = WorkoutState.count.toString()
@@ -156,7 +160,7 @@ class WOActivity : AppCompatActivity() {
             cameraSource?.release()
         }
     }
-    
+
     companion object {
         private const val POSE_DETECTION = "Pose Detection"
         private const val TAG = "WOActivity"
