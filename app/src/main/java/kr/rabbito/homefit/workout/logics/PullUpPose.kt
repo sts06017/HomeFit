@@ -5,45 +5,74 @@ import android.util.Log
 import com.google.mlkit.vision.pose.Pose
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
-import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.greenPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 
 class PullUpPose: WorkoutPose() {
     lateinit var pose: Pose
     lateinit var context: Context
 
-    override fun calcCount(pose: Pose) {
-        Log.d("pose test", "call calcKneeDrive")
+    override fun calculate(pose: Pose) {
+        val coordinate = PoseCoordinate(pose)
 
-        val c = PoseCoordinate(pose)
+        // 자세 검사
+        guidePose(coordinate)
 
-        /*
-        자세 검사 (임시)
-        팔이 굽혀져 있으면 초록색으로 표시
-         */
+        // 횟수 검사
+        checkCount(coordinate)
+    }
+
+    private fun guidePose(c: PoseCoordinate) {
         try {
-            //Log.d("Angle test","$rightArmAngle")
-            if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 90 ) {
-                //----각도가 90' 보다 큼
-                PoseGraphic.rightShoulderToRightElbowPaint = redPaint // 90보다 크면 빨간색으로 변경
+            if (getYDistance(c.rightShoulder, c.rightHand) < 0) {
+                PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                 PoseGraphic.rightElbowToRightWristPaint = redPaint
+            } else {
+                PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
+                PoseGraphic.rightElbowToRightWristPaint = whitePaint
+            }
 
-            } else if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 90) {
-                //----각도가 90' 보다 작음
-                PoseGraphic.rightShoulderToRightElbowPaint = greenPaint //90보다 작으면 초록색으로 변경
-                PoseGraphic.rightElbowToRightWristPaint = greenPaint
+            if (getYDistance(c.leftShoulder, c.leftHand) < 0) {
+                PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
+                PoseGraphic.leftElbowToLeftWristPaint = redPaint
+            } else {
+                PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
+                PoseGraphic.leftElbowToLeftWristPaint = whitePaint
+            }
+
+            if (!WorkoutState.isUp) { // 내려가는 시점
+                if (
+                    getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
+                ) {   // 팔을 너무 펴면 안내선 빨갛게
+                    PoseGraphic.rightShoulderToRightElbowPaint = redPaint
+                    PoseGraphic.rightElbowToRightWristPaint = redPaint
+                } else {
+                    PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
+                    PoseGraphic.rightElbowToRightWristPaint = whitePaint
+                }
+
+                if (
+                    getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170
+                ) {
+                    PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
+                    PoseGraphic.leftElbowToLeftWristPaint = redPaint
+                } else {
+                    PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
+                    PoseGraphic.leftElbowToLeftWristPaint = whitePaint
+                }
             }
         } catch (_: NullPointerException) {
+            // 추후 로그 작성
         }
+    }
 
-        /*
-        횟수 검사 (임시)
-        팔을 굽혔다 피면 횟수 증가
-         */
+    private fun checkCount(c: PoseCoordinate) {
         try {
             if (
                 (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
                 && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
+                && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
+                && getYDistance(c.leftShoulder, c.leftHand) > 60
                 && WorkoutState.isUp
             ) {
                 Log.d("pull_up","down")
@@ -52,6 +81,8 @@ class PullUpPose: WorkoutPose() {
             } else if (
                 (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
                 && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
+                && getYDistance(c.rightShoulder, c.rightHand) <= 60
+                && getYDistance(c.leftShoulder, c.leftHand) <= 60
                 && !WorkoutState.isUp
             ) {
                 Log.d("pull_up","up")

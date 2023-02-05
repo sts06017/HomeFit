@@ -58,19 +58,21 @@ class PoseGraphic internal constructor(
     ex) 자세가 잘못되었으면 leftShoulderToLeftElbowPaint = redPaint로 변경
      */
 
+    // 아래의 변수들 조정해 안내선 색상 변경 - 기본: 흰색
+
     // left paint
-    val leftShoulderToLeftElbowPaint = whitePaint
-    val leftElbowToLeftWristPaint = whitePaint
-    val leftShoulderToLeftHipPaint = whitePaint
-    val leftHipToLeftKneePaint = whitePaint
-    val leftKneeToLeftAnklePaint = whitePaint
+    var leftShoulderToLeftElbowPaint = whitePaint
+    var leftElbowToLeftWristPaint = whitePaint
+    var leftShoulderToLeftHipPaint = whitePaint
+    var leftHipToLeftKneePaint = whitePaint
+    var leftKneeToLeftAnklePaint = whitePaint
 
     // right paint
     var rightShoulderToRightElbowPaint = whitePaint
     var rightElbowToRightWristPaint = whitePaint
-    val rightShoulderToRightHipPaint = whitePaint
-    val rightHipToRightKneePaint = whitePaint
-    val rightKneeToRightAnklePaint = whitePaint
+    var rightShoulderToRightHipPaint = whitePaint
+    var rightHipToRightKneePaint = whitePaint
+    var rightKneeToRightAnklePaint = whitePaint
   }
 
   init {

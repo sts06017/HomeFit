@@ -29,3 +29,26 @@ fun getAngle(
         return Double.MIN_VALUE
     }
 }
+
+fun getXDistance(
+    firstPoint: PoseLandmark?,
+    secondPoint: PoseLandmark?,
+): Float {
+    if (firstPoint != null && secondPoint != null) {
+        return firstPoint.position.x - secondPoint.position.x
+    } else {
+        return Float.MIN_VALUE
+    }
+}
+
+fun getYDistance(
+    firstPoint: PoseLandmark?,
+    secondPoint: PoseLandmark?,
+): Float {
+    if (firstPoint != null && secondPoint != null) {
+        return firstPoint.position.y - secondPoint.position.y
+    } else {
+        return Float.MIN_VALUE
+    }
+}
+

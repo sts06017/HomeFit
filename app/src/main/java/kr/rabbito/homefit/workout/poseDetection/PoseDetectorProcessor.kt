@@ -29,8 +29,6 @@ import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.WorkoutView
 import kr.rabbito.homefit.workout.WorkoutCore
-import kr.rabbito.homefit.workout.WorkoutState
-import kr.rabbito.homefit.workout.logics.PullUpPose
 import kr.rabbito.homefit.workout.logics.WorkoutPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
@@ -133,7 +131,7 @@ class PoseDetectorProcessor(
       )
     )
 
-    workoutPose.calcCount(poseWithClassification.pose)
+    workoutPose.calculate(poseWithClassification.pose)
     workoutView.refreshValues()
   }
 
