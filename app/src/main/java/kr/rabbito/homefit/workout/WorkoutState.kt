@@ -24,5 +24,8 @@ class WorkoutState {
         var elapSec = 0    // 경과 시간
         var remainSec = 120  // 남은 시간
         var calorieBurned = 0   // 소모한 칼로리
+
+        // 현재 자세 진행 상태
+        var isPrevUp = false
     }
 }

@@ -30,6 +30,7 @@ class WOActivity : AppCompatActivity() {
     private var workoutIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("debug","WOActivity start")
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -118,6 +119,7 @@ class WOActivity : AppCompatActivity() {
     private fun startCameraSource() {
         if (cameraSource != null) {
             try {
+                Log.d("debug","startCameraSource")
                 binding.woPvPreviewView.start(cameraSource!!, binding.woGoGraphicOverlay)
             } catch (e: IOException) {
                 Log.e(TAG, "Unable to start camera source.", e)
@@ -129,6 +131,7 @@ class WOActivity : AppCompatActivity() {
 
     // 최초 화면 초기화
     private fun initView(workoutIdx: Int) {
+        Log.d("debug","initView")
         /*
         구상: 운동 선택 -> 선택한 운동에 해당하는 위젯들을 생성하는 함수(generateWidgets) 실행
          */
