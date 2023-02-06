@@ -6,7 +6,7 @@ import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.workout.WorkoutState
 
-class PullUpView(context: Context, binding: ActivityWoBinding): WorkoutView(context, binding) {
+class PushUpView(context: Context, binding: ActivityWoBinding): WorkoutView(context, binding) {
     override fun generateWidgets() {
 //        val target = ImageView(context)
 //        target.setImageResource(R.drawable.loading_iv_icon)
