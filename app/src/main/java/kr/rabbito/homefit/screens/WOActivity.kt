@@ -152,7 +152,7 @@ class WOActivity : AppCompatActivity() {
     private fun startTimer() {
         timer(period = 1000) {
             runOnUiThread {
-                WorkoutState.remainSec -= 1
+                if (WorkoutState.remainSec > 0) WorkoutState.remainSec -= 1
                 WorkoutState.elapSec += 1
 
                 val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)

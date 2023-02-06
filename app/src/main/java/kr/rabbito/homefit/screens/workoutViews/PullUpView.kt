@@ -16,5 +16,6 @@ class PullUpView(context: Context, binding: ActivityWoBinding): WorkoutView(cont
 
     override fun refreshValues() {
         binding.woTvCount.text = WorkoutState.count.toString()
+        binding.woTvSet.text = WorkoutState.set.toString()
     }
 }

@@ -78,6 +78,9 @@ class PullUpPose: WorkoutPose() {
                 Log.d("pull_up","down")
                 WorkoutState.count += 1
                 WorkoutState.isUp = false
+
+                checkSetCondition()
+                checkEnd()
             } else if (
                 (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
                 && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
@@ -89,6 +92,22 @@ class PullUpPose: WorkoutPose() {
                 WorkoutState.isUp = true
             }
         } catch (_: NullPointerException) {
+        }
+    }
+
+    // 세트가 끝났는지 확인
+    private fun checkSetCondition() {
+        if (WorkoutState.count == WorkoutState.setCondition) {
+            WorkoutState.count = 0
+            WorkoutState.set += 1
+        }
+    }
+
+    // 운동이 끝났는지 확인
+    private fun checkEnd() {
+        if (WorkoutState.set == WorkoutState.setTotal + 1) {
+            // 운동 종료
+            Log.d("pull up pose", "운동 종료")
         }
     }
 }
