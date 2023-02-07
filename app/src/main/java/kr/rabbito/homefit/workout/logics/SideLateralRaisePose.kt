@@ -2,11 +2,13 @@ package kr.rabbito.homefit.workout.logics
 
 import android.content.Context
 import android.util.Log
+import kotlin.math.abs
 import com.google.mlkit.vision.pose.Pose
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
+import kotlin.math.absoluteValue
 
 class SideLateralRaisePose: WorkoutPose() {
     lateinit var pose: Pose
@@ -23,8 +25,8 @@ class SideLateralRaisePose: WorkoutPose() {
     }
 
     private fun guidePose(c: PoseCoordinate) {
-        try {
-            if (getYDistance(c.rightShoulder, c.rightHand) < 0) {
+        try {   //팔을 굽히면 빨간색 표시
+            if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 160) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                 PoseGraphic.rightElbowToRightWristPaint = redPaint
             } else {
@@ -32,7 +34,7 @@ class SideLateralRaisePose: WorkoutPose() {
                 PoseGraphic.rightElbowToRightWristPaint = whitePaint
             }
 
-            if (getYDistance(c.leftShoulder, c.leftHand) < 0) {
+            if (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 160) {
                 PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                 PoseGraphic.leftElbowToLeftWristPaint = redPaint
             } else {
@@ -40,10 +42,10 @@ class SideLateralRaisePose: WorkoutPose() {
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
             }
 
-            if (!WorkoutState.isUp) { // 내려가는 시점
+            if (WorkoutState.isUp) { // 올라가는 시점
                 if (
-                    getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
-                ) {   // 팔을 너무 펴면 안내선 빨갛게
+                    getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 140
+                ) {   // 팔을 너무 높게 들면 안내선 빨갛게
                     PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                     PoseGraphic.rightElbowToRightWristPaint = redPaint
                 } else {
@@ -52,7 +54,7 @@ class SideLateralRaisePose: WorkoutPose() {
                 }
 
                 if (
-                    getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170
+                    getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 140
                 ) {
                     PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                     PoseGraphic.leftElbowToLeftWristPaint = redPaint
@@ -68,28 +70,29 @@ class SideLateralRaisePose: WorkoutPose() {
 
     private fun checkCount(c: PoseCoordinate) {
         try {
+            Log.d("side lateral raise","L:${getXDistance(c.leftShoulder, c.leftHand).absoluteValue.toInt()}, R:${getXDistance(c.rightShoulder, c.rightHand).absoluteValue.toInt()}")
             if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
-                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
-                && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
-                && getYDistance(c.leftShoulder, c.leftHand) > 60
-                && WorkoutState.isUp
+                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) > 100)
+                && (getAngle(c.rightElbow, c.rightShoulder,c. rightHip) > 100)
+                && getXDistance(c.rightShoulder, c.rightHand).absoluteValue > 90  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
+                && getXDistance(c.leftShoulder, c.leftHand).absoluteValue > 90
+                && !WorkoutState.isUp
             ) {
-                Log.d("pull_up","down")
+                Log.d("side lateral raise","up")
                 WorkoutState.count += 1
-                WorkoutState.isUp = false
+                WorkoutState.isUp = true
 
                 checkSetCondition()
                 checkEnd()
             } else if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
-                && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
-                && getYDistance(c.rightShoulder, c.rightHand) <= 60
-                && getYDistance(c.leftShoulder, c.leftHand) <= 60
-                && !WorkoutState.isUp
+                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) <= 30)
+                && (getAngle(c.rightElbow, c.rightShoulder,c. rightHip) <= 30)
+                && getXDistance(c.rightShoulder, c.rightHand).absoluteValue <= 40
+                && getXDistance(c.leftShoulder, c.leftHand).absoluteValue <= 40
+                && WorkoutState.isUp
             ) {
-                Log.d("pull_up","up")
-                WorkoutState.isUp = true
+                Log.d("side lateral raise","down")
+                WorkoutState.isUp = false
             }
         } catch (_: NullPointerException) {
         }
@@ -107,7 +110,7 @@ class SideLateralRaisePose: WorkoutPose() {
     private fun checkEnd() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
-            Log.d("pull up pose", "운동 종료")
+            Log.d("side lateral raise pose", "운동 종료")
         }
     }
 }

@@ -24,7 +24,7 @@ class PushUpPose: WorkoutPose() {
 
     private fun guidePose(c: PoseCoordinate) {
         try {
-            if (getYDistance(c.rightShoulder, c.rightHand) < 0) {
+            if (getYDistance(c.rightHand, c.rightShoulder) <= 0) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                 PoseGraphic.rightElbowToRightWristPaint = redPaint
             } else {
@@ -32,7 +32,7 @@ class PushUpPose: WorkoutPose() {
                 PoseGraphic.rightElbowToRightWristPaint = whitePaint
             }
 
-            if (getYDistance(c.leftShoulder, c.leftHand) < 0) {
+            if (getYDistance(c.leftHand, c.leftShoulder) <= 0) {
                 PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                 PoseGraphic.leftElbowToLeftWristPaint = redPaint
             } else {
@@ -40,7 +40,7 @@ class PushUpPose: WorkoutPose() {
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
             }
 
-            if (!WorkoutState.isUp) { // 내려가는 시점
+            /*if (!WorkoutState.isUp) { // 내려가는 시점
                 if (
                     getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
                 ) {   // 팔을 너무 펴면 안내선 빨갛게
@@ -60,7 +60,7 @@ class PushUpPose: WorkoutPose() {
                     PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
                     PoseGraphic.leftElbowToLeftWristPaint = whitePaint
                 }
-            }
+            }*/
         } catch (_: NullPointerException) {
             // 추후 로그 작성
         }
@@ -69,13 +69,13 @@ class PushUpPose: WorkoutPose() {
     private fun checkCount(c: PoseCoordinate) {
         try {
             if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
-                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
-                && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
-                && getYDistance(c.leftShoulder, c.leftHand) > 60
+                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 120)
+                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 120)
+                //&& getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
+                //&& getYDistance(c.leftShoulder, c.leftHand) > 60
                 && WorkoutState.isUp
             ) {
-                Log.d("pull_up","down")
+                Log.d("push_up","up")
                 WorkoutState.count += 1
                 WorkoutState.isUp = false
 
@@ -84,11 +84,11 @@ class PushUpPose: WorkoutPose() {
             } else if (
                 (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
                 && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
-                && getYDistance(c.rightShoulder, c.rightHand) <= 60
-                && getYDistance(c.leftShoulder, c.leftHand) <= 60
+                //&& getYDistance(c.rightShoulder, c.rightHand) <= 60
+                //&& getYDistance(c.leftShoulder, c.leftHand) <= 60
                 && !WorkoutState.isUp
             ) {
-                Log.d("pull_up","up")
+                Log.d("push_up","down")
                 WorkoutState.isUp = true
             }
         } catch (_: NullPointerException) {
