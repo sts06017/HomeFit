@@ -28,7 +28,7 @@ class WOActivity : AppCompatActivity() {
 
     private var tts: PoseAdviceTTS? = null
 
-    private var workoutIdx = 2
+    private var workoutIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +63,6 @@ class WOActivity : AppCompatActivity() {
     }
 
     private fun createCameraSource(model: String) {
-        Log.d("debug", "createCameraSorce")
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = CameraSource(this, binding.woGoGraphicOverlay)
