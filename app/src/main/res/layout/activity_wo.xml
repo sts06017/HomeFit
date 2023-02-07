@@ -123,29 +123,28 @@
                 android:id="@+id/wo_tv_elap_time_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:layout_marginStart="85dp"
+                android:layout_marginEnd="16dp"
                 android:includeFontPadding="false"
                 android:text="진행시간"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@id/wo_tv_title"
-                app:layout_constraintTop_toBottomOf="@id/wo_tv_title" />
+                app:layout_constraintTop_toTopOf="@id/wo_tv_set_title"
+                app:layout_constraintEnd_toStartOf="@id/wo_tv_elap_time"/>
 
             <TextView
                 android:id="@+id/wo_tv_elap_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:includeFontPadding="false"
                 android:text="00:03:30"
                 android:textColor="@color/white"
                 android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="@id/wo_tv_elap_time_title"
                 app:layout_constraintBottom_toBottomOf="@id/wo_tv_elap_time_title"
-                app:layout_constraintStart_toEndOf="@id/wo_tv_elap_time_title"
-                app:layout_constraintTop_toTopOf="@id/wo_tv_elap_time_title" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/wo_tv_remain_time_title"
@@ -153,13 +152,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:layout_marginStart="85dp"
                 android:includeFontPadding="false"
                 android:text="남은시간"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@id/wo_tv_title"
-                app:layout_constraintTop_toBottomOf="@id/wo_tv_elap_time_title" />
+                app:layout_constraintTop_toBottomOf="@id/wo_tv_elap_time_title"
+                app:layout_constraintStart_toStartOf="@id/wo_tv_elap_time_title"/>
 
             <TextView
                 android:id="@+id/wo_tv_remain_time"

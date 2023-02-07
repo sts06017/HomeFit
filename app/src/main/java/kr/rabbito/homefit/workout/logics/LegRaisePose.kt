@@ -8,7 +8,7 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 
-class LegRaisePose: WorkoutPose() {
+class LegRaisePose : WorkoutPose() {
     lateinit var pose: Pose
     lateinit var context: Context
 
@@ -24,71 +24,50 @@ class LegRaisePose: WorkoutPose() {
 
     private fun guidePose(c: PoseCoordinate) {
         try {
-            if (getYDistance(c.rightShoulder, c.rightHand) < 0) {
-                PoseGraphic.rightShoulderToRightElbowPaint = redPaint
-                PoseGraphic.rightElbowToRightWristPaint = redPaint
+            if (getAngle(c.leftFeet, c.leftHip, c.leftShoulder) < 80) {    // 다리를 너무 올린 경우
+                PoseGraphic.leftHipToLeftKneePaint = redPaint
+                PoseGraphic.leftKneeToLeftAnklePaint = redPaint
             } else {
-                PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
-                PoseGraphic.rightElbowToRightWristPaint = whitePaint
+                PoseGraphic.leftHipToLeftKneePaint = whitePaint
+                PoseGraphic.leftKneeToLeftAnklePaint = whitePaint
             }
 
-            if (getYDistance(c.leftShoulder, c.leftHand) < 0) {
-                PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
-                PoseGraphic.leftElbowToLeftWristPaint = redPaint
+            if (getAngle(c.rightFeet, c.rightHip, c.rightShoulder) < 80) {
+                PoseGraphic.rightHipToRightKneePaint = redPaint
+                PoseGraphic.rightKneeToRightAnklePaint = redPaint
             } else {
-                PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
-                PoseGraphic.leftElbowToLeftWristPaint = whitePaint
-            }
-
-            if (!WorkoutState.isUp) { // 내려가는 시점
-                if (
-                    getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
-                ) {   // 팔을 너무 펴면 안내선 빨갛게
-                    PoseGraphic.rightShoulderToRightElbowPaint = redPaint
-                    PoseGraphic.rightElbowToRightWristPaint = redPaint
-                } else {
-                    PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
-                    PoseGraphic.rightElbowToRightWristPaint = whitePaint
-                }
-
-                if (
-                    getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170
-                ) {
-                    PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
-                    PoseGraphic.leftElbowToLeftWristPaint = redPaint
-                } else {
-                    PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
-                    PoseGraphic.leftElbowToLeftWristPaint = whitePaint
-                }
+                PoseGraphic.rightHipToRightKneePaint = whitePaint
+                PoseGraphic.rightKneeToRightAnklePaint = whitePaint
             }
         } catch (_: NullPointerException) {
             // 추후 로그 작성
         }
     }
 
+    // 다리 펴고 하는 경우를 기준으로 계산
     private fun checkCount(c: PoseCoordinate) {
         try {
             if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
-                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
-                && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
-                && getYDistance(c.leftShoulder, c.leftHand) > 60
+                getAngle(c.leftHip, c.leftShoulder, c.leftEar) > 140    // 고개 너무 굽히지 않도록
+                && getAngle(c.leftFeet, c.leftHip, c.leftShoulder) < 100    // 다리 충분히 들었는지 확인
+                && getAngle(c.rightFeet, c.rightHip, c.rightShoulder) < 100
                 && WorkoutState.isUp
             ) {
-                Log.d("pull_up","down")
+                Log.d("leg_raise", "down")
                 WorkoutState.count += 1
                 WorkoutState.isUp = false
 
                 checkSetCondition()
                 checkEnd()
             } else if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
-                && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
-                && getYDistance(c.rightShoulder, c.rightHand) <= 60
-                && getYDistance(c.leftShoulder, c.leftHand) <= 60
+                getAngle(c.leftHip, c.leftShoulder, c.leftEar) > 140
+                && getAngle(c.leftFeet, c.leftHip, c.leftShoulder) > 130    // 다리 적당히 내렸는지 확인
+                && getAngle(c.leftFeet, c.leftHip, c.leftShoulder) < 170
+                && getAngle(c.rightFeet, c.rightHip, c.rightShoulder) > 130
+                && getAngle(c.rightFeet, c.rightHip, c.rightShoulder) < 170
                 && !WorkoutState.isUp
             ) {
-                Log.d("pull_up","up")
+                Log.d("leg_raise", "up")
                 WorkoutState.isUp = true
             }
         } catch (_: NullPointerException) {
@@ -107,7 +86,7 @@ class LegRaisePose: WorkoutPose() {
     private fun checkEnd() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
-            Log.d("pull up pose", "운동 종료")
+            Log.d("leg_raise", "finish")
         }
     }
 }
