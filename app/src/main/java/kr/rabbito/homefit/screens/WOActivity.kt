@@ -28,7 +28,7 @@ class WOActivity : AppCompatActivity() {
 
     private var tts: PoseAdviceTTS? = null
 
-    private var workoutIdx = 5
+    private var workoutIdx = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

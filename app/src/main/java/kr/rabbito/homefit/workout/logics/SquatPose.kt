@@ -24,15 +24,10 @@ class SquatPose: WorkoutPose() {
 
     private fun guidePose(c: PoseCoordinate) {
         try {
-            if (getYDistance(c.rightShoulder, c.rightHand) < 0) {
-                PoseGraphic.rightShoulderToRightElbowPaint = redPaint
-                PoseGraphic.rightElbowToRightWristPaint = redPaint
-            } else {
-                PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
-                PoseGraphic.rightElbowToRightWristPaint = whitePaint
-            }
-
-            if (getYDistance(c.leftShoulder, c.leftHand) < 0) {
+            if (
+                getAngle(c.leftHand, c.leftShoulder, c.leftHip) < 70    // 팔을 내리거나
+                || getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 140  // 팔을 굽히면
+            ) {
                 PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                 PoseGraphic.leftElbowToLeftWristPaint = redPaint
             } else {
@@ -40,26 +35,15 @@ class SquatPose: WorkoutPose() {
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
             }
 
-            if (!WorkoutState.isUp) { // 내려가는 시점
-                if (
-                    getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
-                ) {   // 팔을 너무 펴면 안내선 빨갛게
-                    PoseGraphic.rightShoulderToRightElbowPaint = redPaint
-                    PoseGraphic.rightElbowToRightWristPaint = redPaint
-                } else {
-                    PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
-                    PoseGraphic.rightElbowToRightWristPaint = whitePaint
-                }
-
-                if (
-                    getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170
-                ) {
-                    PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
-                    PoseGraphic.leftElbowToLeftWristPaint = redPaint
-                } else {
-                    PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
-                    PoseGraphic.leftElbowToLeftWristPaint = whitePaint
-                }
+            if (
+                getAngle(c.rightHand, c.rightShoulder, c.rightHip) < 70
+                || getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 140
+            ) {
+                PoseGraphic.rightShoulderToRightElbowPaint = redPaint
+                PoseGraphic.rightElbowToRightWristPaint = redPaint
+            } else {
+                PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
+                PoseGraphic.rightElbowToRightWristPaint = whitePaint
             }
         } catch (_: NullPointerException) {
             // 추후 로그 작성
@@ -69,27 +53,27 @@ class SquatPose: WorkoutPose() {
     private fun checkCount(c: PoseCoordinate) {
         try {
             if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
-                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
-                && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
-                && getYDistance(c.leftShoulder, c.leftHand) > 60
+                getAngle(c.leftShoulder, c.leftHip, c.leftKnee) < 70    // 몸을 충분히 내리고
+                && getAngle(c.leftHip, c.leftKnee, c.leftFeet) < 70 // 다리를 충분히 굽히게
+                && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) < 70
+                && getAngle(c.rightHip, c.rightKnee, c.rightFeet) < 70
                 && WorkoutState.isUp
             ) {
-                Log.d("pull_up","down")
-                WorkoutState.count += 1
+                Log.d("squat","down")
                 WorkoutState.isUp = false
+            } else if (
+                getAngle(c.leftShoulder, c.leftHip, c.leftKnee) >= 160
+                && getAngle(c.leftHip, c.leftKnee, c.leftFeet) >= 160
+                && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) >= 160
+                && getAngle(c.rightHip, c.rightKnee, c.rightFeet) >= 160
+                && !WorkoutState.isUp
+            ) {
+                Log.d("squat","up")
+                WorkoutState.isUp = true
+                WorkoutState.count += 1
 
                 checkSetCondition()
                 checkEnd()
-            } else if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
-                && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
-                && getYDistance(c.rightShoulder, c.rightHand) <= 60
-                && getYDistance(c.leftShoulder, c.leftHand) <= 60
-                && !WorkoutState.isUp
-            ) {
-                Log.d("pull_up","up")
-                WorkoutState.isUp = true
             }
         } catch (_: NullPointerException) {
         }
@@ -107,7 +91,7 @@ class SquatPose: WorkoutPose() {
     private fun checkEnd() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
-            Log.d("pull up pose", "운동 종료")
+            Log.d("squat", "finish")
         }
     }
 }
