@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kr.rabbito.homefit.databinding.ActivityWoBinding
+import kr.rabbito.homefit.screens.workoutViews.WorkoutView
 import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
@@ -27,7 +28,7 @@ class WOActivity : AppCompatActivity() {
 
     private var tts: PoseAdviceTTS? = null
 
-    private var workoutIdx = 0
+    private var workoutIdx = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("debug","WOActivity start")
@@ -137,7 +138,7 @@ class WOActivity : AppCompatActivity() {
          */
 
         // 선택한 운동에 맞게 위젯 로드
-        val workoutView = WorkoutCore(this, binding).workoutViews[workoutIdx]
+        val workoutView: WorkoutView = WorkoutCore(this, binding).workoutViews[workoutIdx]
         workoutView.generateWidgets()
 
         // 기본 위젯 로드
