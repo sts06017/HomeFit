@@ -45,6 +45,9 @@ class WOActivity : AppCompatActivity() {
         구상: 특정 운동 타일 선택해 넘어오면, intent 이용해서 운동 인덱스 전달됨 -> 해당 인덱스로 initView 호출
          */
 
+        // 임시
+        workoutIdx = intent.getIntExtra("index", 0)
+
         // 운동에 맞게 화면 초기화, 위젯 제시
         initView(workoutIdx)
 
@@ -55,7 +58,7 @@ class WOActivity : AppCompatActivity() {
 
         // 임시
         binding.woBtnPause.setOnClickListener {
-            tts!!.raiseArmTTS() // tts 출력 테스트
+//            tts!!.raiseArmTTS() // tts 출력 테스트
         }
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
@@ -138,6 +141,7 @@ class WOActivity : AppCompatActivity() {
         workoutView.generateWidgets()
 
         // 기본 위젯 로드
+        Log.d("index", workoutIdx.toString())
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
         binding.woTvSet.text = WorkoutState.set.toString()
         binding.woTvCount.text = WorkoutState.count.toString()

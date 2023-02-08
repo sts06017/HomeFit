@@ -16,7 +16,41 @@ class MainActivity : AppCompatActivity() {
 
         // 임시
         binding.mainClTop.setOnClickListener {
-            startActivity(Intent(this, WODetailActivity::class.java))
+//            startActivity(Intent(this, WODetailActivity::class.java))
         }
+
+
+        // 임시
+        binding.mainBtn1.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 0)
+            startActivity(intent)
+        }
+        binding.mainBtn2.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 1)
+            startActivity(intent)
+        }
+        binding.mainBtn3.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 2)
+            startActivity(intent)
+        }
+        binding.mainBtn4.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 3)
+            startActivity(intent)
+        }
+        binding.mainBtn5.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 4)
+            startActivity(intent)
+        }
+        binding.mainBtn6.setOnClickListener {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("index", 5)
+            startActivity(intent)
+        }
+
     }
 }

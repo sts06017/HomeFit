@@ -107,7 +107,7 @@ class PushUpPose: WorkoutPose() {
     private fun checkEnd() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
-            Log.d("pull up pose", "운동 종료")
+            Log.d("push_up", "finish")
         }
     }
 }
