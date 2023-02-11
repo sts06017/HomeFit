@@ -20,14 +20,24 @@ class HomeFitClient {
         Log.d("connection", "$socket")
     }
 
-    // 메시지 송신
-    fun sendMessage(message: String) {
-        outputStream.write(message.toByteArray())
+    // 임시 - 단순 텍스트 송신
+    fun sendText(text: String) {
+        outputStream.write(text.toByteArray())
         Log.d("connection", "send message")
     }
 
+    fun sendUserName(name: String) {
+        val message = makeMessage(1, name)
+
+        outputStream.write(message)
+    }
+
+    fun sendImage(){
+
+    }
+
     // 메시지 수신
-    fun getMessage() {
+    fun getData() {
         val check = inputStream.available()
 
         // 받은 데이터 없으면 -1 반환
@@ -39,6 +49,18 @@ class HomeFitClient {
         } else {
             Log.d("connection", "message not received")
         }
+    }
+
+    private fun makeMessage(messageNumber: Int, data: String): ByteArray {
+        val start = "[".toByteArray()
+        val number = messageNumber.toByte()
+        val size = (data.length + 4).toByte()
+        val userName = data.toByteArray()
+        val end = "]".toByteArray()
+
+        val message = start + number + size + userName + end
+
+        return message
     }
 
     fun closeSocket() {

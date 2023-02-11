@@ -32,8 +32,9 @@ class DCameraActivity : AppCompatActivity() {
         // 임시
         binding.dcameraBtnShot.setOnClickListener {
             Thread {
-                client!!.sendMessage("connection test")
-                client!!.getMessage()
+//                client!!.sendText("connection test")
+                client!!.sendUserName("User")
+                client!!.getData()
             }.start()
         }
 
