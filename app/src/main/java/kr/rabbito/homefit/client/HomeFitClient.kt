@@ -1,6 +1,8 @@
 package kr.rabbito.homefit.client
 
+import android.graphics.Bitmap
 import android.util.Log
+import kr.rabbito.homefit.utils.calc.Converter
 import java.io.InputStream
 import java.io.OutputStream
 import java.net.Socket
@@ -28,12 +30,16 @@ class HomeFitClient {
 
     fun sendUserName(name: String) {
         val message = makeMessage(1, name)
-
         outputStream.write(message)
     }
 
-    fun sendImage(){
+    fun sendImage(image: Bitmap){
+        val imageByteArray = Converter.bitmapToByteArray(image, "png")
+        val message = makeMessage(2, imageByteArray)
+        outputStream.write(message)
+        outputStream.write(imageByteArray)
 
+        Log.d("image", imageByteArray.contentToString())
     }
 
     // 메시지 수신
@@ -51,14 +57,36 @@ class HomeFitClient {
         }
     }
 
-    private fun makeMessage(messageNumber: Int, data: String): ByteArray {
+    private fun makeMessage(messageNumber: Int, data: Any): ByteArray? {
         val start = "[".toByteArray()
         val number = messageNumber.toByte()
-        val size = (data.length + 4).toByte()
-        val userName = data.toByteArray()
         val end = "]".toByteArray()
 
-        val message = start + number + size + userName + end
+        var message: ByteArray? = null
+
+        when(messageNumber) {
+            1 -> {
+                // 사용자명을 String 으로 입력 받음
+                if (data is String) {
+                    val size = (data.length + 4).toByte()
+                    val userName = data.toByteArray()
+
+                    message = start + number + size + userName + end
+                }
+            }
+            2 -> {
+                // 이미지를 Bitmap 으로 입력 받음
+                if (data is ByteArray) {
+                    val msgSize = (11).toByte()
+                    val fileSize = Converter.convertToBigEndian(data.size)
+                    Log.d("connection", "file size: ${data.size}")
+                    val ext = "png".toByteArray()
+
+                    message = start + number + msgSize + ext + fileSize + end
+                }
+            }
+        }
+
 
         return message
     }

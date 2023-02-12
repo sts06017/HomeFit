@@ -1,9 +1,10 @@
 package kr.rabbito.homefit.screens
 
-import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import kr.rabbito.homefit.R
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 
@@ -32,7 +33,6 @@ class DCameraActivity : AppCompatActivity() {
         // 임시
         binding.dcameraBtnShot.setOnClickListener {
             Thread {
-//                client!!.sendText("connection test")
                 client!!.sendUserName("User")
                 client!!.getData()
             }.start()
@@ -40,7 +40,11 @@ class DCameraActivity : AppCompatActivity() {
 
         // 임시
         binding.dcameraBtnCancel.setOnClickListener {
-            startActivity(Intent(this, DReportActivity::class.java))
+            Thread {
+                val image = BitmapFactory.decodeResource(this.resources, R.drawable.connection_test)
+                client!!.sendImage(image)
+            }.start()
+//            startActivity(Intent(this, DReportActivity::class.java))
         }
     }
 
