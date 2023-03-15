@@ -1,28 +1,14 @@
 package kr.rabbito.homefit.workout.logics
 
-import android.content.Context
 import android.util.Log
-import com.google.mlkit.vision.pose.Pose
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 
 class LegRaisePose : WorkoutPose() {
-    lateinit var pose: Pose
-    lateinit var context: Context
 
-    override fun calculate(pose: Pose) {
-        val coordinate = PoseCoordinate(pose)
-
-        // 자세 검사
-        guidePose(coordinate)
-
-        // 횟수 검사
-        checkCount(coordinate)
-    }
-
-    private fun guidePose(c: PoseCoordinate) {
+    override fun guidePose(c: PoseCoordinate) {
         try {
             if (getAngle(c.leftFeet, c.leftHip, c.leftShoulder) < 80) {    // 다리를 너무 올린 경우
                 PoseGraphic.leftHipToLeftKneePaint = redPaint
@@ -45,7 +31,7 @@ class LegRaisePose : WorkoutPose() {
     }
 
     // 다리 펴고 하는 경우를 기준으로 계산
-    private fun checkCount(c: PoseCoordinate) {
+    override fun checkCount(c: PoseCoordinate) {
         try {
             if (
                 getAngle(c.leftHip, c.leftShoulder, c.leftEar) > 140    // 고개 너무 굽히지 않도록
