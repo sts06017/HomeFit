@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="#555555"
+    android:elevation="5dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/nvBar_btn_workout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_fitness_center_24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nvBar_btn_diet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_restaurant_24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nvBar_btn_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_twotone_group_24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nvBar_btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_miscellaneous_services_24" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,56 +1,36 @@
 package kr.rabbito.homefit.screens
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
+import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityMainBinding
+import kr.rabbito.homefit.screens.navigatorBar.NavigatorAdapter
 
 class MainActivity : AppCompatActivity() {
-    private var mBinding: ActivityMainBinding? = null
-    private val binding get() = mBinding!!
+
+    private lateinit var mbinding: ActivityMainBinding
+    private val binding get() = mbinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configureBottomNavigation()
+    }
+    private fun configureBottomNavigation(){
+        // 네비게이터 adapter 연결
+        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4)   // fragmentCount 인자는 넣을 페이지 수
 
-        // 임시
-        binding.mainClTop.setOnClickListener {
-//            startActivity(Intent(this, WODetailActivity::class.java))
-        }
+        binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
 
+        val bottomNaviLayout: View = this.layoutInflater.inflate(R.layout.navigation_bar, null, false)
 
-        // 임시
-        binding.mainBtn1.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 0)
-            startActivity(intent)
-        }
-        binding.mainBtn2.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 1)
-            startActivity(intent)
-        }
-        binding.mainBtn3.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 2)
-            startActivity(intent)
-        }
-        binding.mainBtn4.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 3)
-            startActivity(intent)
-        }
-        binding.mainBtn5.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 4)
-            startActivity(intent)
-        }
-        binding.mainBtn6.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 5)
-            startActivity(intent)
-        }
-
+        // main activity에 하단 네비게이터 버튼 연결
+        binding.mainTlMenubar.getTabAt(0)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_workout) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(1)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_diet) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(2)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_profile) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(3)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_setting) as RelativeLayout
     }
 }
