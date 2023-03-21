@@ -66,49 +66,13 @@
         android:layout_width="296dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:numColumns="2"
+        android:verticalSpacing="30dp"
+        android:horizontalSpacing="20dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_lv_tags" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/main_cl_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/main_btn_1"
-            android:text="팔굽혀펴기"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <Button
-            android:id="@+id/main_btn_2"
-            android:text="턱걸이"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <Button
-            android:id="@+id/main_btn_3"
-            android:text="스쿼트"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <Button
-            android:id="@+id/main_btn_4"
-            android:text="사이드 레터럴 레이즈"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <Button
-            android:id="@+id/main_btn_5"
-            android:text="덤벨 컬"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <Button
-            android:id="@+id/main_btn_6"
-            android:text="레그 레이즈"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-    </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
