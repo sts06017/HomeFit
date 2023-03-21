@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens.navigatorBar
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -11,7 +12,7 @@ class NavigatorAdapter(fm : FragmentManager, private val fragmentCount : Int) : 
             1 -> DReportFragment()
             2 -> ProfileFragment()
             3 -> SettingFragment()
-            else -> MainFragment()
+            else -> {Fragment()}
         }
     }
     override fun getCount(): Int = fragmentCount // { return fragmentCount }

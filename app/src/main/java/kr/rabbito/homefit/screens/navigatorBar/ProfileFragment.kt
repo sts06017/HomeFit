@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kr.rabbito.homefit.R
-import kr.rabbito.homefit.databinding.ActivityProfileBinding
-import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.databinding.FragmentProfileBinding
 import kr.rabbito.homefit.screens.RoutineListActivity
 
