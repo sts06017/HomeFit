@@ -31,4 +31,6 @@
     <string name="pref_key_pose_detector_run_classification" translatable="false">pdrc</string>
 
     <string name="pref_key_segmentation_raw_size_mask" translatable="false">srsm</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kr.rabbito.homefit.databinding.ActivityWohistoryBinding
+import kr.rabbito.homefit.screens.navigatorBar.DReportFragment
 
 class WOHistoryActivity : AppCompatActivity() {
     private var mBinding: ActivityWohistoryBinding? = null
@@ -16,7 +17,9 @@ class WOHistoryActivity : AppCompatActivity() {
 
         // 임시
         binding.wohistoryVCalendar.setOnClickListener {
-            startActivity(Intent(this, DReportActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX",1)
+            startActivity(intent)
         }
     }
 }

@@ -16,7 +16,9 @@ class DCameraActivity : AppCompatActivity() {
 
         // 임시
         binding.dcameraBtnCancel.setOnClickListener {
-            startActivity(Intent(this, DReportActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX",1)
+            startActivity(intent)
         }
     }
 }
