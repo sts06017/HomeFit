@@ -2,14 +2,13 @@ package kr.rabbito.homefit.screens.navigatorBar
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.BaseAdapter
-import android.widget.ImageView
+import android.widget.*
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.FragmentMainBinding
 import kr.rabbito.homefit.screens.MainActivity
@@ -21,6 +20,7 @@ class MainFragment : Fragment() {
     private var mBinding: FragmentMainBinding? = null
     private val binding get() = mBinding!!
     lateinit var mainActivity: MainActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,8 +37,17 @@ class MainFragment : Fragment() {
     ): View? {
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
 
+        // 운동 태그 리스트
+        var tagBtns = arrayOf(binding.mainBtnAll, binding.mainBtnChest, binding.mainBtnShoulder, binding.mainBtnArm, binding.mainBtnWaist)
+        val tagBtnBoolean = booleanArrayOf(false, false, false, false, false)
+        for(i in tagBtns.indices){
+            tagBtns[i].setOnClickListener {
+                pressButton(i, tagBtns, tagBtnBoolean)
+            }
+        }
+
         // 운동 이미지 리스트
-        val images = arrayOf(
+        val woImages = arrayOf(
             R.drawable.push_up,
             R.drawable.chin_up,
             R.drawable.squat,
@@ -48,12 +57,12 @@ class MainFragment : Fragment() {
         )
 
         // 그리드뷰 어댑터에 이미지 리스트 연결
-        val adapter = ImageAdapter(mainActivity,images)
-        binding.mainGvWos.adapter=adapter
+        val woAdapter = WoImageAdapter(mainActivity,woImages)
+        binding.mainGvWos.adapter=woAdapter
 
         // 각 이미지 클릭시 이벤트리스너 설정
         binding.mainGvWos.setOnItemClickListener { parent, view, position, id ->
-            val imageNum = images[position]
+            val imageNum = woImages[position]
             val intent = Intent(activity, WODetailActivity::class.java)
 
             when (imageNum){
@@ -85,9 +94,25 @@ class MainFragment : Fragment() {
         }
         return binding.root
     }
+    // 운동 태그 클릭 함수
+    private fun pressButton(buttonIndex: Int, btnArray: Array<Button>, btnBoolean: BooleanArray){
+        for(i in btnBoolean.indices){
+            btnBoolean[i] = (i == buttonIndex)
+        }
+        for(i in btnBoolean.indices) {
+            if(btnBoolean[i]) {
+                btnArray[i].setBackgroundResource(R.drawable.main_iv_tag_s_clicked)
+                btnArray[i].setTextColor(Color.BLACK)
+            }
+            else{
+                btnArray[i].setBackgroundResource(R.drawable.main_iv_tag_s)
+                btnArray[i].setTextColor(Color.WHITE)
+            }
+        }
+    }
 
     // 그리드뷰 어댑터 클래스
-    class ImageAdapter(private val context: Context, private val images: Array<Int>) : BaseAdapter() {
+    class WoImageAdapter(private val context: Context, private val images: Array<Int>) : BaseAdapter() {
 
         override fun getCount(): Int {
             return images.size
@@ -116,5 +141,4 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         mBinding = null
     }
-
 }
