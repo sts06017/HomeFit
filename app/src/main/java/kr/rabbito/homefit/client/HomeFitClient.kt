@@ -8,7 +8,7 @@ import java.io.OutputStream
 import java.net.Socket
 
 class HomeFitClient {
-    private var serverIP = "192.168.206.195"   // 집 기준
+    private var serverIP = "192.168.0.197"
     private var serverPort = 10001
 
     lateinit var socket: Socket
