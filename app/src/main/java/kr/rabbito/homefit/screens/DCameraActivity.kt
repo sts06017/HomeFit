@@ -2,7 +2,6 @@ package kr.rabbito.homefit.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.Animation
@@ -13,7 +12,6 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import kr.rabbito.homefit.R
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 import kr.rabbito.homefit.utils.calc.Converter
@@ -126,10 +124,10 @@ class DCameraActivity : AppCompatActivity() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
 
-                    val bitmap = Converter.imageProxyToBitmap(image)
+                    val imageByteArray = Converter.imageProxyToByteArray(image)
 
                     Thread {
-                        client!!.sendImage(bitmap)
+                        client!!.sendImage(imageByteArray)
                     }.start()
                 }
             })
