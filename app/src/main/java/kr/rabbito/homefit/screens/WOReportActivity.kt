@@ -17,5 +17,14 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }
+        binding.woreportBtnSaveReport.setOnClickListener {
+            startActivity(Intent(this,WOHistoryActivity::class.java))
+        }
+        binding.woreportBtnDeleteReport.setOnClickListener {
+            startActivity(Intent(this,MainActivity::class.java))
+        }
+
+
+
     }
 }
