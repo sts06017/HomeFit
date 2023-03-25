@@ -123,10 +123,10 @@
     <GridView
         android:id="@+id/main_gv_wos"
         android:layout_width="296dp"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
         android:gravity="center"
         android:horizontalSpacing="20dp"
-        android:numColumns="2"
+        android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="30dp"
         android:layout_marginTop="20dp"
