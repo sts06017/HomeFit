@@ -97,18 +97,20 @@
             app:layout_constraintTop_toBottomOf="@id/woreport_tv_date" />
 
         <!-- 그래프 1 -->
-        <View
-            android:id="@+id/woreport_v_graph_1"
+<!--        <View-->
+<!--            android:id="@+id/woreport_v_graph_1"-->
+<!--            android:layout_width="140dp"-->
+<!--            android:layout_height="140dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:background="@drawable/woreport_iv_temp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo" />-->
+        <com.github.mikephil.charting.charts.PieChart            android:id="@+id/woreport_v_graph_1"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/woreport_iv_temp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo" />
-<!--        <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView-->
-<!--            android:id="@+id/chart_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp" />-->
 
         <!-- 그래프 2 -->
         <View
@@ -130,7 +132,8 @@
             android:text="평소보다 3회 더 많이 하셨습니다.\n계속해서 횟수를 늘려보세요."
             android:textColor="@color/lightGray"
             android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/woreport_v_graph_1" />
+            app:layout_constraintTop_toBottomOf="@id/woreport_v_graph_1"
+            app:layout_constraintStart_toStartOf="@+id/woreport_v_graph_1"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
