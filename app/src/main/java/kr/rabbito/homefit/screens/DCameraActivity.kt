@@ -124,10 +124,10 @@ class DCameraActivity : AppCompatActivity() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
 
-                    val imageByteArray = Converter.imageProxyToByteArray(image)
+                    val bitmap = Converter.imageProxyToBitmap(image)
 
                     Thread {
-                        client!!.sendImage(imageByteArray)
+                        client!!.sendImage(bitmap)
                     }.start()
                 }
             })

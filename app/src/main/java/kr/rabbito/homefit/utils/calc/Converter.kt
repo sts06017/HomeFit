@@ -29,14 +29,16 @@ class Converter {
         )
 
         @SuppressLint("UnsafeOptInUsageError")
-        fun imageProxyToByteArray(imageProxy: ImageProxy): ByteArray {
+        fun imageProxyToBitmap(imageProxy: ImageProxy): Bitmap {
             val image = imageProxy.image!!
 
             val buffer: ByteBuffer = image.planes[0].buffer
             val bytes = ByteArray(buffer.capacity())
             buffer.get(bytes)
 
-            return bytes
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null);
+
+            return bitmap
         }
     }
 }
