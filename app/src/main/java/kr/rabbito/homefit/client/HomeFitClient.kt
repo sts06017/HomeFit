@@ -33,8 +33,8 @@ class HomeFitClient {
         outputStream.write(message)
     }
 
-    fun sendImage(image: Bitmap){
-        val imageByteArray = Converter.bitmapToByteArray(image, "png")
+    fun sendImage(bitmap: Bitmap){
+        val imageByteArray = Converter.bitmapToByteArray(bitmap, "jpeg")
         val message = makeMessage(2, imageByteArray)
         outputStream.write(message)
         outputStream.write(imageByteArray)
