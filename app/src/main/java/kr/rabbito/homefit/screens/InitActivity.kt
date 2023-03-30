@@ -3,8 +3,6 @@ package kr.rabbito.homefit.screens
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,32 +27,33 @@ class InitActivity : AppCompatActivity() {
         userDB = UserDB.getInstance(this)
 
         userId = 0L  // 임시
-        getAndRefreshUserById(userId!!)
+        loadUserById(userId!!)
 
         binding.initBtnRegister.setOnClickListener {
             val userName = binding.initEtName.text.toString()
             val height = binding.initEtHeight.text.toString().toInt()
             val weight = binding.initEtWeight.text.toString().toInt()
 
-
-            val user = User(0, userName, height, weight)
-            insertUser(user)
-//            updateUserById(userId!!, userName, height, weight)
+            if (user != null) {
+                val newUser = User(0, userName, height, weight)
+                insertUser(newUser)
+            } else {
+                updateUserById(userId!!, userName, height, weight)
+            }
 
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
-    private fun getAndRefreshUserById(id: Long) {
-        var user: User?
+    private fun loadUserById(id: Long) {
         CoroutineScope(Dispatchers.IO).launch {
             val users = userDB?.userDAO()?.getUserById(id)
             if (users!!.isNotEmpty()) {
                 user = users[0]
+            }
 
-                if (user != null) {
-                    initEditTextView(user!!)
-                }
+            if (user != null) {
+                initEditTextView(user!!)
             }
         }
     }
