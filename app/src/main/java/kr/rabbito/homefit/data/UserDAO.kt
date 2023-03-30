@@ -9,10 +9,10 @@ interface UserDAO {
     fun getAll(): LiveData<List<User>>
 
     @Query("SELECT * FROM User WHERE id = :id")
-    fun getByUserId(id: Long): LiveData<List<User>>
+    fun getUserById(id: Long): List<User>
 
-    @Query("UPDATE User SET userName = :userName, height = :height, weight = :weight")
-    fun updateByUserId(id: Long, height: String, weight: String)
+    @Query("UPDATE User SET userName = :userName, height = :height, weight = :weight WHERE id = :id")
+    fun updateUserById(id: Long, userName: String, height: Int, weight: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
