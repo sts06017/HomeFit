@@ -39,6 +39,8 @@ android {
     maven { url 'https://androidx.dev/snapshots/builds/6787662/artifacts/repository/' }
 }*/
 dependencies {
+    // kotlin 그래프,차트 의존성 추가
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31'
     implementation 'androidx.multidex:multidex:2.0.1'
     // Pose detection with default models
