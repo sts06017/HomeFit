@@ -38,13 +38,23 @@ class WOReportActivity : AppCompatActivity() {
 
         createPieGraph(pieDateTest,woreportVGraph1)
 
-//        val lineDataTest = mutableMapOf<Float,Float>()
-//        lineDataTest[0f]=10f
-//        lineDataTest[1f]=30f
-//        lineDataTest[2f]=25f
-//        lineDataTest[3f]=5f
+        val xLineData = mutableListOf<String>()
+        xLineData.add("Jan")
+        xLineData.add("Feb")
+        xLineData.add("Mar")
+        xLineData.add("Apr")
+        xLineData.add("May")
+        xLineData.add("Jun")
 
-        createLineChart(woreportVGraph2)
+        val yLineData = mutableListOf<Int>()
+//        yLineData.add(40)
+//        yLineData.add(10)
+//        yLineData.add(30)
+//        yLineData.add(3)
+//        yLineData.add(35)
+//        yLineData.add(25)
+
+        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }
@@ -98,21 +108,23 @@ class WOReportActivity : AppCompatActivity() {
             transparentCircleRadius = 0f
         }
     }
-    fun createLineChart(chart: LineChart){
-//        val entries = ArrayList<Entry>()
-//        for(i in data.entries){
-//            entries.add(PieEntry(i.key,i.value))
-//        }
-//        val dataSet = LineDataSet(entries,"Label")
-//        dataSet.color = Color.RED
-//        dataSet.valueTextColor = Color.BLUE
-        val xValues = ArrayList<String>()
-        xValues.add("Jan")
-        xValues.add("Feb")
-        xValues.add("Mar")
-        xValues.add("Apr")
-        xValues.add("May")
-        xValues.add("Jun")
+
+    // line chart -> 데이터 최신화 및 변동 데이터 입력 처리 필요
+    fun createLineChart(xValues : ArrayList<String>, yValues : ArrayList<Int>, chart: LineChart){
+        val entries = ArrayList<Entry>()
+        var y = 10
+        for(i in yValues){
+            entries.add(Entry(y.toFloat(),i.toFloat()))
+            y += 10
+        }
+
+//        val xValues = ArrayList<String>()
+//        xValues.add("Jan")
+//        xValues.add("Feb")
+//        xValues.add("Mar")
+//        xValues.add("Apr")
+//        xValues.add("May")
+//        xValues.add("Jun")
 
         val yValues = ArrayList<Entry>()
         yValues.add(Entry(10f, 40F))
@@ -162,12 +174,6 @@ class WOReportActivity : AppCompatActivity() {
             legend.isEnabled = false
         }
 
-
-//        chart.xAxis.setDrawLabels(false)
-//        chart.description.text = "테스트"
-//        chart.description.textColor = Color.WHITE
-//        chart.description.typeface = Typeface.DEFAULT_BOLD
-//        chart.description.setPosition()
         chart.invalidate()
 
     }
