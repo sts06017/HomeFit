@@ -27,17 +27,17 @@ class InitActivity : AppCompatActivity() {
         userDB = UserDB.getInstance(this)
 
         userId = 0L  // 임시
-        loadUserById(userId!!)
+        loadUserById(userId!!)  // 사용자 정보 불러오고 EditText에 적용
 
         binding.initBtnRegister.setOnClickListener {
             val userName = binding.initEtName.text.toString()
             val height = binding.initEtHeight.text.toString().toInt()
             val weight = binding.initEtWeight.text.toString().toInt()
 
-            if (user != null) {
+            if (user == null) { // 사용자 정보를 불러오지 못한 경우
                 val newUser = User(0, userName, height, weight)
                 insertUser(newUser)
-            } else {
+            } else {    // 사용자 정보를 불러온 경우
                 updateUserById(userId!!, userName, height, weight)
             }
 
@@ -53,9 +53,15 @@ class InitActivity : AppCompatActivity() {
             }
 
             if (user != null) {
-                initEditTextView(user!!)
+                initEditText(user!!)
             }
         }
+    }
+
+    private fun initEditText(user: User) {
+        binding.initEtName.setText(user.userName)
+        binding.initEtHeight.setText(user.height.toString())
+        binding.initEtWeight.setText(user.weight.toString())
     }
 
     private fun insertUser(user: User) {
@@ -68,11 +74,5 @@ class InitActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             userDB?.userDAO()?.updateUserById(id, userName, height, weight)
         }
-    }
-
-    private fun initEditTextView(user: User) {
-        binding.initEtName.setText(user.userName)
-        binding.initEtHeight.setText(user.height.toString())
-        binding.initEtWeight.setText(user.weight.toString())
     }
 }
