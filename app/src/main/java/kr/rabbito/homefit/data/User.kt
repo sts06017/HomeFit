@@ -10,22 +10,32 @@ import androidx.room.PrimaryKey
 class User(@PrimaryKey var id: Long?,
            @ColumnInfo(name = "userName") var userName: String?,
            @ColumnInfo(name = "height") var height: Int?,
-           @ColumnInfo(name = "weight") var weight: Int?,) : Parcelable {
+           @ColumnInfo(name = "weight") var weight: Int?,
+           @ColumnInfo(name = "mealCount") var mealCount: Int?,
+           @ColumnInfo(name = "favWorkout") var favWorkout: String?,
+           @ColumnInfo(name = "basicDiet") var basicDiet: String?,
+    ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readValue(Long::class.java.classLoader) as? Long,
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,) {
-    }
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+    ) {}
 
-    constructor() : this(null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
         parcel.writeString(userName)
         parcel.writeValue(height)
         parcel.writeValue(weight)
+        parcel.writeValue(mealCount)
+        parcel.writeString(favWorkout)
+        parcel.writeString(basicDiet)
     }
 
     override fun describeContents(): Int {

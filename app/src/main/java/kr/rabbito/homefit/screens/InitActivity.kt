@@ -29,16 +29,30 @@ class InitActivity : AppCompatActivity() {
         userId = 0L  // 임시
         loadUserById(userId!!)  // 사용자 정보 불러오고 EditText에 적용
 
+        binding.initBtnMealCountSub.setOnClickListener {
+            var cnt = binding.initEtMealCount.text.toString().toInt()
+            if (cnt > 0) cnt--
+            binding.initEtMealCount.setText(cnt.toString())
+        }
+        binding.initBtnMealCountAdd.setOnClickListener {
+            var cnt = binding.initEtMealCount.text.toString().toInt()
+            if (cnt < 9) cnt++
+            binding.initEtMealCount.setText(cnt.toString())
+        }
+
         binding.initBtnRegister.setOnClickListener {
             val userName = binding.initEtName.text.toString()
             val height = binding.initEtHeight.text.toString().toInt()
             val weight = binding.initEtWeight.text.toString().toInt()
+            val mealCount = binding.initEtMealCount.text.toString().toInt()
+            val favWorkout = "턱걸이"  // 임시
+            val basicDiet = "기본"    // 임시
 
             if (user == null) { // 사용자 정보를 불러오지 못한 경우
-                val newUser = User(0, userName, height, weight)
+                val newUser = User(0, userName, height, weight, mealCount, favWorkout, basicDiet)
                 insertUser(newUser)
             } else {    // 사용자 정보를 불러온 경우
-                updateUserById(userId!!, userName, height, weight)
+                updateUserById(userId!!, userName, height, weight, mealCount, favWorkout, basicDiet)
             }
 
             startActivity(Intent(this, MainActivity::class.java))
@@ -62,6 +76,7 @@ class InitActivity : AppCompatActivity() {
         binding.initEtName.setText(user.userName)
         binding.initEtHeight.setText(user.height.toString())
         binding.initEtWeight.setText(user.weight.toString())
+        binding.initEtMealCount.setText(user.mealCount.toString())
     }
 
     private fun insertUser(user: User) {
@@ -70,9 +85,9 @@ class InitActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUserById(id: Long, userName: String, height: Int, weight: Int) {
+    private fun updateUserById(id: Long, userName: String, height: Int, weight: Int, mealCount: Int, favWorkout: String, basicDiet: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            userDB?.userDAO()?.updateUserById(id, userName, height, weight)
+            userDB?.userDAO()?.updateUserById(id, userName, height, weight, mealCount, favWorkout, basicDiet)
         }
     }
 }

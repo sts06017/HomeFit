@@ -232,7 +232,7 @@
                         android:background="@drawable/wodetail_et_num"
                         android:fontFamily="@font/pretendard_regular"
                         android:gravity="center_horizontal"
-                        android:hint="0"
+                        android:text="0"
                         android:includeFontPadding="false"
                         android:padding="8dp"
                         android:textColor="@color/white"
