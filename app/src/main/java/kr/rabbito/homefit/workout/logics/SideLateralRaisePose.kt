@@ -1,9 +1,6 @@
 package kr.rabbito.homefit.workout.logics
 
-import android.content.Context
 import android.util.Log
-import kotlin.math.abs
-import com.google.mlkit.vision.pose.Pose
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
@@ -11,20 +8,8 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 import kotlin.math.absoluteValue
 
 class SideLateralRaisePose: WorkoutPose() {
-    lateinit var pose: Pose
-    lateinit var context: Context
 
-    override fun calculate(pose: Pose) {
-        val coordinate = PoseCoordinate(pose)
-
-        // 자세 검사
-        guidePose(coordinate)
-
-        // 횟수 검사
-        checkCount(coordinate)
-    }
-
-    private fun guidePose(c: PoseCoordinate) {
+    override fun guidePose(c: PoseCoordinate) {
         try {   //팔을 굽히면 빨간색 표시
             if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 160) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
@@ -68,7 +53,7 @@ class SideLateralRaisePose: WorkoutPose() {
         }
     }
 
-    private fun checkCount(c: PoseCoordinate) {
+    override fun checkCount(c: PoseCoordinate) {
         try {
             Log.d("side lateral raise","L:${getXDistance(c.leftShoulder, c.leftHand).absoluteValue.toInt()}, R:${getXDistance(c.rightShoulder, c.rightHand).absoluteValue.toInt()}")
             if (

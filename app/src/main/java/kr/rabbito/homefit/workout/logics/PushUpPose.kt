@@ -1,28 +1,14 @@
 package kr.rabbito.homefit.workout.logics
 
-import android.content.Context
 import android.util.Log
-import com.google.mlkit.vision.pose.Pose
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 
 class PushUpPose: WorkoutPose() {
-    lateinit var pose: Pose
-    lateinit var context: Context
 
-    override fun calculate(pose: Pose) {
-        val coordinate = PoseCoordinate(pose)
-
-        // 자세 검사
-        guidePose(coordinate)
-
-        // 횟수 검사
-        checkCount(coordinate)
-    }
-
-    private fun guidePose(c: PoseCoordinate) {
+    override fun guidePose(c: PoseCoordinate) {
         try {
             if (getYDistance(c.rightHand, c.rightShoulder) <= 0) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
@@ -66,7 +52,7 @@ class PushUpPose: WorkoutPose() {
         }
     }
 
-    private fun checkCount(c: PoseCoordinate) {
+    override fun checkCount(c: PoseCoordinate) {
         try {
             if (
                 (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 120)

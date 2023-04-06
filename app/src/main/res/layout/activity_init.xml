@@ -201,6 +201,154 @@
                         app:layout_constraintEnd_toEndOf="@id/init_et_weight"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/init_cl_meal_count"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="44dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/init_cl_weight">
+
+                    <TextView
+                        android:id="@+id/init_tv_meal_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="일평균 식사 횟수"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/init_et_meal_count"
+                        android:layout_width="53dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_et_num"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/init_btn_meal_count_add"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/init_btn_meal_count_sub"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_btn_sub"
+                        app:layout_constraintBottom_toBottomOf="@id/init_et_meal_count"
+                        app:layout_constraintEnd_toStartOf="@id/init_et_meal_count"
+                        app:layout_constraintTop_toTopOf="@id/init_et_meal_count" />
+
+                    <Button
+                        android:id="@+id/init_btn_meal_count_add"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/wodetail_btn_add"
+                        app:layout_constraintBottom_toBottomOf="@id/init_et_meal_count"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/init_et_meal_count" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/init_cl_additional_info"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/init_cl_meal_count">
+
+                    <TextView
+                        android:id="@+id/init_tv_additional_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="추가정보"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/init_cl_fav_workout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/init_tv_additional_info">
+
+                        <TextView
+                            android:id="@+id/init_tv_fav_workout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:includeFontPadding="false"
+                            android:text="선호하는 운동"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- 드롭다운 라이브러리 -->
+                        <View
+                            android:id="@+id/init_v_fav_workout"
+                            android:layout_width="296dp"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/routine_iv_dropdown"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/init_tv_fav_workout" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/init_cl_basic_diet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/init_cl_fav_workout">
+
+                        <TextView
+                            android:id="@+id/init_tv_basic_diet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:includeFontPadding="false"
+                            android:text="기본 식습관"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- 드롭다운 라이브러리 -->
+                        <View
+                            android:id="@+id/init_v_basic_diet"
+                            android:layout_width="296dp"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/routine_iv_dropdown"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/init_tv_basic_diet" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- margin 추후 조정 -->
@@ -208,7 +356,7 @@
                 android:id="@+id/init_btn_register"
                 android:layout_width="312dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="314dp"
+                android:layout_marginTop="64dp"
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/init_btn_basic"
                 android:fontFamily="@font/pretendard_semibold"
