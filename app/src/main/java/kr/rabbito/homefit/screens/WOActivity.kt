@@ -35,6 +35,8 @@ class WOActivity : AppCompatActivity() {
         mBinding = ActivityWoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 테스트
+        Toast.makeText(this,"횟수:${WorkoutState.count}",Toast.LENGTH_SHORT).show()
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
@@ -62,6 +64,10 @@ class WOActivity : AppCompatActivity() {
         }
         binding.woBtnStop.setOnClickListener {
             startActivity(Intent(this, WOReportActivity::class.java))
+        }
+        // 임시 카운트 증가 버튼
+        binding.woBtnCount.setOnClickListener {
+            WorkoutState.count += 1
         }
     }
 
@@ -142,8 +148,10 @@ class WOActivity : AppCompatActivity() {
 
         // 기본 위젯 로드
         Log.d("index", workoutIdx.toString())
+        WorkoutState.count = 0
+        WorkoutState.set = 1
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
-        binding.woTvSet.text = WorkoutState.set.toString()
+        binding.woTvSet.text = WorkoutState.setTotal.toString()
         binding.woTvCount.text = WorkoutState.count.toString()
         val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
         binding.woTvElapTime.text =

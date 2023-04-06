@@ -14,6 +14,7 @@ class WorkoutState {
         // 현재 운동 정보
         var setCondition = 15 // 몇 개가 한 세트인지
         var setTotal = 3 // 총 몇 세트인지
+        var restTotal = 3 // 총 몇번 휴식인지
 
         // 현재 운동 플래그
         var isUp = false

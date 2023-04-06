@@ -96,7 +96,8 @@ class PushUpPose: WorkoutPose() {
     }
 
     // 세트가 끝났는지 확인
-    private fun checkSetCondition() {
+    // 임시 public
+    fun checkSetCondition() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1
@@ -104,7 +105,8 @@ class PushUpPose: WorkoutPose() {
     }
 
     // 운동이 끝났는지 확인
-    private fun checkEnd() {
+    // 임시 public
+    fun checkEnd() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
             Log.d("push_up", "finish")
