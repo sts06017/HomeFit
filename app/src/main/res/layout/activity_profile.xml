@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_semibold"
                     android:includeFontPadding="false"
-                    android:text="체중"
+                    android:text="일평균 식사 횟수"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"

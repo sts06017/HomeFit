@@ -34,17 +34,22 @@
             android:exported="true" />
         <activity
             android:name=".screens.ProfileActivity"
-            android:exported="true" />
+            android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".screens.DHistoryActivity"
             android:exported="true" />
         <activity
             android:name=".screens.DCameraActivity"
             android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".screens.DAddActivity"
@@ -75,10 +80,10 @@
         <activity
             android:name=".screens.LoadingActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".screens.MainActivity"
