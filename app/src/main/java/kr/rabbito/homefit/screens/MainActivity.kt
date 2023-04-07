@@ -1,4 +1,8 @@
 package kr.rabbito.homefit.screens
+// 4개의 fragment 를 담고있는 Activity
+// MainActivity 위에 (mainFragment, dReportFragment, profileFragment, settingFragment)가 존재함.
+// 해당 activity에서는 네비게이션바와 fragment를 연결하는 코드만 작성.
+// 각 fragment에서 context가 요구될경우에는 requireContext() 메소드를 사용하면 MainActivity의 context가 전달됨.
 
 import android.os.Bundle
 import android.util.Log

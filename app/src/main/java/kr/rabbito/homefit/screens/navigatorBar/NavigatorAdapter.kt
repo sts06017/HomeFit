@@ -1,4 +1,5 @@
 package kr.rabbito.homefit.screens.navigatorBar
+// 네비게이터 바에 등록된 fragment를 관리하는 파일
 
 import android.util.Log
 import android.widget.Toast

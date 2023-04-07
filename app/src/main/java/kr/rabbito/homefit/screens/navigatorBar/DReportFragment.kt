@@ -12,7 +12,7 @@ import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
 
-
+// 기존의 DReportActivity.kt 파일
 class DReportFragment : Fragment() {
     private var mBinding: FragmentDreportBinding? = null
     private val binding get() = mBinding!!

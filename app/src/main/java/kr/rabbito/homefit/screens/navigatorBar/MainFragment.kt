@@ -14,12 +14,11 @@ import kr.rabbito.homefit.databinding.FragmentMainBinding
 import kr.rabbito.homefit.screens.MainActivity
 import kr.rabbito.homefit.screens.WoImageAdapter
 
-
+// 기존의 MainActivity.kt 파일
 class MainFragment : Fragment() {
 
     private var mBinding: FragmentMainBinding? = null
     private val binding get() = mBinding!!
-//    lateinit var mainActivity: MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

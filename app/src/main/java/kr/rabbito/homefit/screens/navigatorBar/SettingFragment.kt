@@ -9,6 +9,7 @@ import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.FragmentProfileBinding
 import kr.rabbito.homefit.databinding.FragmentSettingBinding
 
+// 기존의 SettingFragment.kt 파일
 class SettingFragment : Fragment() {
     private var mBinding: FragmentSettingBinding? = null
     private val binding get() = mBinding!!

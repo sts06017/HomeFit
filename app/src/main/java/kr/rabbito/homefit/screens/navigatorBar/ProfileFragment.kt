@@ -19,7 +19,7 @@ import kr.rabbito.homefit.databinding.FragmentProfileBinding
 import kr.rabbito.homefit.screens.MainActivity
 import kr.rabbito.homefit.screens.RoutineListActivity
 
-
+// 기존의 ProfileActivity.kt 파일
 class ProfileFragment : Fragment() {
     private var mBinding: FragmentProfileBinding? = null
     private val binding get() = mBinding!!
@@ -45,7 +45,7 @@ class ProfileFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         Log.d("디버깅","p onCreateView1")
-        mBinding = FragmentProfileBinding.inflate(inflater, container, true)
+        mBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
         userDB = UserDB.getInstance(requireContext())
         Log.d("디버깅","p onCreateView2")
