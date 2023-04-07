@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.navigatorBar.MainFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_cl_top"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/main_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eulyoo1945_regular"
+            android:includeFontPadding="false"
+            android:text="운동을 선택하세요."
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/init_tv_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:includeFontPadding="false"
+            android:text="운동을 선택해 시작하세요.\n자세 교정, 횟수 측정과 운동 결과 분석 기능을 제공합니다."
+            android:textColor="@color/lightGray"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_tv_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <HorizontalScrollView
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_lv_tags"
+        android:layout_marginTop="20dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="@+id/main_cl_top"
+        app:layout_constraintTop_toBottomOf="@id/main_cl_top">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/main_btn_all"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:background="@drawable/main_iv_tag_s_clicked"
+                android:text="#전체"
+                android:textSize="32px"
+                android:textColor="@color/black"
+                android:layout_marginRight="15dp"/>
+            <Button
+                android:id="@+id/main_btn_chest"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:background="@drawable/main_iv_tag_s"
+                android:text="#가슴"
+                android:textSize="32px"
+                android:layout_marginRight="15dp"/>
+            <Button
+                android:id="@+id/main_btn_shoulder"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:background="@drawable/main_iv_tag_s"
+                android:text="#어깨"
+                android:textSize="32px"
+                android:layout_marginRight="15dp"/>
+            <Button
+                android:id="@+id/main_btn_arm"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:background="@drawable/main_iv_tag_s"
+                android:text="#팔"
+                android:textSize="32px"
+                android:layout_marginRight="15dp"/>
+            <Button
+                android:id="@+id/main_btn_waist"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:background="@drawable/main_iv_tag_s"
+                android:text="#허리"
+                android:textSize="32px"
+                android:layout_marginRight="15dp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ListView
+        android:id="@+id/main_lv_tags2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_cl_top" />
+
+    <GridView
+        android:id="@+id/main_gv_wos"
+        android:layout_width="296dp"
+        android:layout_height="450dp"
+        android:gravity="center"
+        android:horizontalSpacing="20dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_lv_tags" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

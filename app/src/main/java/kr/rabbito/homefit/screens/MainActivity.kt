@@ -1,56 +1,52 @@
 package kr.rabbito.homefit.screens
+// 4개의 fragment 를 담고있는 Activity
+// MainActivity 위에 (mainFragment, dReportFragment, profileFragment, settingFragment)가 존재함.
+// 해당 activity에서는 네비게이션바와 fragment를 연결하는 코드만 작성.
+// 각 fragment에서 context가 요구될경우에는 requireContext() 메소드를 사용하면 MainActivity의 context가 전달됨.
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityMainBinding
+import kr.rabbito.homefit.screens.navigatorBar.*
 
 class MainActivity : AppCompatActivity() {
-    private var mBinding: ActivityMainBinding? = null
-    private val binding get() = mBinding!!
+
+    private lateinit var mbinding: ActivityMainBinding
+    private val binding get() = mbinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.d("디버깅","activity onCreate")
 
-        // 임시
-        binding.mainClTop.setOnClickListener {
-//            startActivity(Intent(this, WODetailActivity::class.java))
-        }
+        val pageNum = intent.getIntExtra("VIEW_PAGER_INDEX",0)
+        configureBottomNavigation(pageNum)
 
+    }
+    private fun configureBottomNavigation(pageNum : Int = 0){
+        Log.d("디버깅","activity configure")
 
-        // 임시
-        binding.mainBtn1.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 0)
-            startActivity(intent)
-        }
-        binding.mainBtn2.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 1)
-            startActivity(intent)
-        }
-        binding.mainBtn3.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 2)
-            startActivity(intent)
-        }
-        binding.mainBtn4.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 3)
-            startActivity(intent)
-        }
-        binding.mainBtn5.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 4)
-            startActivity(intent)
-        }
-        binding.mainBtn6.setOnClickListener {
-            val intent = Intent(this, WODetailActivity::class.java)
-            intent.putExtra("index", 5)
-            startActivity(intent)
-        }
+        // 네비게이터 adapter 연결
+        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4)   // fragmentCount 인자는 넣을 페이지 수
+        Log.d("디버깅","activity configure1")
 
+        binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
+        Log.d("디버깅","activity configure2")
+
+        val bottomNaviLayout: View = this.layoutInflater.inflate(R.layout.navigation_bar, null, false)
+        Log.d("디버깅","activity configure3")
+
+        // main activity에 하단 네비게이터 버튼 연결
+        binding.mainTlMenubar.getTabAt(0)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_workout) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(1)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_diet) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(2)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_profile) as RelativeLayout
+        binding.mainTlMenubar.getTabAt(3)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_setting) as RelativeLayout
+        binding.mainVpViewpager.currentItem = pageNum
     }
 }

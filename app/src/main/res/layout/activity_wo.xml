@@ -184,6 +184,13 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
+                android:id="@+id/wo_btn_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                app:layout_constraintTop_toTopOf="@+id/wo_btn_pause"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <Button
                 android:id="@+id/wo_btn_pause"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

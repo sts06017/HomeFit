@@ -29,6 +29,7 @@ import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.WorkoutView
 import kr.rabbito.homefit.workout.WorkoutCore
+import kr.rabbito.homefit.workout.logics.PushUpPose
 import kr.rabbito.homefit.workout.logics.WorkoutPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
@@ -133,6 +134,8 @@ class PoseDetectorProcessor(
 
     workoutPose.calculate(poseWithClassification.pose)
     workoutView.refreshValues()
+    PushUpPose().checkSetCondition()  // 임시 카운트수 비교
+    PushUpPose().checkEnd() // 임시 세트수 비교
   }
 
   override fun onFailure(e: Exception) {

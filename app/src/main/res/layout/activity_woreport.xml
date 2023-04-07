@@ -96,25 +96,51 @@
             android:textSize="22sp"
             app:layout_constraintTop_toBottomOf="@id/woreport_tv_date" />
 
+        <TextView
+            android:id="@+id/woreport_tv_graph_1"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:includeFontPadding="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo"
+            android:text="운동 시간"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/woreport_tv_graph_2"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo"
+            android:text="횟수"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textAlignment="center"/>
+
         <!-- 그래프 1 -->
-        <View
+        <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/woreport_v_graph_1"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/woreport_iv_temp"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo" />
+            app:layout_constraintTop_toBottomOf="@id/woreport_tv_graph_1" />
 
         <!-- 그래프 2 -->
-        <View
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/woreport_v_graph_2"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/woreport_iv_temp"
+            android:layout_marginTop="2.9dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/woreport_tv_wo" />
+            app:layout_constraintTop_toBottomOf="@id/woreport_tv_graph_2" />
 
         <TextView
             android:id="@+id/woreport_tv_comment"
@@ -126,7 +152,8 @@
             android:text="평소보다 3회 더 많이 하셨습니다.\n계속해서 횟수를 늘려보세요."
             android:textColor="@color/lightGray"
             android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/woreport_v_graph_1" />
+            app:layout_constraintTop_toBottomOf="@id/woreport_v_graph_1"
+            app:layout_constraintStart_toStartOf="@+id/woreport_v_graph_1"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView

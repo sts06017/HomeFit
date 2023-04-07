@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kr.rabbito.homefit.databinding.ActivityRoutineBinding
+import kr.rabbito.homefit.screens.navigatorBar.SettingFragment
 
 class RoutineActivity : AppCompatActivity() {
     private var mBinding: ActivityRoutineBinding? = null
@@ -15,7 +16,9 @@ class RoutineActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.routineBtnAddSet.setOnClickListener {
-            startActivity(Intent(this, SettingActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX",3)
+            startActivity(intent)
         }
     }
 }
