@@ -1,11 +1,15 @@
 package kr.rabbito.homefit.screens.navigatorBar
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,33 +23,42 @@ import kr.rabbito.homefit.screens.RoutineListActivity
 class ProfileFragment : Fragment() {
     private var mBinding: FragmentProfileBinding? = null
     private val binding get() = mBinding!!
-    private val mainActivity = context as MainActivity
+//    private val activity = requireActivity()
 
     private var userDB: UserDB? = null
     private var userId: Long? = null
 
     private var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("디버깅","p onCreate")
         super.onCreate(savedInstanceState)
-
     }
-
+    override fun onAttach(context: Context) {
+        Log.d("디버깅","p onAttach")
+        super.onAttach(context)
+    }
     // activity와 다르게 onCreateView에 코드 작성
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        Log.d("디버깅","p onCreateView1")
         mBinding = FragmentProfileBinding.inflate(inflater, container, true)
 
-        userDB = UserDB.getInstance(mainActivity)
+        userDB = UserDB.getInstance(requireContext())
+        Log.d("디버깅","p onCreateView2")
 
         userId = 0L  // 임시
         loadUserById(userId!!)  // 사용자 정보 불러오고 TextView에 적용
+        Log.d("디버깅","p onCreateView3")
 
         binding.profileBtnSetList.setOnClickListener {
             startActivity(Intent(activity, RoutineListActivity::class.java))
         }
+        Log.d("디버깅","p onCreateView4")
+
         return binding.root
     }
     override fun onDestroyView() {
