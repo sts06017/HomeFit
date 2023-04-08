@@ -17,7 +17,6 @@ class DReportFragment : Fragment() {
     private var mBinding: FragmentDreportBinding? = null
     private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("디버깅","d onCreate")
 
         super.onCreate(savedInstanceState)
     }
@@ -28,10 +27,8 @@ class DReportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.d("디버깅","d onCreateView1")
 
         mBinding = FragmentDreportBinding.inflate(inflater, container, false)
-        Log.d("디버깅","d onCreateView2")
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddActivity::class.java))
