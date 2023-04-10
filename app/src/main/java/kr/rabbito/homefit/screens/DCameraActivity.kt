@@ -127,7 +127,8 @@ class DCameraActivity : AppCompatActivity() {
 
                     Thread {
                         client!!.sendImage(bitmap)
-                        client!!.getData()
+                        val data = client!!.getData()
+                        Log.d("connection", data!!)
                     }.start()
                 }
             })
