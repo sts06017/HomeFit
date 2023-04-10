@@ -8,7 +8,7 @@ import java.io.OutputStream
 import java.net.Socket
 
 class HomeFitClient {
-    private var serverIP = "192.168.0.197"
+    private var serverIP = "192.168.35.69"
     private var serverPort = 10001
 
     lateinit var socket: Socket
@@ -41,21 +41,21 @@ class HomeFitClient {
         outputStream.write(message)
         outputStream.write(imageByteArray)
 
-        Log.d("image", imageByteArray.contentToString())
+//        Log.d("image", imageByteArray.contentToString())
     }
 
     // 메시지 수신
     fun getData() {
-        val check = inputStream.available()
+        val buffer = ByteArray(1024)
+        var check = inputStream.read(buffer)
 
         // 받은 데이터 없으면 -1 반환
-        if (check != -1) {
-            val response = ByteArray(check)
-            inputStream.read(response)   // inputStream 에서 데이터 받아 message 에 저장
-            val message = String(response)
+        while (check != -1) {
+            Log.d("connection", buffer[0].toString())
+            Log.d("connection", buffer[1].toString())
+            val message = String(buffer, 0, check)
             Log.d("connection", "message received: $message")
-        } else {
-            Log.d("connection", "message not received")
+            check = inputStream.read(buffer)
         }
     }
 

@@ -47,7 +47,6 @@ class DCameraActivity : AppCompatActivity() {
             try {
                 client!!.sendRequest()
                 client!!.sendUserName("User")
-                client!!.getData()
             } catch (e: NullPointerException) {
                 Log.d("connection", "socket not initialized")
             }
@@ -128,6 +127,7 @@ class DCameraActivity : AppCompatActivity() {
 
                     Thread {
                         client!!.sendImage(bitmap)
+                        client!!.getData()
                     }.start()
                 }
             })
