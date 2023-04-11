@@ -28,7 +28,8 @@ class DReportFragment : Fragment() {
         val foodName = arguments?.getString("FOOD_NAME")
         val foodQuantity = arguments?.getString("FOOD_QUANTITY")
 
-        binding.dreportTvComment.text = "$foodName $foodQuantity"
+        binding.dreportTvResultTitle.text = foodName
+        binding.dreportTvResultCalorie.text = "${foodQuantity}kcal"
     }
 
     // activity와 다르게 onCreateView에 코드 작성
