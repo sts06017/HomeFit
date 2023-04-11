@@ -68,5 +68,6 @@ fun checkMessage(data: ByteArray): Int {
 
 fun parseMessage(data: ByteArray): List<Any> {
     // 데이터 부분 크기 = 전체 크기 - 데이터 부분 제외 크기
-    return listOf<Any>(String(data, 4, data[2].toInt() - 5), data[3].toInt())   // 음식 이름, 양
+    Log.d("connection", "${data[3]} ${data[4]}")
+    return listOf<Any>(String(data, 5, data[2].toInt() - 6), data[3].toUInt() * 128u + data[4].toUInt())   // 음식 이름, 양
 }
