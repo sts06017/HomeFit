@@ -31,10 +31,15 @@ class DReportFragment : Fragment() {
         val foodQuantity = arguments?.getString("FOOD_QUANTITY")
 
         val index = FOOD_CLASSES.indexOf(foodName)
-        val calorie = calcCalorie(index, foodQuantity!!.toInt())
+        if (index != -1) {
+            val calorie = calcCalorie(index, foodQuantity!!.toInt())
 
-        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
-        binding.dreportTvResultCalorie.text = "${calorie}kcal"
+            binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+            binding.dreportTvResultCalorie.text = "${calorie}kcal"
+        }
+
+//        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+//        binding.dreportTvResultCalorie.text = "${calorie}kcal"
     }
 
     // activity와 다르게 onCreateView에 코드 작성
