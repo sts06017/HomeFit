@@ -1,6 +1,7 @@
 package kr.rabbito.homefit.screens
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
+import kr.rabbito.homefit.screens.navigatorBar.DReportFragment
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
 import java.util.concurrent.ExecutorService
@@ -127,8 +129,8 @@ class DCameraActivity : AppCompatActivity() {
 
                     Thread {
                         client!!.sendImage(bitmap)
-                        val data = client!!.getData()
-                        Log.d("connection", data!!)
+                        val data = client!!.getData()!!
+                        Log.d("connection", "${data[0]}: ${data[1]}")
                     }.start()
                 }
             })

@@ -45,7 +45,7 @@ class HomeFitClient {
     }
 
     // 메시지 수신
-    fun getData(): String? {
+    fun getData(): List<Any>? {
         val buffer = ByteArray(1024)
         var check = inputStream.read(buffer)
 

@@ -66,6 +66,7 @@ fun checkMessage(data: ByteArray): Int {
     }
 }
 
-fun parseMessage(data: ByteArray): String {
-    return String(data, 4, data[2].toInt() - 5) // 데이터 부분 크기 = 전체 크기 - 데이터 부분 제외 크기
+fun parseMessage(data: ByteArray): List<Any> {
+    // 데이터 부분 크기 = 전체 크기 - 데이터 부분 제외 크기
+    return listOf<Any>(String(data, 4, data[2].toInt() - 5), data[3].toInt())   // 음식 이름, 양
 }
