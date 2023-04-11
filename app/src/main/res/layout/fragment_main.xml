@@ -74,7 +74,7 @@
                 android:text="#전체"
                 android:textSize="32px"
                 android:textColor="@color/black"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="10dp"/>
             <Button
                 android:id="@+id/main_btn_chest"
                 android:layout_width="56dp"
@@ -82,7 +82,7 @@
                 android:background="@drawable/main_iv_tag_s"
                 android:text="#가슴"
                 android:textSize="32px"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="10dp"/>
             <Button
                 android:id="@+id/main_btn_shoulder"
                 android:layout_width="56dp"
@@ -90,7 +90,7 @@
                 android:background="@drawable/main_iv_tag_s"
                 android:text="#어깨"
                 android:textSize="32px"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="10dp"/>
             <Button
                 android:id="@+id/main_btn_arm"
                 android:layout_width="56dp"
@@ -98,7 +98,7 @@
                 android:background="@drawable/main_iv_tag_s"
                 android:text="#팔"
                 android:textSize="32px"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="10dp"/>
             <Button
                 android:id="@+id/main_btn_waist"
                 android:layout_width="56dp"
@@ -106,7 +106,7 @@
                 android:background="@drawable/main_iv_tag_s"
                 android:text="#허리"
                 android:textSize="32px"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="10dp"/>
 
         </LinearLayout>
     </HorizontalScrollView>

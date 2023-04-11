@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kr.rabbito.homefit.R
+import kr.rabbito.homefit.client.FOOD_CLASSES
+import kr.rabbito.homefit.client.FOOD_NAMES_KR
+import kr.rabbito.homefit.client.calcCalorie
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
@@ -17,7 +20,6 @@ class DReportFragment : Fragment() {
     private var mBinding: FragmentDreportBinding? = null
     private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("디버깅","d onCreate")
 
         super.onCreate(savedInstanceState)
     }
@@ -28,7 +30,16 @@ class DReportFragment : Fragment() {
         val foodName = arguments?.getString("FOOD_NAME")
         val foodQuantity = arguments?.getString("FOOD_QUANTITY")
 
-        binding.dreportTvComment.text = "$foodName $foodQuantity"
+        val index = FOOD_CLASSES.indexOf(foodName)
+        if (index != -1) {
+            val calorie = calcCalorie(index, foodQuantity!!.toInt())
+
+            binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+            binding.dreportTvResultCalorie.text = "${calorie}kcal"
+        }
+
+//        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+//        binding.dreportTvResultCalorie.text = "${calorie}kcal"
     }
 
     // activity와 다르게 onCreateView에 코드 작성
@@ -37,10 +48,8 @@ class DReportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.d("디버깅","d onCreateView1")
 
         mBinding = FragmentDreportBinding.inflate(inflater, container, false)
-        Log.d("디버깅","d onCreateView2")
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddActivity::class.java))

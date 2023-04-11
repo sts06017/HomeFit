@@ -11,7 +11,7 @@ class SquatPose: WorkoutPose() {
     override fun guidePose(c: PoseCoordinate) {
         try {
             if (
-                getAngle(c.leftHand, c.leftShoulder, c.leftHip) < 70    // 팔을 내리거나
+                getAngle(c.leftHand, c.leftShoulder, c.leftHip) < 60    // 팔을 내리거나
                 || getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 140  // 팔을 굽히면
             ) {
                 PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
@@ -22,7 +22,7 @@ class SquatPose: WorkoutPose() {
             }
 
             if (
-                getAngle(c.rightHand, c.rightShoulder, c.rightHip) < 70
+                getAngle(c.rightHand, c.rightShoulder, c.rightHip) < 60
                 || getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 140
             ) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
@@ -38,11 +38,17 @@ class SquatPose: WorkoutPose() {
 
     override fun checkCount(c: PoseCoordinate) {
         try {
+            Log.d("운동 테스트","${WorkoutState.isUp}")
+            Log.d("스쿼트 각도","lH: ${getAngle(c.leftShoulder,c.leftHip,c.leftKnee)}, lK: ${getAngle(c.leftHip,c.leftKnee,c.leftFeet)}")
             if (
-                getAngle(c.leftShoulder, c.leftHip, c.leftKnee) < 70    // 몸을 충분히 내리고
-                && getAngle(c.leftHip, c.leftKnee, c.leftFeet) < 70 // 다리를 충분히 굽히게
-                && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) < 70
-                && getAngle(c.rightHip, c.rightKnee, c.rightFeet) < 70
+                getAngle(c.leftShoulder, c.leftHip, c.leftKnee) < 90    // 몸을 충분히 내리고
+                && getAngle(c.leftHip, c.leftKnee, c.leftFeet) < 120 // 다리를 충분히 굽히게
+                && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) < 90
+                && getAngle(c.rightHip, c.rightKnee, c.rightFeet) < 120
+//                && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) > 90
+//                && getAngle(c.rightHip, c.rightKnee, c.rightFeet) > 90
+                && getYDistance(c.rightFeet, c.rightElbow) > 200 //  정확도 향상 목적
+                && getYDistance(c.leftFeet, c.leftElbow) > 200   //  정확도 향상 목적
                 && WorkoutState.isUp
             ) {
                 Log.d("squat","down")
@@ -52,6 +58,8 @@ class SquatPose: WorkoutPose() {
                 && getAngle(c.leftHip, c.leftKnee, c.leftFeet) >= 160
                 && getAngle(c.rightShoulder, c.rightHip, c.rightKnee) >= 160
                 && getAngle(c.rightHip, c.rightKnee, c.rightFeet) >= 160
+                && getYDistance(c.rightFeet, c.rightElbow) > 200 //  정확도 향상 목적
+                && getYDistance(c.leftFeet, c.leftElbow) > 200   //  정확도 향상 목적
                 && !WorkoutState.isUp
             ) {
                 Log.d("squat","up")
@@ -70,6 +78,8 @@ class SquatPose: WorkoutPose() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1
+            WorkoutState.mySet.value = (WorkoutState.mySet.value!!) + 1 // 임시 live data 증가 코드
+            Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
         }
     }
 

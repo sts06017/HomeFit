@@ -1,5 +1,8 @@
 package kr.rabbito.homefit.workout
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+
 class WorkoutState {
     /*
     구상: count_change와 같은 역할 하도록 구현, 추후에 LiveData 등을 이용해 실시간으로 적용되도록 변경할 필요 있음
@@ -28,5 +31,11 @@ class WorkoutState {
 
         // 현재 자세 진행 상태
         var isPrevUp = false
+
+        var myCount = MutableLiveData<Int>(0)
+        var mySet = MutableLiveData<Int>(1)
+        init{
+            Log.d("디버깅","mySet create")
+        }
     }
 }

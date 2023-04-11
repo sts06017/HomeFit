@@ -14,7 +14,7 @@ class DAddActivity : AppCompatActivity() {
         mBinding = ActivityDaddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.daddBtnAddDiet.setOnClickListener {
+        binding.daddBtnCamera.setOnClickListener {
             startActivity(Intent(this, DCameraActivity::class.java))
         }
     }
