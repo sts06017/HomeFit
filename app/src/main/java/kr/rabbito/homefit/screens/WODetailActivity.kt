@@ -21,13 +21,11 @@ class WODetailActivity : AppCompatActivity() {
         mBinding = ActivityWodetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        // 임시
         val index = intent.getIntExtra("index", 0)
 
         binding.wodetailTvTitle.text = WorkoutData.workoutNamesKOR[index]
         binding.wodetailTvSubTitle.text = WorkoutData.workoutNamesENG[index]
-        binding.wodetailIvWo.setImageResource(WorkoutData.workoutImages[index])
-        binding.wodetailTvDetail.text = WorkoutData.workoutExplain[index]
         // WorkoutState.setTotal = 3
 
         binding.wodetailBtnStartWo.setOnClickListener {
