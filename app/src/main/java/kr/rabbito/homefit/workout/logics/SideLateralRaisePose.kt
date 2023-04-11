@@ -27,7 +27,7 @@ class SideLateralRaisePose: WorkoutPose() {
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
             }
 
-            if (WorkoutState.isUp) { // 올라가는 시점
+            if (!WorkoutState.isUp) { // 올라가는 시점
                 if (
                     getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 130
                 ) {   // 팔을 너무 높게 들면 안내선 빨갛게
