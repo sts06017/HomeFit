@@ -4,7 +4,6 @@ package kr.rabbito.homefit.screens
 // 해당 activity에서는 네비게이션바와 fragment를 연결하는 코드만 작성.
 // 각 fragment에서 context가 요구될경우에는 requireContext() 메소드를 사용하면 MainActivity의 context가 전달됨.
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityMainBinding
-import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.navigatorBar.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,27 +24,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d("디버깅","activity onCreate")
 
         val pageNum = intent.getIntExtra("VIEW_PAGER_INDEX",0)
         configureBottomNavigation(pageNum)
     }
 
     private fun configureBottomNavigation(pageNum : Int = 0){
-        Log.d("디버깅","activity configure")
 
         val foodName = intent.getStringExtra("FOOD_NAME") ?: "입력되지 않았습니다."
         val foodQuantity = intent.getStringExtra("FOOD_QUANTITY") ?: "0"
 
         // 네비게이터 adapter 연결
         binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, foodName, foodQuantity)   // fragmentCount 인자는 넣을 페이지 수
-        Log.d("디버깅","activity configure1")
 
         binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
-        Log.d("디버깅","activity configure2")
 
         val bottomNaviLayout: View = this.layoutInflater.inflate(R.layout.navigation_bar, null, false)
-        Log.d("디버깅","activity configure3")
 
         // main activity에 하단 네비게이터 버튼 연결
         binding.mainTlMenubar.getTabAt(0)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_workout) as RelativeLayout
