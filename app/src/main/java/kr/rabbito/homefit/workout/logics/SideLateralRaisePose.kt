@@ -11,7 +11,7 @@ class SideLateralRaisePose: WorkoutPose() {
 
     override fun guidePose(c: PoseCoordinate) {
         try {   //팔을 굽히면 빨간색 표시
-            if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 160) {
+            if (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 130) {
                 PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                 PoseGraphic.rightElbowToRightWristPaint = redPaint
             } else {
@@ -19,7 +19,7 @@ class SideLateralRaisePose: WorkoutPose() {
                 PoseGraphic.rightElbowToRightWristPaint = whitePaint
             }
 
-            if (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 160) {
+            if (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 130) {
                 PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                 PoseGraphic.leftElbowToLeftWristPaint = redPaint
             } else {
@@ -27,9 +27,9 @@ class SideLateralRaisePose: WorkoutPose() {
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
             }
 
-            if (WorkoutState.isUp) { // 올라가는 시점
+            if (!WorkoutState.isUp) { // 올라가는 시점
                 if (
-                    getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 140
+                    getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 130
                 ) {   // 팔을 너무 높게 들면 안내선 빨갛게
                     PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                     PoseGraphic.rightElbowToRightWristPaint = redPaint
@@ -39,7 +39,7 @@ class SideLateralRaisePose: WorkoutPose() {
                 }
 
                 if (
-                    getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 140
+                    getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 130
                 ) {
                     PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                     PoseGraphic.leftElbowToLeftWristPaint = redPaint
@@ -55,10 +55,11 @@ class SideLateralRaisePose: WorkoutPose() {
 
     override fun checkCount(c: PoseCoordinate) {
         try {
+            Log.d("사레레 각도","겨: ${getAngle(c.leftElbow,c.leftShoulder,c.leftHip)}")
             Log.d("side lateral raise","L:${getXDistance(c.leftShoulder, c.leftHand).absoluteValue.toInt()}, R:${getXDistance(c.rightShoulder, c.rightHand).absoluteValue.toInt()}")
             if (
-                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) > 100)
-                && (getAngle(c.rightElbow, c.rightShoulder,c. rightHip) > 100)
+                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) > 80)
+                && (getAngle(c.rightElbow, c.rightShoulder,c. rightHip) > 80)
                 && getXDistance(c.rightShoulder, c.rightHand).absoluteValue > 90  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
                 && getXDistance(c.leftShoulder, c.leftHand).absoluteValue > 90
                 && !WorkoutState.isUp
@@ -88,6 +89,8 @@ class SideLateralRaisePose: WorkoutPose() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1
+            WorkoutState.mySet.value = (WorkoutState.mySet.value!!) + 1 // 임시 live data 증가 코드
+            Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
         }
     }
 

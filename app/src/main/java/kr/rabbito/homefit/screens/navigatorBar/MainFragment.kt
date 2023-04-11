@@ -33,7 +33,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("디버깅","m onCreateView")
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
 
         // 운동 태그 리스트
@@ -115,10 +114,8 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        Log.d("디버깅","m onDestroyView1")
         super.onDestroyView()
         mBinding = null
-        Log.d("디버깅","m onDestroyView2")
 
     }
 }

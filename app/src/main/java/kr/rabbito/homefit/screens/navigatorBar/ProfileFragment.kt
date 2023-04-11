@@ -23,7 +23,6 @@ import kr.rabbito.homefit.screens.RoutineListActivity
 class ProfileFragment : Fragment() {
     private var mBinding: FragmentProfileBinding? = null
     private val binding get() = mBinding!!
-//    private val activity = requireActivity()
 
     private var userDB: UserDB? = null
     private var userId: Long? = null
@@ -31,11 +30,9 @@ class ProfileFragment : Fragment() {
     private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("디버깅","p onCreate")
         super.onCreate(savedInstanceState)
     }
     override fun onAttach(context: Context) {
-        Log.d("디버깅","p onAttach")
         super.onAttach(context)
     }
     // activity와 다르게 onCreateView에 코드 작성
@@ -44,20 +41,16 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        Log.d("디버깅","p onCreateView1")
         mBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
         userDB = UserDB.getInstance(requireContext())
-        Log.d("디버깅","p onCreateView2")
 
         userId = 0L  // 임시
         loadUserById(userId!!)  // 사용자 정보 불러오고 TextView에 적용
-        Log.d("디버깅","p onCreateView3")
 
         binding.profileBtnSetList.setOnClickListener {
             startActivity(Intent(activity, RoutineListActivity::class.java))
         }
-        Log.d("디버깅","p onCreateView4")
 
         return binding.root
     }

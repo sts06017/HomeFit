@@ -20,7 +20,6 @@ class DReportFragment : Fragment() {
     private var mBinding: FragmentDreportBinding? = null
     private val binding get() = mBinding!!
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("디버깅","d onCreate")
 
         super.onCreate(savedInstanceState)
     }
@@ -32,10 +31,15 @@ class DReportFragment : Fragment() {
         val foodQuantity = arguments?.getString("FOOD_QUANTITY")
 
         val index = FOOD_CLASSES.indexOf(foodName)
-        val calorie = calcCalorie(index, foodQuantity!!.toInt())
+        if (index != -1) {
+            val calorie = calcCalorie(index, foodQuantity!!.toInt())
 
-        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
-        binding.dreportTvResultCalorie.text = "${calorie}kcal"
+            binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+            binding.dreportTvResultCalorie.text = "${calorie}kcal"
+        }
+
+//        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
+//        binding.dreportTvResultCalorie.text = "${calorie}kcal"
     }
 
     // activity와 다르게 onCreateView에 코드 작성
@@ -44,10 +48,8 @@ class DReportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.d("디버깅","d onCreateView1")
 
         mBinding = FragmentDreportBinding.inflate(inflater, container, false)
-        Log.d("디버깅","d onCreateView2")
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddActivity::class.java))
