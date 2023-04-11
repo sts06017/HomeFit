@@ -17,5 +17,9 @@ class DAddActivity : AppCompatActivity() {
         binding.daddBtnCamera.setOnClickListener {
             startActivity(Intent(this, DCameraActivity::class.java))
         }
+
+        binding.daddBtnBack.setOnClickListener{
+            finish()
+        }
     }
 }

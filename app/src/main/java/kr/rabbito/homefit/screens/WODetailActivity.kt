@@ -104,5 +104,9 @@ class WODetailActivity : AppCompatActivity() {
                 Log.d("ed test","ed can't formatting")
             }
         }
+
+        binding.wodetailBtnBack.setOnClickListener {
+            finish()
+        }
     }
 }

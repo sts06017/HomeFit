@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
         // 운동 이미지 리스트
         val woImages = arrayOf(
             R.drawable.push_up,
-            R.drawable.chin_up,
+            R.drawable.pull_up,
             R.drawable.squat,
             R.drawable.side_lateral_raise,
             R.drawable.dumbbell_curl,

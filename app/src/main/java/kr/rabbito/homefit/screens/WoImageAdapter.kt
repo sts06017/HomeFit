@@ -16,7 +16,7 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
 
     private val woImages = mutableListOf(
         R.drawable.push_up,
-        R.drawable.chin_up,
+        R.drawable.pull_up,
         R.drawable.squat,
         R.drawable.side_lateral_raise,
         R.drawable.dumbbell_curl,
