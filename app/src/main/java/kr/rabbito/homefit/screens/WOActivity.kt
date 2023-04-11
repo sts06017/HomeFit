@@ -36,8 +36,6 @@ class WOActivity : AppCompatActivity() {
         mBinding = ActivityWoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 테스트
-        Toast.makeText(this,"횟수:${WorkoutState.count}",Toast.LENGTH_SHORT).show()
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
@@ -71,9 +69,9 @@ class WOActivity : AppCompatActivity() {
         }
 
         // 임시 카운트 증가 버튼
-        binding.woBtnCount.setOnClickListener {
-            WorkoutState.count += 1
-        }
+//        binding.woBtnCount.setOnClickListener {
+//            WorkoutState.count += 1
+//        }
         // 임시 운동 종료 로직
         WorkoutState.mySet.observe(this, Observer{
             Log.d("디버깅","mySet updated! : $it")
