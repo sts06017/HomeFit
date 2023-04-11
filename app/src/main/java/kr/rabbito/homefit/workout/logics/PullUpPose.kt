@@ -86,6 +86,8 @@ class PullUpPose: WorkoutPose() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1
+            WorkoutState.mySet.value = (WorkoutState.mySet.value!!) + 1 // 임시 live data 증가 코드
+            Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutViews.WorkoutView
 import kr.rabbito.homefit.utils.calc.TimeCalc
@@ -25,7 +26,7 @@ class WOActivity : AppCompatActivity() {
     private var cameraSource: CameraSource? = null
     private var selectedModel = POSE_DETECTION
     private lateinit var mat: android.opengl.Matrix
-
+    private var workoutState = WorkoutState()
     private var tts: PoseAdviceTTS? = null
 
     private var workoutIdx = 0
@@ -35,8 +36,6 @@ class WOActivity : AppCompatActivity() {
         mBinding = ActivityWoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 테스트
-        Toast.makeText(this,"횟수:${WorkoutState.count}",Toast.LENGTH_SHORT).show()
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
 
@@ -63,12 +62,26 @@ class WOActivity : AppCompatActivity() {
 //            tts!!.raiseArmTTS() // tts 출력 테스트
         }
         binding.woBtnStop.setOnClickListener {
-            startActivity(Intent(this, WOReportActivity::class.java))
+            Log.d("디버깅","운동 강제 종료")
+            val intent = Intent(this, WOReportActivity::class.java)
+            startActivity(intent)
+            finish()
         }
+
         // 임시 카운트 증가 버튼
-        binding.woBtnCount.setOnClickListener {
-            WorkoutState.count += 1
-        }
+//        binding.woBtnCount.setOnClickListener {
+//            WorkoutState.count += 1
+//        }
+        // 임시 운동 종료 로직
+        WorkoutState.mySet.observe(this, Observer{
+            Log.d("디버깅","mySet updated! : $it")
+            if(it == WorkoutState.setTotal+1){
+                Log.d("디버깅","it==setTotal+1")
+                val intent = Intent(this, WOReportActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     private fun createCameraSource(model: String) {
@@ -150,6 +163,7 @@ class WOActivity : AppCompatActivity() {
         Log.d("index", workoutIdx.toString())
         WorkoutState.count = 0
         WorkoutState.set = 1
+        WorkoutState.mySet.value = 1    // 임시 livedata 초기화
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
         binding.woTvSet.text = WorkoutState.setTotal.toString()
         binding.woTvCount.text = WorkoutState.count.toString()

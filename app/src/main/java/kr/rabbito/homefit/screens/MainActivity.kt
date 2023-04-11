@@ -4,7 +4,6 @@ package kr.rabbito.homefit.screens
 // 해당 activity에서는 네비게이션바와 fragment를 연결하는 코드만 작성.
 // 각 fragment에서 context가 요구될경우에는 requireContext() 메소드를 사용하면 MainActivity의 context가 전달됨.
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityMainBinding
-import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.navigatorBar.*
 
 class MainActivity : AppCompatActivity() {
