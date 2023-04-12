@@ -28,6 +28,11 @@ class WODetailActivity : AppCompatActivity() {
         binding.wodetailTvSubTitle.text = WorkoutData.workoutNamesENG[index]
         binding.wodetailIvWo.setImageResource(WorkoutData.workoutImages[index])
         binding.wodetailTvDetail.text = WorkoutData.workoutExplain[index]
+
+        if (index == 3) {
+            binding.wodetailTvTitle.textSize = 22F
+            binding.wodetailTvSubTitle.textSize = 10F
+        }
         // WorkoutState.setTotal = 3
 
         binding.wodetailBtnStartWo.setOnClickListener {
