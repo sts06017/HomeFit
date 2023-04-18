@@ -11,4 +11,10 @@
     <color name="dark">#FF221D19</color>
     <color name="lightGray">#FFCCCCCC</color>
     <color name="gray">#FFAAAAAA</color>
+
+    <color name="calendar_gray">#2D2D2F</color>
+    <color name="calendar_blue">#297CE7</color>
+    <color name="calendar_blue_light">#D2E3FC</color>
+    <color name="calendar_black">#D9000000</color>
+    <color name="calendar_white">#D9FFFFFF</color>
 </resources>

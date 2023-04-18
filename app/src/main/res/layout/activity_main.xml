@@ -10,10 +10,8 @@
         android:id="@+id/main_vp_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_tl_menubar">
-    </androidx.viewpager.widget.ViewPager>
-
-
+        android:layout_above="@+id/main_tl_menubar"
+        android:layout_marginBottom="-140dp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tl_menubar"
