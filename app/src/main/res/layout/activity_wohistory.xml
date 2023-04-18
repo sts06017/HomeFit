@@ -47,13 +47,36 @@
             app:layout_constraintStart_toEndOf="@id/wohistory_btn_back" />
 
         <!-- 캘린더 라이브러리 -->
-        <View
-            android:id="@+id/wohistory_v_calendar"
+<!--        <View-->
+<!--            android:id="@+id/wohistory_v_calendar"-->
+<!--            android:layout_width="312dp"-->
+<!--            android:layout_height="245dp"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:background="@drawable/wohistory_iv_temp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/wohistory_tv_title" />-->
+
+        <TextView
+            android:id="@+id/wohistory_tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wohistory_tv_title"
+            android:layout_marginTop="16dp"/>
+        <include
+            android:id="@+id/wohistory_v_weekTitles"
+            layout="@layout/calendar_week_titles_container" />
+
+        <com.kizitonwose.calendarview.CalendarView
             android:layout_width="312dp"
-            android:layout_height="245dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/wohistory_iv_temp"
-            app:layout_constraintTop_toBottomOf="@id/wohistory_tv_title" />
+            android:layout_height="265dp"
+            android:id="@+id/wohistory_v_calendar"
+            app:cv_dayViewResource="@layout/calendar_day_layout"
+            app:cv_scrollMode="paged"
+            app:cv_hasBoundaries="true"
+            app:cv_orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wohistory_v_weekTitles"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
