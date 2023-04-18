@@ -41,12 +41,12 @@ class MainFragment : Fragment() {
 
         // 운동 이미지 리스트
         val woImages = arrayOf(
-            R.drawable.push_up,
-            R.drawable.pull_up,
-            R.drawable.squat,
-            R.drawable.side_lateral_raise,
-            R.drawable.dumbbell_curl,
-            R.drawable.leg_raise
+            R.drawable.temp_push_up_tile,
+            R.drawable.temp_pull_up_tile,
+            R.drawable.temp_squat_tile,
+            R.drawable.temp_side_lateral_raise_tile,
+            R.drawable.temp_dumbbell_curl_tile,
+            R.drawable.temp_leg_raise_tile
         )
 
         // 그리드뷰 참조하기

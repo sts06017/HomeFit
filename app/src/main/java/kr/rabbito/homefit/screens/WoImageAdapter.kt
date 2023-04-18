@@ -15,12 +15,12 @@ import android.os.Bundle
 class WoImageAdapter(private val context: Context, private val imageList: Array<Int>) : BaseAdapter(){
 
     private val woImages = mutableListOf(
-        R.drawable.push_up,
-        R.drawable.pull_up,
-        R.drawable.squat,
-        R.drawable.side_lateral_raise,
-        R.drawable.dumbbell_curl,
-        R.drawable.leg_raise
+        R.drawable.temp_push_up_tile,
+        R.drawable.temp_pull_up_tile,
+        R.drawable.temp_squat_tile,
+        R.drawable.temp_side_lateral_raise_tile,
+        R.drawable.temp_dumbbell_curl_tile,
+        R.drawable.temp_leg_raise_tile
     )
 
     var hiddenItems = mutableSetOf<Int>()
