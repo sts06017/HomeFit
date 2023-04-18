@@ -28,10 +28,9 @@ class WOHistoryActivity : AppCompatActivity() {
         val calendar_tv_monthTitle = binding.wohistoryTvMonth
         SetCalendar(caledar_v, calendar_tv_monthTitle).setting()
 
-        // 임시
-        binding.wohistoryVCalendar.setOnClickListener {
+        binding.wohistoryBtnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",1)
+            intent.putExtra("VIEW_PAGER_INDEX",0)
             startActivity(intent)
         }
 
