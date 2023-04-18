@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="312dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="7"
+    android:orientation="horizontal"
+    android:layout_marginTop="8dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/dhistory_tv_month">
+
+    <!-- 하나하나가 요일을 나타내는 텍스트 뷰. -->
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+    <include layout="@layout/calendar_week_titles_text" />
+
+</LinearLayout>

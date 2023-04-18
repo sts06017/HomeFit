@@ -14,7 +14,7 @@ class User(@PrimaryKey var id: Long?,
            @ColumnInfo(name = "mealCount") var mealCount: Int?,
            @ColumnInfo(name = "favWorkout") var favWorkout: String?,
            @ColumnInfo(name = "basicDiet") var basicDiet: String?,
-    ) : Parcelable {
+    ) : Parcelable {    // 클래스의 객체를 인텐트로 전달할수 있게 해줌..
 
     constructor(parcel: Parcel) : this(
         parcel.readValue(Long::class.java.classLoader) as? Long,
