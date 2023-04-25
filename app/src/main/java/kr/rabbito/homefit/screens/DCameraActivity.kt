@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
@@ -55,6 +56,10 @@ class DCameraActivity : AppCompatActivity() {
                 Log.d("connection", "socket not initialized")
             }
         }.start()
+
+        // 안내화면
+        binding.dcameraClInfo.visibility = View.VISIBLE
+        removeInfo()
 
         // 촬영 및 사진 전송
         binding.dcameraBtnShot.setOnClickListener {
@@ -132,6 +137,7 @@ class DCameraActivity : AppCompatActivity() {
                     Thread {
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.VISIBLE
+                            binding.dcameraIvSpoonFrame.visibility = View.INVISIBLE
                         }
 
                         client!!.sendImage(bitmap)
@@ -143,13 +149,21 @@ class DCameraActivity : AppCompatActivity() {
                         }
 
                         val intent = Intent(this@DCameraActivity, MainActivity::class.java)
-                        intent.putExtra("VIEW_PAGER_INDEX",1)
+                        intent.putExtra("VIEW_PAGER_INDEX", 1)
                         intent.putExtra("FOOD_NAME", data[0].toString())
                         intent.putExtra("FOOD_QUANTITY", data[1].toString())
                         startActivity(intent)
                     }.start()
                 }
             })
+    }
+
+    private fun removeInfo() {
+        val handler = Handler()
+        handler.postDelayed({
+            binding.dcameraClInfo.visibility = View.INVISIBLE
+            binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
+        }, 7000)
     }
 
     override fun onDestroy() {

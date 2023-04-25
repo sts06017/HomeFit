@@ -33,4 +33,7 @@
     <string name="pref_key_segmentation_raw_size_mask" translatable="false">srsm</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="dcamera_shot_guide">화면을 가로로 돌린 후,\n<b>숟가락</b>이 <b>좌측 사각형</b>에\n들어올 거리에서 촬영하세요.</string>
 </resources>

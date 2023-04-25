@@ -16,56 +16,123 @@
             android:id="@+id/dcamera_pv_camera_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        
-        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dcamera_iv_spoon_frame"
+            android:layout_width="296dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/dcamera_iv_spoon_frame"
             android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/dcamera_cl_loading"
             android:layout_width="274dp"
             android:layout_height="255dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-            
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/dcamera_iv_loading"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-            
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/dcamera_icon_loading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/dcamera_icon_loading"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
                 android:fontFamily="@font/eulyoo1945_regular"
                 android:includeFontPadding="false"
                 android:text="계산중"
                 android:textColor="@color/white"
                 android:textSize="22sp"
-                android:layout_marginTop="48dp"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="44dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:includeFontPadding="false"
                 android:text="잠시만 기다려주세요."
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:layout_marginBottom="44dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dcamera_cl_info"
+            android:layout_width="274dp"
+            android:layout_height="255dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/dcamera_iv_loading"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/dcamera_icon_rotate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/dcamera_tv_info_content"
+                app:layout_constraintTop_toBottomOf="@id/dcamera_tv_info_title"/>
+
+            <TextView
+                android:id="@+id/dcamera_tv_info_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/eulyoo1945_regular"
+                android:includeFontPadding="false"
+                android:text="음식 촬영"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dcamera_tv_info_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:includeFontPadding="false"
+                android:textAlignment="center"
+                android:text="@string/dcamera_shot_guide"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -76,28 +143,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/dcamera_btn_shot"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/dcamera_btn_shot"
+                android:rotation="90"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/dcamera_btn_shot"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/dcamera_btn_cancel"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginStart="16dp"
-                app:layout_constraintStart_toEndOf="@id/dcamera_btn_shot"
-                app:layout_constraintTop_toTopOf="@id/dcamera_btn_shot"
+                android:background="@drawable/dcamera_btn_cancel"
                 app:layout_constraintBottom_toBottomOf="@id/dcamera_btn_shot"
-                android:background="@drawable/dcamera_btn_cancel"/>
+                app:layout_constraintStart_toEndOf="@id/dcamera_btn_shot"
+                app:layout_constraintTop_toTopOf="@id/dcamera_btn_shot" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
