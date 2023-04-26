@@ -163,7 +163,7 @@ class DCameraActivity : AppCompatActivity() {
         handler.postDelayed({
             binding.dcameraClInfo.visibility = View.INVISIBLE
             binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
-        }, 7000)
+        }, 6000)
     }
 
     override fun onDestroy() {
