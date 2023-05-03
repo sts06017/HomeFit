@@ -60,6 +60,8 @@ fun checkMessage(data: ByteArray): Int {
 
     if (data[1].toInt() == 32) {
         return data[1].toInt()
+    } else if (data[1].toInt() == 33) {
+        return data[1].toInt()
     } else {
         Log.d("connection", "wrong message number ${data[1].toInt()}")
         return -1
