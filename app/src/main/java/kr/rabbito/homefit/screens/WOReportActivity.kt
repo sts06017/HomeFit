@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import androidx.room.Room
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
@@ -17,7 +19,14 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.rabbito.homefit.data.Workout
+import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
+import kr.rabbito.homefit.workout.WorkoutData
+import java.time.LocalDate
 
 class WOReportActivity : AppCompatActivity() {
     private var mBinding: ActivityWoreportBinding? = null
@@ -27,7 +36,11 @@ class WOReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoreportBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val db = Room.databaseBuilder(
+            this, WorkoutDB::class.java, "workout"
+        ).build()
 
+        val workoutIdx = intent.getIntExtra("index", 0)
         val woreportVGraph1 = binding.woreportVGraph1
         val woreportVGraph2 = binding.woreportVGraph2
 
@@ -54,11 +67,24 @@ class WOReportActivity : AppCompatActivity() {
 //        yLineData.add(35)
 //        yLineData.add(25)
 
+        val newWorkout = Workout(
+            id = null,
+            workoutName = WorkoutData.workoutNamesKOR[workoutIdx],
+            set = 3,
+            count = 10,
+            workTime = 0,
+            date = LocalDate.now()
+        )
         createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }
         binding.woreportBtnSaveReport.setOnClickListener {
+            // 운동 결과 DB저장
+            CoroutineScope(Dispatchers.IO).launch {
+                db.workoutDAO().insert(newWorkout)
+            }
+
             startActivity(Intent(this,WOHistoryActivity::class.java))
         }
         binding.woreportBtnDeleteReport.setOnClickListener {

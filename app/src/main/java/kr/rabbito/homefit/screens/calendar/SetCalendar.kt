@@ -7,12 +7,20 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.room.Room
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.rabbito.homefit.R
+import kr.rabbito.homefit.data.Workout
+import kr.rabbito.homefit.data.WorkoutDAO
+import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.CalendarDayLayoutBinding
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -25,16 +33,19 @@ data class Event(val id: String, val text: String, val date: LocalDate)
 private val today = LocalDate.now()
 private var selectedDate: LocalDate? = null
 
-class SetCalendar(calendarView_: CalendarView, title_ : TextView) {
+class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Context) {
     private val calendarView = calendarView_
     private val title = title_
 //    val calendarView:CalendarView = activity.findViewById(R.id.calendarView)
+    private val db = Room.databaseBuilder(context, WorkoutDB::class.java, "workout").build()
 
     fun setting() {
         calendarView.monthScrollListener = {
             // Select the first day of the visible month.
-            selectDate(it.yearMonth.atDay(1))
-            Log.d("테스트", "monthScroll")
+            if(it.month==LocalDate.now().monthValue)
+                selectDate(it.yearMonth.atDay(LocalDate.now().dayOfMonth))
+            else
+                selectDate(it.yearMonth.atDay(1))
         }
         val daysOfWeek = daysOfWeek()
         val currentMonth = YearMonth.now()
@@ -60,6 +71,13 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView) {
         }
 //        binding.calendarTitle.text = "${date.year}.${date.month.value}"
         this.title.text = "${date.year}.${date.month.value}"
+        // 추가 - DB에서 선택날짜에 해당되는 데이터 리사이클러뷰에 출력.
+        CoroutineScope(Dispatchers.IO).launch {
+            val allWorkouts : List<Workout> = db.workoutDAO().getAll()
+            allWorkouts.forEach { workout ->
+                Log.d("Workout", "id: ${workout.id}, Name: ${workout.workoutName}, Set: ${workout.set}, Count: ${workout.count}, Time: ${workout.workTime}, Date: ${workout.date}")
+            }
+        }
     }
 
     private fun configureBinders(daysOfWeek: List<DayOfWeek>) {
@@ -68,11 +86,11 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView) {
             val binding = CalendarDayLayoutBinding.bind(view)
             init {
                 view.setOnClickListener {
-                    Log.d("캘린더","configureBinders_init")
+//                    Log.d("캘린더","configureBinders_init")
                     if (day.owner == DayOwner.THIS_MONTH) {
                         selectDate(day.date)
                         // day.date 포멧 : YYYY-MM-DD
-                        Log.d("캘린더","click! date:${day.date} day:${day.day} ow:${day.owner}")
+//                        Log.d("캘린더","click! date:${day.date} day:${day.day} ow:${day.owner}")
                     }
                 }
             }

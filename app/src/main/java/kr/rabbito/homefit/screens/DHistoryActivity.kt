@@ -28,7 +28,7 @@ class DHistoryActivity : AppCompatActivity() {
         val calendar_tv_weekTitles = findViewById<ViewGroup>(R.id.dhistory_v_weekTitles)
         val calendar_v_monthTitle = binding.dhistoryTvMonth
 
-        SetCalendar(calendar_v, calendar_v_monthTitle).setting()
+        SetCalendar(calendar_v, calendar_v_monthTitle, this).setting()
         // 임시
         binding.dhistoryVCalendar.setOnClickListener {
 //            startActivity(Intent(this, ProfileFragment::class.java))
