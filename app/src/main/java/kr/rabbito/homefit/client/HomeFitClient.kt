@@ -48,15 +48,15 @@ class HomeFitClient {
     }
 
     // 메시지 수신
-    fun getData(): List<Any>? {
+    fun getData(): String? {
         val buffer = ByteArray(1024)
         var check = inputStream.read(buffer)
 
         // 받은 데이터 없으면 -1 반환
         while (check != -1) {
             val messageNumber = checkMessage(buffer)
-            if (messageNumber == 32) {
-                return parseMessage(buffer)
+            if (messageNumber == 32) {  // 임시 결과 수신
+                return parseMessage(buffer).toString()
             } else if (messageNumber == 33) {
                 val fileSize = buffer[3].toUInt() * 128u + buffer[4].toUInt()
 
@@ -74,7 +74,8 @@ class HomeFitClient {
                 }
 
                 val jsonFileString = byteArrayOutputStream.toString()
-                Log.d("jsonFile", jsonFileString)
+
+                return jsonFileString
             }
 
             check = inputStream.read(buffer)

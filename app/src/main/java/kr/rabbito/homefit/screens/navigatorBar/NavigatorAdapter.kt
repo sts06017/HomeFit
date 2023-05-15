@@ -11,8 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 class NavigatorAdapter(
     fm: FragmentManager,
     private val fragmentCount: Int,
-    private var foodName: String,
-    private var foodQuantity: String
+    private var data: String?,
 ) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         Log.d("디버깅", "call adapter")
@@ -23,8 +22,7 @@ class NavigatorAdapter(
                 val dReportFragment = DReportFragment()
 
                 val bundle = Bundle()
-                bundle.putString("FOOD_NAME", foodName)
-                bundle.putString("FOOD_QUANTITY", foodQuantity)
+                bundle.putString("RESULT_JSON", data)
 
                 dReportFragment.arguments = bundle
                 return dReportFragment

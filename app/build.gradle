@@ -96,6 +96,9 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    // 캘린더 의존성
+    // 캘린더
     implementation 'com.github.kizitonwose:calendarView:1.1.0'
+
+    // JSON
+    implementation 'com.google.code.gson:gson:2.8.8'
 }

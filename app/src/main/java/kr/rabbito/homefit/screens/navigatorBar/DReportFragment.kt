@@ -17,10 +17,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import kr.rabbito.homefit.R
-import kr.rabbito.homefit.client.FOOD_CLASSES
-import kr.rabbito.homefit.client.FOOD_NAMES_KR
-import kr.rabbito.homefit.client.calcCalorie
-import kr.rabbito.homefit.client.calcWeight
+import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
@@ -36,22 +33,19 @@ class DReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val foodName = arguments?.getString("FOOD_NAME")
-        val foodQuantity = arguments?.getString("FOOD_QUANTITY")
+        val resultJson = arguments?.getString("RESULT_JSON")
 
-        val index = FOOD_CLASSES.indexOf(foodName)
-        if (index != -1) {
-            val weight = calcWeight(index, foodQuantity!!.toInt())
-            val calorie = calcCalorie(index, weight)
+        if (resultJson != null) {
+            Log.d("jsonFile", resultJson)
 
-            binding.dreportIvTempItemBackground.visibility = View.VISIBLE
-            binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
-            binding.dreportTvResultCalorie.text = "${calorie}kcal"
-            binding.dreportTvResultTime.text = "${weight.toInt()}g"
+            val resultMap = parseJSONString(resultJson)
+            Log.d("jsonFileKeys", resultMap.keys.toString())
+
+            val jajangmyeonData = resultMap["Jajangmyeon"] as Map<String, Any>
+            val jajangmyeonVolume = jajangmyeonData["volume(cm^3)"]
+            Log.d("jsonFileCheck", jajangmyeonVolume.toString())
         }
 
-//        binding.dreportTvResultTitle.text = FOOD_NAMES_KR[index]
-//        binding.dreportTvResultCalorie.text = "${calorie}kcal"
     }
 
     // activity와 다르게 onCreateView에 코드 작성
@@ -149,7 +143,7 @@ class DReportFragment : Fragment() {
     }
 
     // line chart -> 데이터 최신화 및 변동 데이터 입력 처리 필요
-    fun createLineChart(xValues : ArrayList<String>, yValues : ArrayList<Int>, chart: LineChart){
+    private fun createLineChart(xValues : ArrayList<String>, yValues : ArrayList<Int>, chart: LineChart){
         val entries = ArrayList<Entry>()
         var y = 10
         for(i in yValues){
