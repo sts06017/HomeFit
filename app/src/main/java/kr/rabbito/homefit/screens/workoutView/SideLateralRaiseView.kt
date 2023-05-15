@@ -1,12 +1,9 @@
-package kr.rabbito.homefit.screens.workoutViews
+package kr.rabbito.homefit.screens.workoutView
 
 import android.content.Context
-import android.widget.ImageView
-import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.workout.WorkoutState
 
-class SquatView(context: Context, binding: ActivityWoBinding): WorkoutView(context, binding) {
+class SideLateralRaiseView(context: Context, binding: ActivityWoBinding): WorkoutView(context, binding) {
     override fun generateWidgets() {
 //        val target = ImageView(context)
 //        target.setImageResource(R.drawable.loading_iv_icon)

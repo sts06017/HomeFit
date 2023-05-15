@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
@@ -21,6 +22,7 @@ import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
+import kr.rabbito.homefit.screens.adapter.DReportAdapter
 
 // 기존의 DReportActivity.kt 파일
 class DReportFragment : Fragment() {
@@ -41,9 +43,10 @@ class DReportFragment : Fragment() {
             val resultMap = parseJSONString(resultJson)
             Log.d("jsonFileKeys", resultMap.keys.toString())
 
-            val jajangmyeonData = resultMap["Jajangmyeon"] as Map<String, Any>
-            val jajangmyeonVolume = jajangmyeonData["volume(cm^3)"]
-            Log.d("jsonFileCheck", jajangmyeonVolume.toString())
+            val layoutManager = LinearLayoutManager(this.context)
+
+            binding.dreportRvFoods.layoutManager = layoutManager
+            binding.dreportRvFoods.adapter = DReportAdapter(resultMap)
         }
 
     }

@@ -1,4 +1,4 @@
-package kr.rabbito.homefit.screens.workoutViews
+package kr.rabbito.homefit.screens.workoutView
 
 import android.content.Context
 import kr.rabbito.homefit.databinding.ActivityWoBinding

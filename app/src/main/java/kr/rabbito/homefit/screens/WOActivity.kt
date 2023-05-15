@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.screens.workoutViews.WorkoutView
+import kr.rabbito.homefit.screens.workoutView.WorkoutView
 import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData

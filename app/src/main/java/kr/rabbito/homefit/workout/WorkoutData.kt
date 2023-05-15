@@ -2,7 +2,6 @@ package kr.rabbito.homefit.workout
 
 import android.content.Context
 import kr.rabbito.homefit.R
-import kr.rabbito.homefit.screens.workoutViews.PullUpView
 
 class WorkoutData(val context: Context){
     companion object {
