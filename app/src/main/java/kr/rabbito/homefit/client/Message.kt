@@ -1,7 +1,10 @@
 package kr.rabbito.homefit.client
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kr.rabbito.homefit.utils.calc.Converter
+import java.lang.reflect.Type
 
 fun makeMessage(messageNumber: Int, data: Any): ByteArray? {
     val start = "[".toByteArray()
@@ -60,14 +63,22 @@ fun checkMessage(data: ByteArray): Int {
 
     if (data[1].toInt() == 32) {
         return data[1].toInt()
+    } else if (data[1].toInt() == 33) {
+        return data[1].toInt()
     } else {
         Log.d("connection", "wrong message number ${data[1].toInt()}")
         return -1
     }
 }
 
-fun parseMessage(data: ByteArray): List<Any> {
+fun parseMessage(data: ByteArray): Map<String, Any> {
     // 데이터 부분 크기 = 전체 크기 - 데이터 부분 제외 크기
     Log.d("connection", "${data[3]} ${data[4]}")
-    return listOf<Any>(String(data, 5, data[2].toInt() - 6), data[3].toUInt() * 128u + data[4].toUInt())   // 음식 이름, 양
+    return mapOf("result" to listOf<Any>(String(data, 5, data[2].toInt() - 6), data[3].toUInt() * 128u + data[4].toUInt()))   // 음식 이름, 양
+}
+
+fun parseJSONString(jsonString: String?): Map<String, Any> {
+    val gson = Gson()
+    val type: Type = object : TypeToken<Map<String, Any>>() {}.type
+    return gson.fromJson(jsonString, type)
 }

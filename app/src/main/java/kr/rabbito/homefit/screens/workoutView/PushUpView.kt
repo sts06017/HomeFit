@@ -1,11 +1,8 @@
-package kr.rabbito.homefit.screens.workoutViews
+package kr.rabbito.homefit.screens.workoutView
 
 import android.content.Context
 import android.util.Log
-import android.widget.ImageView
-import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.workout.WorkoutState
 
 class PushUpView(context: Context, binding: ActivityWoBinding): WorkoutView(context, binding) {
     override fun generateWidgets() {

@@ -2,7 +2,7 @@ package kr.rabbito.homefit.workout
 
 import android.content.Context
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.screens.workoutViews.*
+import kr.rabbito.homefit.screens.workoutView.*
 import kr.rabbito.homefit.workout.logics.*
 
 class WorkoutCore(val context: Context, val binding: ActivityWoBinding) {

@@ -142,7 +142,6 @@ class DCameraActivity : AppCompatActivity() {
 
                         client!!.sendImage(bitmap)
                         val data = client!!.getData()!!
-                        Log.d("connection", "${data[0]}: ${data[1]}")
 
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.INVISIBLE
@@ -150,8 +149,7 @@ class DCameraActivity : AppCompatActivity() {
 
                         val intent = Intent(this@DCameraActivity, MainActivity::class.java)
                         intent.putExtra("VIEW_PAGER_INDEX", 1)
-                        intent.putExtra("FOOD_NAME", data[0].toString())
-                        intent.putExtra("FOOD_QUANTITY", data[1].toString())
+                        intent.putExtra("DATA", data)
                         startActivity(intent)
                     }.start()
                 }

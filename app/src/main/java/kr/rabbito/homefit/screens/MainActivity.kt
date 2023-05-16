@@ -31,11 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureBottomNavigation(pageNum : Int = 0){
 
-        val foodName = intent.getStringExtra("FOOD_NAME") ?: "입력되지 않았습니다."
-        val foodQuantity = intent.getStringExtra("FOOD_QUANTITY") ?: "0"
+        val result = intent.getStringExtra("DATA")
 
         // 네비게이터 adapter 연결
-        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, foodName, foodQuantity)   // fragmentCount 인자는 넣을 페이지 수
+        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, result)   // fragmentCount 인자는 넣을 페이지 수
 
         binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
 

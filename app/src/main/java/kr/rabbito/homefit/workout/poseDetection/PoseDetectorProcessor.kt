@@ -27,9 +27,8 @@ import com.google.mlkit.vision.pose.PoseDetection
 import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase
 import kr.rabbito.homefit.databinding.ActivityWoBinding
-import kr.rabbito.homefit.screens.workoutViews.WorkoutView
+import kr.rabbito.homefit.screens.workoutView.WorkoutView
 import kr.rabbito.homefit.workout.WorkoutCore
-import kr.rabbito.homefit.workout.logics.PushUpPose
 import kr.rabbito.homefit.workout.logics.WorkoutPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
 import java.util.ArrayList
