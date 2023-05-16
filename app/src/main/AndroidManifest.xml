@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -24,22 +25,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeFit">
         <activity
+            android:name=".screens.DImageActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".screens.RoutineActivity"
             android:exported="true" />
         <activity
             android:name=".screens.RoutineListActivity"
             android:exported="true" />
-
         <activity
             android:name=".screens.DHistoryActivity"
             android:exported="true" />
         <activity
             android:name=".screens.DCameraActivity"
             android:exported="true">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".screens.DAddActivity"
@@ -49,8 +57,7 @@
             android:exported="true" />
         <activity
             android:name=".screens.WOReportActivity"
-            android:exported="true" >
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".screens.WOActivity"
             android:exported="true" />
@@ -65,6 +72,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

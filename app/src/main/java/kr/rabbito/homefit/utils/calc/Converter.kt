@@ -1,7 +1,9 @@
 package kr.rabbito.homefit.utils.calc
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.graphics.*
+import android.net.Uri
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
@@ -37,6 +39,12 @@ class Converter {
             buffer.get(bytes)
 
             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null);
+
+            return bitmap
+        }
+
+        fun imageUriToBitmap(contentResolver: ContentResolver, imageUri: Uri): Bitmap {
+            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
 
             return bitmap
         }
