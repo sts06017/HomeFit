@@ -64,6 +64,7 @@ class WOActivity : AppCompatActivity() {
         binding.woBtnStop.setOnClickListener {
             Log.d("디버깅","운동 강제 종료")
             val intent = Intent(this, WOReportActivity::class.java)
+            intent.putExtra("index", workoutIdx)
             startActivity(intent)
             finish()
         }
@@ -78,6 +79,7 @@ class WOActivity : AppCompatActivity() {
             if(it == WorkoutState.setTotal+1){
                 Log.d("디버깅","it==setTotal+1")
                 val intent = Intent(this, WOReportActivity::class.java)
+                intent.putExtra("index", workoutIdx)
                 startActivity(intent)
                 finish()
             }

@@ -83,7 +83,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.2.0-beta01")
 
     // Room
-    implementation ("android.arch.lifecycle:extensions:1.1.0")
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor

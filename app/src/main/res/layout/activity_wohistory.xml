@@ -47,13 +47,13 @@
             app:layout_constraintStart_toEndOf="@id/wohistory_btn_back" />
 
         <!-- 캘린더 라이브러리 -->
-<!--        <View-->
-<!--            android:id="@+id/wohistory_v_calendar"-->
-<!--            android:layout_width="312dp"-->
-<!--            android:layout_height="245dp"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:background="@drawable/wohistory_iv_temp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/wohistory_tv_title" />-->
+        <!--        <View-->
+        <!--            android:id="@+id/wohistory_v_calendar"-->
+        <!--            android:layout_width="312dp"-->
+        <!--            android:layout_height="245dp"-->
+        <!--            android:layout_marginTop="32dp"-->
+        <!--            android:background="@drawable/wohistory_iv_temp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/wohistory_tv_title" />-->
 
         <TextView
             android:id="@+id/wohistory_tv_month"
@@ -69,7 +69,7 @@
 
         <com.kizitonwose.calendarview.CalendarView
             android:layout_width="312dp"
-            android:layout_height="265dp"
+            android:layout_height="wrap_content"
             android:id="@+id/wohistory_v_calendar"
             app:cv_dayViewResource="@layout/calendar_day_layout"
             app:cv_scrollMode="paged"
@@ -79,14 +79,17 @@
             app:layout_constraintTop_toBottomOf="@+id/wohistory_v_weekTitles"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/wohistory_lv_reports"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wohistory_rv_results"
         android:layout_width="296dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:paddingTop="16dp"
         android:scrollbars="none"
+        android:paddingBottom="300dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wohistory_cl_top" />
 </androidx.constraintlayout.widget.ConstraintLayout>
