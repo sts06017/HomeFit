@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.lifecycle.lifecycleScope
 import kr.rabbito.homefit.R
-import kr.rabbito.homefit.screens.calendar.SetCalendar
 import kr.rabbito.homefit.databinding.ActivityWohistoryBinding
+import kr.rabbito.homefit.screens.calendar.WOHistorySetCalendar
 import kr.rabbito.homefit.screens.calendar.daysOfWeek
 import java.time.format.TextStyle
 
@@ -26,8 +27,7 @@ class WOHistoryActivity : AppCompatActivity() {
         val caledar_v = binding.wohistoryVCalendar
         val calendar_tv_weekTitles = findViewById<ViewGroup>(R.id.wohistory_v_weekTitles)
         val calendar_tv_monthTitle = binding.wohistoryTvMonth
-        SetCalendar(caledar_v, calendar_tv_monthTitle,this).setting()
-
+        WOHistorySetCalendar(caledar_v, calendar_tv_monthTitle,this, binding.wohistoryRvResults).setting()
         binding.wohistoryBtnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("VIEW_PAGER_INDEX",0)

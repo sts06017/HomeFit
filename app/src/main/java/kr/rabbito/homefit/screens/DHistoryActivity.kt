@@ -9,7 +9,7 @@ import androidx.core.view.children
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.R.*
 import kr.rabbito.homefit.databinding.ActivityDhistoryBinding
-import kr.rabbito.homefit.screens.calendar.SetCalendar
+import kr.rabbito.homefit.screens.calendar.DHistorySetCalendar
 import kr.rabbito.homefit.screens.calendar.daysOfWeek
 import kr.rabbito.homefit.screens.navigatorBar.ProfileFragment
 import java.time.format.TextStyle
@@ -28,7 +28,7 @@ class DHistoryActivity : AppCompatActivity() {
         val calendar_tv_weekTitles = findViewById<ViewGroup>(R.id.dhistory_v_weekTitles)
         val calendar_v_monthTitle = binding.dhistoryTvMonth
 
-        SetCalendar(calendar_v, calendar_v_monthTitle, this).setting()
+        DHistorySetCalendar(calendar_v, calendar_v_monthTitle, this).setting()
         // 임시
         binding.dhistoryVCalendar.setOnClickListener {
 //            startActivity(Intent(this, ProfileFragment::class.java))

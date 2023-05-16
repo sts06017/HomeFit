@@ -1,6 +1,5 @@
 package kr.rabbito.homefit.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import java.time.LocalDate
 

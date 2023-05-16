@@ -7,7 +7,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -17,29 +20,33 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.data.Workout
-import kr.rabbito.homefit.data.WorkoutDAO
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.CalendarDayLayoutBinding
+import kr.rabbito.homefit.screens.adapter.WOHistoryAdapter
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.Locale
 
-data class Event(val id: String, val text: String, val date: LocalDate)
 
 private val today = LocalDate.now()
 private var selectedDate: LocalDate? = null
 
-class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Context) {
+class WOHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, context: Context, recyclerView: RecyclerView) {
     private val calendarView = calendarView_
     private val title = title_
-//    val calendarView:CalendarView = activity.findViewById(R.id.calendarView)
+    private val recyclerView = recyclerView
+
+    private val context = context
+    //    val calendarView:CalendarView = activity.findViewById(R.id.calendarView)
     private val db = Room.databaseBuilder(context, WorkoutDB::class.java, "workout").build()
 
     fun setting() {
+        recyclerView.layoutManager = LinearLayoutManager(context)
         calendarView.monthScrollListener = {
             // Select the first day of the visible month.
             if(it.month==LocalDate.now().monthValue)
@@ -60,8 +67,8 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Conte
 
     private fun selectDate(date: LocalDate) {
         // 캘린더 클릭,스크롤시 호출되는 함수.
+
         // 기능1  : 이전에 선택된 날짜를 oldDate에 저장 후 방금 선택한 날짜를 selectedDate에 저장.
-        // 기능2  : 캘린더 상단의 {년.월} textView를 수정함.
         Log.d("캘린더","call selectDate()")
         if (selectedDate != date) {
             val oldDate = selectedDate
@@ -69,15 +76,26 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Conte
             oldDate?.let { calendarView.notifyDateChanged(it) }
             calendarView.notifyDateChanged(date)
         }
-//        binding.calendarTitle.text = "${date.year}.${date.month.value}"
+        // 기능2  : 캘린더 상단의 {년.월} textView를 수정함.
         this.title.text = "${date.year}.${date.month.value}"
-        // 추가 - DB에서 선택날짜에 해당되는 데이터 리사이클러뷰에 출력.
-        CoroutineScope(Dispatchers.IO).launch {
-            val allWorkouts : List<Workout> = db.workoutDAO().getAll()
-            allWorkouts.forEach { workout ->
-                Log.d("Workout", "id: ${workout.id}, Name: ${workout.workoutName}, Set: ${workout.set}, Count: ${workout.count}, Time: ${workout.workTime}, Date: ${workout.date}")
+
+        // 기능3  : DB에서 선택날짜에 해당되는 데이터 리사이클러뷰에 출력.
+        (context as? LifecycleOwner)?.lifecycleScope?.launch {
+            val workouts = withContext(Dispatchers.IO) {
+                // 데이터베이스에서 데이터를 가져옴.
+                db.workoutDAO().getWorkoutByDate(date)
             }
+            // 메인 스레드에서 UI를 갱신.
+            val adapter = WOHistoryAdapter(workouts)
+            recyclerView.adapter = adapter
         }
+        /** DB 테이블 확인 코드
+        CoroutineScope(Dispatchers.IO).launch {
+            val workouts : List<Workout> = db.workoutDAO().getAll()
+            workouts.forEach { workout ->
+                Log.d("Workout", "id: ${workout.id}, Name: ${workout.workoutName}, Set: ${workout.set}, Count: ${workout.count}, Duration: ${workout.woDuration}, Date: ${workout.date}, Time: ${workout.time}")
+            }
+        }**/
     }
 
     private fun configureBinders(daysOfWeek: List<DayOfWeek>) {
@@ -90,7 +108,7 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Conte
                     if (day.owner == DayOwner.THIS_MONTH) {
                         selectDate(day.date)
                         // day.date 포멧 : YYYY-MM-DD
-//                        Log.d("캘린더","click! date:${day.date} day:${day.day} ow:${day.owner}")
+                        Log.d("캘린더","click! date:${day.date} day:${day.day} ow:${day.owner}")
                     }
                 }
             }
@@ -127,29 +145,3 @@ class SetCalendar(calendarView_: CalendarView, title_ : TextView, context: Conte
         }
     }
 }
-
-fun daysOfWeek(firstDayOfWeek: DayOfWeek = firstDayOfWeekFromLocale()): List<DayOfWeek> {
-    val pivot = 7 - firstDayOfWeek.ordinal
-    val daysOfWeek = DayOfWeek.values()
-    // Order `daysOfWeek` array so that firstDayOfWeek is at the start position.
-    return (daysOfWeek.takeLast(pivot) + daysOfWeek.dropLast(pivot))
-}
-
-fun firstDayOfWeekFromLocale(): DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-
-fun View.makeVisible() {
-    visibility = View.VISIBLE
-}
-
-fun View.makeInVisible() {
-    visibility = View.INVISIBLE
-}
-
-internal fun Context.getColorCompat(@ColorRes color: Int) =
-    ContextCompat.getColor(this, color)
-
-internal fun TextView.setTextColorRes(@ColorRes color: Int) =
-    setTextColor(context.getColorCompat(color))
-
-val Int.dp: Int
-    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()

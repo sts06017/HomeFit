@@ -6,7 +6,10 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
@@ -27,6 +30,9 @@ import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
 import kr.rabbito.homefit.workout.WorkoutData
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class WOReportActivity : AppCompatActivity() {
     private var mBinding: ActivityWoreportBinding? = null
@@ -38,7 +44,8 @@ class WOReportActivity : AppCompatActivity() {
         setContentView(binding.root)
         val db = Room.databaseBuilder(
             this, WorkoutDB::class.java, "workout"
-        ).build()
+        )//.fallbackToDestructiveMigration()
+            .build()
 
         val workoutIdx = intent.getIntExtra("index", 0)
         val woreportVGraph1 = binding.woreportVGraph1
@@ -72,13 +79,19 @@ class WOReportActivity : AppCompatActivity() {
             workoutName = WorkoutData.workoutNamesKOR[workoutIdx],
             set = 3,
             count = 10,
-            workTime = 0,
-            date = LocalDate.now()
+            woDuration = 0,
+            date = LocalDate.now(),
+            time = LocalDateTime.now().format(formatter().timeFormatter)
         )
         createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }
+//        val migration_3_4 = object : Migration(3,4) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                database.execSQL("DROP TABLE IF EXISTS Workout")
+//            }
+//        }
         binding.woreportBtnSaveReport.setOnClickListener {
             // 운동 결과 DB저장
             CoroutineScope(Dispatchers.IO).launch {
@@ -90,7 +103,7 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportBtnDeleteReport.setOnClickListener {
             startActivity(Intent(this,MainActivity::class.java))
         }
-        
+
     }
 
     private fun createPieGraph(data: Map<String,Float>, chart: PieChart){
@@ -202,5 +215,10 @@ class WOReportActivity : AppCompatActivity() {
 
         chart.invalidate()
 
+    }
+    inner class formatter{
+        val dateFormatter_ko = DateTimeFormatter.ofPattern("yyyy년 M월 dd일")
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd")
+        val timeFormatter = DateTimeFormatter.ofPattern( "a HH시 mm분 ss초").withLocale(Locale.forLanguageTag("ko"))
     }
 }
