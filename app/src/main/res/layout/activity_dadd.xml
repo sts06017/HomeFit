@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
                     android:includeFontPadding="false"
-                    android:text="앨범이나 촬영을 통해 식단 사진을 입력하면, 자동으로 식단정보가 추가됩니다.\n직접 메뉴를 선택해 정보를 입력할 수도 있습니다."
+                    android:text="음식의 영양정보를 입력해주세요.\n항목을 선택 시 표준 영양정보가 자동으로 입력됩니다."
                     android:textColor="@color/lightGray"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
