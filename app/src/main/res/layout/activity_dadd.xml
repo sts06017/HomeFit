@@ -85,117 +85,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/dadd_cl_select_food"
+                <!-- 드롭다운 라이브러리 -->
+                <View
+                    android:id="@+id/dadd_v_dropdown"
                     android:layout_width="296dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_marginTop="32dp"
+                    android:background="@drawable/dadd_iv_dropdown"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_comment">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/dadd_cl_album"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <Button
-                            android:id="@+id/dadd_btn_album"
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/dadd_btn_album"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/pretendard_regular"
-                            android:includeFontPadding="false"
-                            android:text="앨범"
-                            android:textColor="@color/white"
-                            android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_album"
-                            app:layout_constraintStart_toStartOf="@id/dadd_btn_album"
-                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_album" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/dadd_cl_camera"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_cl_album"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <Button
-                            android:id="@+id/dadd_btn_camera"
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/dadd_btn_camera"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/pretendard_regular"
-                            android:includeFontPadding="false"
-                            android:text="촬영"
-                            android:textColor="@color/white"
-                            android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="@id/dadd_btn_camera"
-                            app:layout_constraintStart_toStartOf="@id/dadd_btn_camera"
-                            app:layout_constraintTop_toBottomOf="@id/dadd_btn_camera" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/dadd_cl_dropdown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_cl_camera"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <!-- 드롭다운 라이브러리 -->
-                        <View
-                            android:id="@+id/dadd_v_dropdown"
-                            android:layout_width="176dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/dadd_iv_dropdown"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/pretendard_regular"
-                            android:includeFontPadding="false"
-                            android:text="직접선택"
-                            android:textColor="@color/white"
-                            android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="@id/dadd_v_dropdown"
-                            app:layout_constraintStart_toStartOf="@id/dadd_v_dropdown"
-                            app:layout_constraintTop_toBottomOf="@id/dadd_v_dropdown" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_comment" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/dadd_cl_selected_food"
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_select_food">
+                    app:layout_constraintTop_toBottomOf="@id/dadd_v_dropdown">
 
                     <ImageView
                         android:id="@+id/dadd_iv_selected_food"
@@ -264,6 +172,15 @@
                         app:layout_constraintBottom_toBottomOf="@id/dadd_et_selected_food_calorie"
                         app:layout_constraintEnd_toEndOf="@id/dadd_et_selected_food_calorie"
                         app:layout_constraintTop_toTopOf="@id/dadd_et_selected_food_calorie" />
+                    
+                    <Button
+                        android:id="@+id/dadd_btn_album"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/dadd_btn_album_small"
+                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
+                        app:layout_constraintBottom_toBottomOf="@id/dadd_iv_selected_food" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -273,7 +190,7 @@
                     android:layout_marginTop="32dp"
                     android:fontFamily="@font/eulyoo1945_regular"
                     android:includeFontPadding="false"
-                    android:text="상세정보 입력"
+                    android:text="상세정보"
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     app:layout_constraintStart_toStartOf="parent"
