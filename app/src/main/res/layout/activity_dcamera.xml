@@ -101,6 +101,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/dcamera_btn_info_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/dcamera_btn_back"/>
+
+            <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:src="@drawable/dcamera_icon_rotate"

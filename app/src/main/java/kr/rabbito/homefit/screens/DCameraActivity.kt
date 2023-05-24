@@ -61,6 +61,11 @@ class DCameraActivity : AppCompatActivity() {
         binding.dcameraClInfo.visibility = View.VISIBLE
         removeInfo()
 
+        binding.dcameraBtnInfoBack.setOnClickListener {
+            binding.dcameraClInfo.visibility = View.INVISIBLE
+            binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
+        }
+
         // 촬영 및 사진 전송
         binding.dcameraBtnShot.setOnClickListener {
             takeAndSendPhoto()
