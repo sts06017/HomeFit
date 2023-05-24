@@ -21,6 +21,7 @@ import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 import kr.rabbito.homefit.screens.navigatorBar.DReportFragment
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
+import java.net.SocketException
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -62,8 +63,7 @@ class DCameraActivity : AppCompatActivity() {
         removeInfo()
 
         binding.dcameraBtnInfoBack.setOnClickListener {
-            binding.dcameraClInfo.visibility = View.INVISIBLE
-            binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
+            initView()
         }
 
         // 촬영 및 사진 전송
@@ -73,11 +73,7 @@ class DCameraActivity : AppCompatActivity() {
 
         // 임시
         binding.dcameraBtnCancel.setOnClickListener {
-//            Thread {
-//                val image = BitmapFactory.decodeResource(this.resources, R.drawable.connection_test)
-//                client!!.sendImage(image)
-//            }.start()
-//            startActivity(Intent(this, DReportActivity::class.java))
+            finish()
         }
     }
 
@@ -143,19 +139,33 @@ class DCameraActivity : AppCompatActivity() {
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.VISIBLE
                             binding.dcameraIvSpoonFrame.visibility = View.INVISIBLE
+                            binding.dcameraBtnShot.isEnabled = false
+                            binding.dcameraBtnShot.alpha = 0.5f
                         }
 
                         client!!.sendImage(bitmap)
-                        val data = client!!.getData()!!
+
+                        var data: String? = null
+                        try {
+                            data = client!!.getData()!!
+                        } catch (e: SocketException) {
+                            // 양 추정 도중에 취소 버튼 누른 경우
+                            Log.d("connection", "socket closed")
+                        }
+
 
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.INVISIBLE
                         }
 
-                        val intent = Intent(this@DCameraActivity, MainActivity::class.java)
-                        intent.putExtra("VIEW_PAGER_INDEX", 1)
-                        intent.putExtra("DATA", data)
-                        startActivity(intent)
+                        if (data != null) {
+                            val intent = Intent(this@DCameraActivity, MainActivity::class.java)
+                            intent.putExtra("VIEW_PAGER_INDEX", 1)
+                            intent.putExtra("DATA", data)
+                            startActivity(intent)
+                        } else {
+                            finish()
+                        }
                     }.start()
                 }
             })
@@ -164,9 +174,15 @@ class DCameraActivity : AppCompatActivity() {
     private fun removeInfo() {
         val handler = Handler()
         handler.postDelayed({
-            binding.dcameraClInfo.visibility = View.INVISIBLE
-            binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
+            initView()
         }, 6000)
+    }
+
+    private fun initView() {
+        binding.dcameraBtnShot.alpha = 1.0f
+        binding.dcameraBtnShot.isEnabled = true
+        binding.dcameraClInfo.visibility = View.INVISIBLE
+        binding.dcameraIvSpoonFrame.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

@@ -164,6 +164,8 @@
                 android:layout_height="80dp"
                 android:background="@drawable/dcamera_btn_shot"
                 android:rotation="90"
+                android:enabled="false"
+                android:alpha="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
