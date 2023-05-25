@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDimageBinding
 import kr.rabbito.homefit.utils.calc.Converter
@@ -21,31 +22,42 @@ class DImageActivity : AppCompatActivity() {
         mBinding = ActivityDimageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        client = HomeFitClient()
+
         Thread {
-            client = HomeFitClient()
+            client!!.sendRequest()
+            client!!.sendUserName("User")
+        }.start()
 
-            try {
-                client!!.sendRequest()
-                client!!.sendUserName("User")
-            } catch (e: NullPointerException) {
-                Log.d("connection", "socket not initialized")
-            }
+        binding.dimageBtnCancel.setOnClickListener {
+            finish()
+        }
 
+        Thread {
             val imageUriString = intent.getStringExtra("SELECTED_IMAGE")
-            val imageUri = Uri.parse(imageUriString)
+            if (imageUriString != null) {
+                val imageUri = Uri.parse(imageUriString)
+                Log.d("selected_image", imageUriString)
+                runOnUiThread {
+                    binding.dimageIvBackground.setImageURI(imageUri)
+                }
 
-            val bitmap = Converter.imageUriToBitmap(contentResolver, imageUri)
-            runOnUiThread {
-                binding.dimageIvBackground.setImageURI(imageUri)
+                val bitmap = Converter.imageUriToBitmap(contentResolver, imageUri)
+
+                client!!.sendImage(this, bitmap)
+                val data: String? = client!!.getData(this)
+
+                if (client == null) {
+                    Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                }
+
+                if (data != null) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("VIEW_PAGER_INDEX", 1)
+                    intent.putExtra("DATA", data)
+                    startActivity(intent)
+                }
             }
-
-            client!!.sendImage(this, bitmap)
-            val data = client!!.getData(this@DImageActivity)!!
-
-            val intent = Intent(this@DImageActivity, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 1)
-            intent.putExtra("DATA", data)
-            startActivity(intent)
         }.start()
     }
 

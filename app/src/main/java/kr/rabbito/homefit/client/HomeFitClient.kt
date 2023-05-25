@@ -56,7 +56,6 @@ class HomeFitClient {
             outputStream.write(imageByteArray)
         } catch (e: UninitializedPropertyAccessException) {
             Log.d("connection", "image send failed")
-            Toast.makeText(context, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -99,7 +98,6 @@ class HomeFitClient {
             Log.d("connection", "socket closed")
         } catch (e: UninitializedPropertyAccessException) {
             Log.d("connection", "server not started")
-            Toast.makeText(context, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
         }
 
         return null

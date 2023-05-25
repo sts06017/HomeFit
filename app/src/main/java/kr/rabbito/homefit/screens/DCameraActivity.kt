@@ -8,6 +8,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -64,7 +65,6 @@ class DCameraActivity : AppCompatActivity() {
             takeAndSendPhoto()
         }
 
-        // 임시
         binding.dcameraBtnCancel.setOnClickListener {
             finish()
         }
@@ -136,11 +136,11 @@ class DCameraActivity : AppCompatActivity() {
                             binding.dcameraBtnShot.alpha = 0.5f
                         }
 
-                        var data: String? = null
+                        client!!.sendImage(this@DCameraActivity, bitmap)
+                        val data: String? = client!!.getData(this@DCameraActivity)
 
-                        runOnUiThread {
-                            client!!.sendImage(this@DCameraActivity, bitmap)
-                            data = client!!.getData(this@DCameraActivity)
+                        if (client == null) {
+                            Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                         }
 
                         runOnUiThread {
