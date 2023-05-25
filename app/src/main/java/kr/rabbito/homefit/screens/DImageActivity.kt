@@ -22,17 +22,20 @@ class DImageActivity : AppCompatActivity() {
         mBinding = ActivityDimageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        client = HomeFitClient()
-
         Thread {
+            client = HomeFitClient()
             client!!.sendRequest()
             client!!.sendUserName("User")
+
+            getAndSendPhoto()
         }.start()
 
         binding.dimageBtnCancel.setOnClickListener {
             finish()
         }
+    }
 
+    private fun getAndSendPhoto() {
         Thread {
             val imageUriString = intent.getStringExtra("SELECTED_IMAGE")
             if (imageUriString != null) {
@@ -48,7 +51,8 @@ class DImageActivity : AppCompatActivity() {
                 val data: String? = client!!.getData(this)
 
                 if (client == null) {
-                    Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 if (data != null) {
