@@ -2,6 +2,7 @@ package kr.rabbito.homefit.utils.calc
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.res.Resources
 import android.graphics.*
 import android.net.Uri
 import androidx.camera.core.ImageProxy
@@ -47,6 +48,10 @@ class Converter {
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
 
             return bitmap
+        }
+
+        fun pxToSp(px: Float): Float{
+            return px / Resources.getSystem().displayMetrics.scaledDensity
         }
     }
 }

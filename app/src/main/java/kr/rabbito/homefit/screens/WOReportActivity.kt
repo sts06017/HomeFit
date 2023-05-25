@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import androidx.core.content.res.ResourcesCompat
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -25,9 +26,11 @@ import com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kr.rabbito.homefit.R
 import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
+import kr.rabbito.homefit.utils.calc.Converter.Companion.pxToSp
 import kr.rabbito.homefit.workout.WorkoutData
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -121,12 +124,15 @@ class WOReportActivity : AppCompatActivity() {
         for(c in ColorTemplate.LIBERTY_COLORS) colorsItems.add(c)
         for(c in ColorTemplate.PASTEL_COLORS) colorsItems.add(c)
 
+        //------chart data 폰트 불러오기------
+        val typeface = ResourcesCompat.getFont(this, R.font.pretendard_regular)!!
+
         //------chart dataset 설정------
         val pieDataSet = PieDataSet(testEntries,"")
         pieDataSet.apply {
             colors = colorsItems
             valueTextColor = Color.WHITE
-            valueTextSize = 9f
+            valueTextSize = 11f
         }
         pieDataSet.setDrawValues(false)
         val pieData = PieData(pieDataSet)
@@ -142,7 +148,10 @@ class WOReportActivity : AppCompatActivity() {
             animate()
             setDrawEntryLabels(false)
             setHoleColor(Color.TRANSPARENT)
+            legend.textSize = 11f
             legend.textColor = Color.WHITE
+            legend.typeface = typeface
+            legend.form = Legend.LegendForm.CIRCLE
             holeRadius = 80f
             transparentCircleRadius = 0f
         }
