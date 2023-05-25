@@ -27,11 +27,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.rabbito.homefit.R
+import kr.rabbito.homefit.data.User
+import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
+import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.utils.calc.Converter.Companion.pxToSp
 import kr.rabbito.homefit.workout.WorkoutData
+import kr.rabbito.homefit.workout.logics.getCalories
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -41,6 +45,14 @@ class WOReportActivity : AppCompatActivity() {
     private var mBinding: ActivityWoreportBinding? = null
     private val binding get() = mBinding!!
 
+    private var userDB: UserDB? = null
+    private var userId: Long? = null
+
+    private var weight: Int = 0
+    private var workoutIdx: Int = 0
+    private var totalCount: Int = 0
+    private var workoutTime: Long = 0
+    private var totalRestTime: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoreportBinding.inflate(layoutInflater)
@@ -49,15 +61,23 @@ class WOReportActivity : AppCompatActivity() {
             this, WorkoutDB::class.java, "workout"
         )//.fallbackToDestructiveMigration()
             .build()
+        userDB = UserDB.getInstance(this)
+        userId = 0L  // 임시
+        getWeightById(userId!!)  // 사용자 몸무게 정보 불러옴
 
-        val workoutIdx = intent.getIntExtra("index", 0)
+        workoutIdx = intent.getIntExtra("index", 0)
+        totalCount = intent.getIntExtra("count",0)
+        workoutTime = intent.getLongExtra("woTime",0)
+        totalRestTime = intent.getLongExtra("restTime",0)
+
+        initView()
+
         val woreportVGraph1 = binding.woreportVGraph1
         val woreportVGraph2 = binding.woreportVGraph2
 
         val pieDateTest = mutableMapOf<String,Float>()
-        pieDateTest["운동"]=100f
-        pieDateTest["휴식"]=20f
-        pieDateTest["정지"]=10f
+        pieDateTest["운동"] = workoutTime.toFloat() / 60000
+        pieDateTest["휴식"]= totalRestTime.toFloat() / 60000
 
         createPieGraph(pieDateTest,woreportVGraph1)
 
@@ -108,6 +128,16 @@ class WOReportActivity : AppCompatActivity() {
         }
 
     }
+    private fun initView(){
+        binding.woreportTvWo.text = WorkoutData.workoutNamesKOR[workoutIdx]
+        binding.woreportTvCalorie.text = getCalories(WorkoutData.workoutNamesKOR[workoutIdx], weight, totalCount)
+        binding.woreportTvCorrectTime.text = TimeCalc.milliSecFormat(workoutTime)
+        binding.woreportTvStopTime.text = TimeCalc.milliSecFormat(totalRestTime)
+        binding.woreportTvDate.text = LocalDateTime.now().format(formatter().dateFormatter_ko) // 임시
+//        piechart 출력
+//        linechart 출력
+
+    }
 
     private fun createPieGraph(data: Map<String,Float>, chart: PieChart){
         //------입력 데이터 pieEntry로 변환------
@@ -152,6 +182,7 @@ class WOReportActivity : AppCompatActivity() {
             legend.textColor = Color.WHITE
             legend.typeface = typeface
             legend.form = Legend.LegendForm.CIRCLE
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             holeRadius = 80f
             transparentCircleRadius = 0f
         }
@@ -229,5 +260,10 @@ class WOReportActivity : AppCompatActivity() {
         val dateFormatter_ko = DateTimeFormatter.ofPattern("yyyy년 M월 dd일")
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd")
         val timeFormatter = DateTimeFormatter.ofPattern( "a HH시 mm분 ss초").withLocale(Locale.forLanguageTag("ko"))
+    }
+    private fun getWeightById(id: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            weight = userDB?.userDAO()?.getWeightById(id)!!
+        }
     }
 }

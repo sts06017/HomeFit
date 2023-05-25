@@ -14,6 +14,9 @@ interface UserDAO {
     @Query("UPDATE User SET userName = :userName, height = :height, weight = :weight, mealCount = :mealCount, favWorkout = :favWorkout, basicDiet = :basicDiet WHERE id = :id")
     fun updateUserById(id: Long, userName: String, height: Int, weight: Int, mealCount: Int, favWorkout: String, basicDiet: String)
 
+    @Query("SELECT height FROM User WHERE id = :id")
+    fun getWeightById(id: Long): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
 

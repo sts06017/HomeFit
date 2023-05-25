@@ -65,6 +65,7 @@ class SquatPose: WorkoutPose() {
                 Log.d("squat","up")
                 WorkoutState.isUp = true
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
 
                 checkSetCondition()
                 checkEnd()

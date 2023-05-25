@@ -52,3 +52,37 @@ fun getYDistance(
     }
 }
 
+fun getCalories(
+    workoutName: String,
+    weight: Int,
+    count: Int
+): String {
+    when(workoutName){
+        "팔굽혀펴기"-> {
+            val kcal = weight * 4/3600 * 8 * count
+            return "${kcal}Kcal"
+        }
+        "턱걸이"-> {
+            val kcal = weight * 5/3600 * 8 * count
+            return "${kcal}Kcal"
+        }
+        "스쿼트"-> {
+            val kcal = weight * 5/3600 * 8 * count
+            return "${kcal}Kcal"
+        }
+        "사이드 레터럴 레이즈"-> {
+            val kcal = weight * 4/3600 * 5 * count
+            return "${kcal}Kcal"
+        }
+        "덤벨 컬"-> {
+            val kcal = weight * 4/3600 * 3 * count
+            return "${kcal}Kcal"
+        }
+        "레그 레이즈"-> {
+            val kcal = weight * 34/3600 * 4 * count
+            return "${kcal}Kcal"
+        }
+    }
+    return "0Kcal"
+}
+

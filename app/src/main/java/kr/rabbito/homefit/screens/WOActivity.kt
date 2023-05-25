@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutView.WorkoutView
-import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.utils.calc.TimeCalc.Companion.milliSecFormat
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
@@ -20,9 +19,6 @@ import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import kotlin.concurrent.timer
 
 class WOActivity : AppCompatActivity() {
     private var mBinding: ActivityWoBinding? = null
@@ -63,7 +59,6 @@ class WOActivity : AppCompatActivity() {
 
         // 운동 정지 버튼
         binding.woBtnPause.setOnClickListener {
-//            tts!!.raiseArmTTS() // tts 출력 테스트
             WorkoutState.rest = !WorkoutState.rest
             if(WorkoutState.rest){  // 휴식 상태일 때
                 countdownTimer.cancel() // 타이머 일시정지
@@ -71,12 +66,15 @@ class WOActivity : AppCompatActivity() {
                 WorkoutState.remainSec.value = 120*1000L - WorkoutState.elapSec.value!! // '남은시간' = 2분 - '경과시간'
             }
             else{
-                WorkoutState.restTotalTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
+                WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
                 startTimer()    // 타이머 재개
             }
         }
         // 운동 종료 버튼
         binding.woBtnStop.setOnClickListener {
+            if(WorkoutState.rest){
+                WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime
+            }
             countdownTimer.cancel()
             startNextActivity()
         }
@@ -173,6 +171,7 @@ class WOActivity : AppCompatActivity() {
         // 기본 위젯 로드
         Log.d("index", workoutIdx.toString())
         WorkoutState.count = 0
+        WorkoutState.totalCount = 0
         WorkoutState.set = 1
         WorkoutState.mySet.value = 1    // 임시 livedata 초기화
         WorkoutState.elapSec.value = 0  // 경과 시간 초기화
@@ -228,6 +227,9 @@ class WOActivity : AppCompatActivity() {
     private fun startNextActivity(){
         val intent = Intent(this, WOReportActivity::class.java)
         intent.putExtra("index", workoutIdx)
+        intent.putExtra("count", WorkoutState.totalCount)
+        intent.putExtra("woTime", WorkoutState.elapSec.value)
+        intent.putExtra("restTime", WorkoutState.totalRestTime)
         startActivity(intent)
         finish()
     }

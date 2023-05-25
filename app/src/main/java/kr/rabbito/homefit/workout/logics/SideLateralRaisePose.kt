@@ -66,6 +66,7 @@ class SideLateralRaisePose: WorkoutPose() {
             ) {
                 Log.d("side lateral raise","up")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = true
 
                 checkSetCondition()
