@@ -2,6 +2,7 @@ package kr.rabbito.homefit.screens
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutView.WorkoutView
 import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.utils.calc.TimeCalc.Companion.milliSecFormat
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
@@ -17,18 +19,21 @@ import kr.rabbito.homefit.workout.poseDetection.PoseDetectorProcessor
 import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.concurrent.timer
 
 class WOActivity : AppCompatActivity() {
     private var mBinding: ActivityWoBinding? = null
     private val binding get() = mBinding!!
-
     private var cameraSource: CameraSource? = null
     private var selectedModel = POSE_DETECTION
     private lateinit var mat: android.opengl.Matrix
     private var workoutState = WorkoutState()
     private var tts: PoseAdviceTTS? = null
-
+    private lateinit var countdownTimer : CountDownTimer
+    private var restStartTime = 0L
     private var workoutIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,35 +58,39 @@ class WOActivity : AppCompatActivity() {
         initView(workoutIdx)
 
         startTimer()
-
         binding.woPvPreviewView.stop()
         startCameraSource()
 
-        // 임시
+        // 운동 정지 버튼
         binding.woBtnPause.setOnClickListener {
 //            tts!!.raiseArmTTS() // tts 출력 테스트
+            WorkoutState.rest = !WorkoutState.rest
+            if(WorkoutState.rest){  // 휴식 상태일 때
+                countdownTimer.cancel() // 타이머 일시정지
+                restStartTime = System.currentTimeMillis() // 휴식시작 시간 저장
+                WorkoutState.remainSec.value = 120*1000L - WorkoutState.elapSec.value!! // '남은시간' = 2분 - '경과시간'
+            }
+            else{
+                WorkoutState.restTotalTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
+                startTimer()    // 타이머 재개
+            }
         }
+        // 운동 종료 버튼
         binding.woBtnStop.setOnClickListener {
-            Log.d("디버깅","운동 강제 종료")
-            val intent = Intent(this, WOReportActivity::class.java)
-            intent.putExtra("index", workoutIdx)
-            startActivity(intent)
-            finish()
+            countdownTimer.cancel()
+            startNextActivity()
         }
 
         // 임시 카운트 증가 버튼
 //        binding.woBtnCount.setOnClickListener {
 //            WorkoutState.count += 1
 //        }
-        // 임시 운동 종료 로직
+
+        // 운동 세트 충족시 운동 종료
         WorkoutState.mySet.observe(this, Observer{
-            Log.d("디버깅","mySet updated! : $it")
             if(it == WorkoutState.setTotal+1){
-                Log.d("디버깅","it==setTotal+1")
-                val intent = Intent(this, WOReportActivity::class.java)
-                intent.putExtra("index", workoutIdx)
-                startActivity(intent)
-                finish()
+                countdownTimer.cancel()
+                startNextActivity()
             }
         })
     }
@@ -166,33 +175,62 @@ class WOActivity : AppCompatActivity() {
         WorkoutState.count = 0
         WorkoutState.set = 1
         WorkoutState.mySet.value = 1    // 임시 livedata 초기화
+        WorkoutState.elapSec.value = 0  // 경과 시간 초기화
+        WorkoutState.remainSec.value = 120*1000L  // 남은 시간 초기화
+
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
         binding.woTvSet.text = WorkoutState.setTotal.toString()
         binding.woTvCount.text = WorkoutState.count.toString()
-        val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
-        binding.woTvElapTime.text =
-            String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
-        val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
-        binding.woTvRemainTime.text =
-            String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
+//        val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec.value!!)
+//        binding.woTvElapTime.text =
+//            String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+//        val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec.value!!)
+//        binding.woTvRemainTime.text =
+//            String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
     }
 
-    private fun startTimer() {
-        timer(period = 1000) {
-            runOnUiThread {
-                if (WorkoutState.remainSec > 0) WorkoutState.remainSec -= 1
-                WorkoutState.elapSec += 1
+//    private fun startTimer() {
+//        timer(period = 1000) {
+//            runOnUiThread {
+//                Log.d("타이머","$debugging")
+//                if (WorkoutState.remainSec.value!! > 0) WorkoutState.remainSec.value = WorkoutState.remainSec.value!! - 1
+//                WorkoutState.elapSec.value = WorkoutState.elapSec.value?.plus(1)
+//
+//                val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec.value!!)
+//                binding.woTvElapTime.text =
+//                    String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
+//                val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec.value!!)
+//                binding.woTvRemainTime.text =
+//                    String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
+//            }
+//        }
+//    }
+    private fun startTimer(){
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
 
-                val elapTime = TimeCalc.secToHourMinSec(WorkoutState.elapSec)
-                binding.woTvElapTime.text =
-                    String.format("%02d:%02d:%02d", elapTime[0], elapTime[1], elapTime[2])
-                val remainTime = TimeCalc.secToHourMinSec(WorkoutState.remainSec)
-                binding.woTvRemainTime.text =
-                    String.format("%02d:%02d:%02d", remainTime[0], remainTime[1], remainTime[2])
+        countdownTimer = object : CountDownTimer(WorkoutState.remainSec.value!!,1000){
+            override fun onTick(millisUntilFinished: Long) {    // 1초마다 호출되는 함수
+                // 기능1 : 남은시간, 경과시간 계산
+                // 기능2 : 남은시간, 경과시간 텍스트 수정
+                WorkoutState.remainSec.value = millisUntilFinished
+                Log.d("최승호", "$millisUntilFinished,${timeFormat.format(millisUntilFinished)}")
+                binding.woTvRemainTime.text = milliSecFormat(WorkoutState.remainSec.value!!)
+                WorkoutState.elapSec.value = WorkoutState.elapSec.value!! + 1000
+                binding.woTvElapTime.text = milliSecFormat(WorkoutState.elapSec.value!!)
             }
-        }
-    }
 
+            override fun onFinish() {   // 타이머의 시간이 종료되면 호출되는 함수
+                // 기능 : 다음 액티비티로 전환
+                startNextActivity()
+            }
+        }.start()
+    }
+    private fun startNextActivity(){
+        val intent = Intent(this, WOReportActivity::class.java)
+        intent.putExtra("index", workoutIdx)
+        startActivity(intent)
+        finish()
+    }
     public override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume")
@@ -204,6 +242,11 @@ class WOActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         binding.woPvPreviewView.stop()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        countdownTimer.cancel()
     }
 
     public override fun onDestroy() {
