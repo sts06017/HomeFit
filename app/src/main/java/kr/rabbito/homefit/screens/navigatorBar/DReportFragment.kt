@@ -21,6 +21,7 @@ import kr.rabbito.homefit.R
 import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddActivity
+import kr.rabbito.homefit.screens.DAddTypeSelectActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
 
@@ -90,7 +91,7 @@ class DReportFragment : Fragment() {
         createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, dreportVGraph2)
 
         binding.dreportBtnAdd.setOnClickListener {
-            startActivity(Intent(activity, DAddActivity::class.java))
+            startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
         }
 
         binding.dreportBtnHistory.setOnClickListener {

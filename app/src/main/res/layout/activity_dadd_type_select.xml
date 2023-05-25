@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.DAddTypeSelectActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dadd_type_select_cl_top"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dadd_type_select_btn_back"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:src="@drawable/basic_icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/dadd_type_select_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dadd_type_select_tv_title" />
+
+        <TextView
+            android:id="@+id/dadd_type_select_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/eulyoo1945_regular"
+            android:includeFontPadding="false"
+            android:text="식단정보 추가"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/dadd_type_select_btn_back"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="312dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dadd_type_select_cl_top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dadd_type_select_cl_bot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_type_select_cl_auto_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/dadd_type_select_tv_auto_input_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/eulyoo1945_regular"
+                        android:includeFontPadding="false"
+                        android:text="자동 입력"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dadd_type_select_tv_auto_input_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="앨범에서 선택하거나 새로 촬영한 음식의 영양정보가 자동으로 입력됩니다."
+                        android:textColor="@color/lightGray"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dadd_type_select_tv_auto_input_title" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dadd_type_select_tv_auto_input_comment">
+
+                        <ImageView
+                            android:id="@+id/dadd_type_select_iv_base_line"
+                            android:layout_width="0.75dp"
+                            android:layout_height="72.75dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/dadd_type_select_line"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/dadd_type_select_btn_camera"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_marginEnd="52dp"
+                            android:background="@drawable/dadd_type_select_btn_camera_large"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/dadd_type_select_iv_base_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="82dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:includeFontPadding="false"
+                            android:text="사진 촬영"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="@id/dadd_type_select_btn_camera"
+                            app:layout_constraintStart_toStartOf="@id/dadd_type_select_btn_camera"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_type_select_btn_camera" />
+
+                        <Button
+                            android:id="@+id/dadd_type_select_btn_album"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_marginStart="52dp"
+                            android:background="@drawable/dadd_type_select_btn_album_large"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/dadd_type_select_iv_base_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="82dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:includeFontPadding="false"
+                            android:text="앨범에서 선택"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="@id/dadd_type_select_btn_album"
+                            app:layout_constraintStart_toStartOf="@id/dadd_type_select_btn_album"
+                            app:layout_constraintTop_toBottomOf="@id/dadd_type_select_btn_album" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_type_select_cl_passive_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_type_select_cl_auto_input">
+
+                    <TextView
+                        android:id="@+id/dadd_type_select_tv_passive_input_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/eulyoo1945_regular"
+                        android:includeFontPadding="false"
+                        android:text="직접 입력"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dadd_type_select_tv_passive_input_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="음식의 영양정보를 직접 입력합니다."
+                        android:textColor="@color/lightGray"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dadd_type_select_tv_passive_input_title" />
+
+                    <Button
+                        android:id="@+id/dadd_type_select_btn_passive_input"
+                        android:layout_width="296dp"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="32dp"
+                        android:background="@drawable/dadd_select_type_passive_input"
+                        android:paddingStart="22dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:includeFontPadding="false"
+                        android:text="영양정보 직접 입력"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textAlignment="textStart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dadd_type_select_tv_passive_input_comment" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
