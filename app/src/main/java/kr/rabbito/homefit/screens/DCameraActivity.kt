@@ -3,7 +3,6 @@ package kr.rabbito.homefit.screens
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,10 +17,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
-import kr.rabbito.homefit.screens.navigatorBar.DReportFragment
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
-import java.net.SocketException
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -50,12 +47,8 @@ class DCameraActivity : AppCompatActivity() {
 
         // 연결, 사용자명 전송
         Thread {
-            try {
-                client!!.sendRequest()
-                client!!.sendUserName("User")
-            } catch (e: NullPointerException) {
-                Log.d("connection", "socket not initialized")
-            }
+            client!!.sendRequest()
+            client!!.sendUserName("User")
         }.start()
 
         // 안내화면
@@ -143,16 +136,12 @@ class DCameraActivity : AppCompatActivity() {
                             binding.dcameraBtnShot.alpha = 0.5f
                         }
 
-                        client!!.sendImage(bitmap)
-
                         var data: String? = null
-                        try {
-                            data = client!!.getData()!!
-                        } catch (e: SocketException) {
-                            // 양 추정 도중에 취소 버튼 누른 경우
-                            Log.d("connection", "socket closed")
-                        }
 
+                        runOnUiThread {
+                            client!!.sendImage(this@DCameraActivity, bitmap)
+                            data = client!!.getData(this@DCameraActivity)
+                        }
 
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.INVISIBLE
@@ -163,8 +152,6 @@ class DCameraActivity : AppCompatActivity() {
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
                             startActivity(intent)
-                        } else {
-                            finish()
                         }
                     }.start()
                 }

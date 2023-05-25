@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kr.rabbito.homefit.client.HomeFitClient
-import kr.rabbito.homefit.databinding.ActivityDaddBinding
 import kr.rabbito.homefit.databinding.ActivityDimageBinding
 import kr.rabbito.homefit.utils.calc.Converter
 
@@ -40,8 +39,8 @@ class DImageActivity : AppCompatActivity() {
                 binding.dimageIvBackground.setImageURI(imageUri)
             }
 
-            client!!.sendImage(bitmap)
-            val data = client!!.getData()!!
+            client!!.sendImage(this, bitmap)
+            val data = client!!.getData(this@DImageActivity)!!
 
             val intent = Intent(this@DImageActivity, MainActivity::class.java)
             intent.putExtra("VIEW_PAGER_INDEX", 1)
