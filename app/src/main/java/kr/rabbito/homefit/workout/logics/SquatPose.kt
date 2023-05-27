@@ -75,7 +75,7 @@ class SquatPose: WorkoutPose() {
     }
 
     // 세트가 끝났는지 확인
-    private fun checkSetCondition() {
+    fun checkSetCondition() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1

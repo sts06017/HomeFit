@@ -86,6 +86,7 @@ class WOHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, conte
                 db.workoutDAO().getWorkoutByDate(date)
             }
             // 메인 스레드에서 UI를 갱신.
+//            val adapter = WOHistoryAdapter(workouts)
             val adapter = WOHistoryAdapter(workouts)
             recyclerView.adapter = adapter
         }

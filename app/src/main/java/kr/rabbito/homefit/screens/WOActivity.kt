@@ -7,18 +7,23 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutView.WorkoutView
+import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import kr.rabbito.homefit.utils.calc.TimeCalc.Companion.milliSecFormat
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
+import kr.rabbito.homefit.workout.logics.SquatPose
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
 import kr.rabbito.homefit.workout.poseDetection.PoseDetectorProcessor
 import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class WOActivity : AppCompatActivity() {
     private var mBinding: ActivityWoBinding? = null
@@ -31,7 +36,7 @@ class WOActivity : AppCompatActivity() {
     private lateinit var countdownTimer : CountDownTimer
     private var restStartTime = 0L
     private var workoutIdx = 0
-
+    private val woStartTime = LocalDateTime.now().format(timeFormatter)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
@@ -80,9 +85,11 @@ class WOActivity : AppCompatActivity() {
         }
 
         // 임시 카운트 증가 버튼
-//        binding.woBtnCount.setOnClickListener {
-//            WorkoutState.count += 1
-//        }
+        binding.woBtnCount.setOnClickListener {
+            WorkoutState.count += 1
+            WorkoutState.totalCount += 1
+            SquatPose().checkSetCondition()
+        }
 
         // 운동 세트 충족시 운동 종료
         WorkoutState.mySet.observe(this, Observer{
@@ -212,7 +219,6 @@ class WOActivity : AppCompatActivity() {
                 // 기능1 : 남은시간, 경과시간 계산
                 // 기능2 : 남은시간, 경과시간 텍스트 수정
                 WorkoutState.remainSec.value = millisUntilFinished
-                Log.d("최승호", "$millisUntilFinished,${timeFormat.format(millisUntilFinished)}")
                 binding.woTvRemainTime.text = milliSecFormat(WorkoutState.remainSec.value!!)
                 WorkoutState.elapSec.value = WorkoutState.elapSec.value!! + 1000
                 binding.woTvElapTime.text = milliSecFormat(WorkoutState.elapSec.value!!)
@@ -225,11 +231,13 @@ class WOActivity : AppCompatActivity() {
         }.start()
     }
     private fun startNextActivity(){
+        val newWorkout = Workout(null, WorkoutData.workoutNamesKOR[workoutIdx], WorkoutState.setTotal, WorkoutState.totalCount, WorkoutState.elapSec.value, LocalDate.now(), woStartTime, WorkoutState.totalRestTime)
         val intent = Intent(this, WOReportActivity::class.java)
         intent.putExtra("index", workoutIdx)
-        intent.putExtra("count", WorkoutState.totalCount)
-        intent.putExtra("woTime", WorkoutState.elapSec.value)
-        intent.putExtra("restTime", WorkoutState.totalRestTime)
+        intent.putExtra("workout", newWorkout)
+//        intent.putExtra("count", WorkoutState.totalCount)
+//        intent.putExtra("woTime", WorkoutState.elapSec.value)
+//        intent.putExtra("restTime", WorkoutState.totalRestTime)
         startActivity(intent)
         finish()
     }

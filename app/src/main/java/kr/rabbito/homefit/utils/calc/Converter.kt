@@ -8,6 +8,8 @@ import android.net.Uri
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class Converter {
     companion object {
@@ -53,6 +55,12 @@ class Converter {
         fun pxToSp(px: Float): Float{
             return px / Resources.getSystem().displayMetrics.scaledDensity
         }
+
+
+        val dateFormatter_ko = DateTimeFormatter.ofPattern("yyyy년 M월 dd일")
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd")
+        val timeFormatter = DateTimeFormatter.ofPattern( "a hh시 mm분").withLocale(Locale.forLanguageTag("ko"))
+
     }
 }
 
