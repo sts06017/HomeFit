@@ -235,9 +235,7 @@ class WOActivity : AppCompatActivity() {
         val intent = Intent(this, WOReportActivity::class.java)
         intent.putExtra("index", workoutIdx)
         intent.putExtra("workout", newWorkout)
-//        intent.putExtra("count", WorkoutState.totalCount)
-//        intent.putExtra("woTime", WorkoutState.elapSec.value)
-//        intent.putExtra("restTime", WorkoutState.totalRestTime)
+
         startActivity(intent)
         finish()
     }

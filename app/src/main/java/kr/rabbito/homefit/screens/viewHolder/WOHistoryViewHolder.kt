@@ -33,7 +33,6 @@ class WOHistoryViewHolder(private val binding: WohistoryItemBinding)
     }
 
     override fun onClick(v: View?) {
-        Log.d("최승호","list onclick")
         if (this.workout != null) {
             val intent = Intent(itemView.context, WOReportActivity::class.java).apply {
                 putExtra("workout", workout)

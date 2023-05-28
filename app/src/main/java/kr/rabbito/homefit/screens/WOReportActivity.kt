@@ -37,78 +37,37 @@ class WOReportActivity : AppCompatActivity() {
     private var userDB: UserDB? = null
     private var userId: Long? = null
     private var workoutDB: WorkoutDB? = null
-    private var workoutId: Int = 0
     private lateinit var workout: Workout
 
     private var weight = 0
-//    private lateinit var currentCounts
-//    private var totalCount: Int = 0
-//    private var workoutTime: Long = 0
-//    private var totalRestTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoreportBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         workoutDB = Room.databaseBuilder(
             this, WorkoutDB::class.java, "workout"
-        )//.fallbackToDestructiveMigration()
-            .build()
+        ).build()
         userDB = UserDB.getInstance(this)
         userId = 0L  // 임시
         getWeightById(userId!!)  // 사용자 몸무게 정보 불러오고 소모칼로리 계산.
 
         workout = intent.getParcelableExtra("workout")!!
-//        workoutId = workout.id!!
-        Log.d("최승호","workout id: ${workout.id}, count: ${workout.count}")
-        getCurrentCounts(workout.id)
+
+        getCurrentCounts(workout.id)    // 최근 운동기록의 횟수 가져오고, lineChart에 출력
         initView()
 
-        val woreportVGraph1 = binding.woreportVGraph1
-        val woreportVGraph2 = binding.woreportVGraph2
+        val woTimeData = mutableMapOf<String,Float>()
+        woTimeData["운동"] = workout.woDuration!!.toFloat() / 60000
+        woTimeData["휴식"]= workout.restTime!!.toFloat() / 60000
 
-        val pieDateTest = mutableMapOf<String,Float>()
-        pieDateTest["운동"] = workout.woDuration!!.toFloat() / 60000
-        pieDateTest["휴식"]= workout.restTime!!.toFloat() / 60000
-
-        createPieGraph(pieDateTest,woreportVGraph1)
-
-        val xLineData = mutableListOf<String>()
-        xLineData.add("Jan")
-        xLineData.add("Feb")
-        xLineData.add("Mar")
-        xLineData.add("Apr")
-        xLineData.add("May")
-        xLineData.add("Jun")
-
-        val yLineData = mutableListOf<Int>()
-//        yLineData.add(40)
-//        yLineData.add(10)
-//        yLineData.add(30)
-//        yLineData.add(3)
-//        yLineData.add(35)
-//        yLineData.add(25)
-
-//        val newWorkout = Workout(
-//            id = null,호
-//            workoutName = WorkoutData.workoutNamesKOR[workoutIdx],
-//            set = 3,
-//            count = 10,
-//            woDuration = 0,
-//            date = LocalDate.now(),
-//            time = LocalDateTime.now().format(formatter().timeFormatter),
-//            restTime = 0L,
-//        )
-
-//        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
+        createPieGraph(woTimeData,binding.woreportVGraph1)
 
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }
-//        val migration_3_4 = object : Migration(3,4) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("DROP TABLE IF EXISTS Workout")
-//            }
-//        }
+
         binding.woreportBtnSaveReport.setOnClickListener {
             // 운동 결과 DB저장
             CoroutineScope(Dispatchers.IO).launch {
@@ -118,6 +77,12 @@ class WOReportActivity : AppCompatActivity() {
             startActivity(Intent(this,WOHistoryActivity::class.java))
         }
         binding.woreportBtnDeleteReport.setOnClickListener {
+            // 운동 결과 DB삭제
+            if (workout.id != null){
+                CoroutineScope(Dispatchers.IO).launch {
+                    workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
+                }
+            }
             startActivity(Intent(this,MainActivity::class.java))
         }
 
@@ -127,8 +92,6 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportTvCorrectTime.text = TimeCalc.milliSecFormat(workout.woDuration!!)
         binding.woreportTvStopTime.text = TimeCalc.milliSecFormat(workout.restTime!!)
         binding.woreportTvDate.text = workout.date!!.format(dateFormatter_ko) // 임시
-//        piechart 출력
-//        linechart 출력
 
     }
 
@@ -181,7 +144,6 @@ class WOReportActivity : AppCompatActivity() {
         }
     }
 
-    // line chart -> 데이터 최신화 및 변동 데이터 입력 처리 필요
     fun createLineChart(yValues : MutableList<Float>, chart: LineChart){
         val entries = ArrayList<Entry>()
         var y = 10
@@ -192,20 +154,12 @@ class WOReportActivity : AppCompatActivity() {
         }
 
         val xValues = ArrayList<String>()
-        xValues.add("Jan")
-        xValues.add("Feb")
-        xValues.add("Mar")
-        xValues.add("Apr")
-        xValues.add("May")
-        xValues.add("Jun")
-
-//        val yValues = ArrayList<Entry>()
-//        yValues.add(Entry(10f, 50F))
-//        yValues.add(Entry(20f, 10F))
-//        yValues.add(Entry(30f, 30F))
-//        yValues.add(Entry(40f, 3F))
-//        yValues.add(Entry(50f, 40F))
-//        yValues.add(Entry(60f, 30F))
+        xValues.add("0")
+        xValues.add("1")
+        xValues.add("2")
+        xValues.add("3")
+        xValues.add("4")
+        xValues.add("5")
 
         chart.xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
         chart.xAxis.position = XAxis.XAxisPosition.TOP
@@ -267,29 +221,16 @@ class WOReportActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             if (id == null){
                 woId = workoutDB?.workoutDAO()?.getMaxId()!!
-                Log.d("최승호","maxId: $woId")
             }
             else {
                 woId = woId!! - 1
             }
-            Log.d("최승호","woId: $woId")
 
             val currentCounts = workoutDB?.workoutDAO()?.getCurrentCounts(woId!!)?.reversed()?.toMutableList()
-            Log.d("최승호","curCounts: $currentCounts")
             woId?.let{
                 currentCounts?.let {
-                    // LineChart 데이터 가져온후 처리
-//                    if (currentCounts.size < 4) {
-//
-//                        val defaultValueSize = 4 - currentCounts.size
-//                        for (i in 1..defaultValueSize){
-//                            currentCounts.add(0)
-//                        }
-//                        Log.d("최승호","add 0 curCounts: $currentCounts")
-//                    }
                     currentCounts.add(workout.count!!)
                     val lineChartData = currentCounts.map { it.toFloat() }.toMutableList()
-                    Log.d("최승호", "lineCD: $lineChartData")
                     createLineChart(lineChartData, binding.woreportVGraph2)
                 }
             }
