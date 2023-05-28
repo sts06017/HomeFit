@@ -7,19 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS
@@ -28,22 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
-import kr.rabbito.homefit.data.User
 import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
 import kr.rabbito.homefit.utils.calc.Converter.Companion.dateFormatter_ko
-import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import kr.rabbito.homefit.utils.calc.TimeCalc
-import kr.rabbito.homefit.utils.calc.Converter.Companion.pxToSp
-import kr.rabbito.homefit.workout.WorkoutData
-import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.logics.getCalories
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class WOReportActivity : AppCompatActivity() {
     private var mBinding: ActivityWoreportBinding? = null
@@ -51,9 +36,12 @@ class WOReportActivity : AppCompatActivity() {
 
     private var userDB: UserDB? = null
     private var userId: Long? = null
+    private var workoutDB: WorkoutDB? = null
+    private var workoutId: Int = 0
     private lateinit var workout: Workout
 
     private var weight = 0
+//    private lateinit var currentCounts
 //    private var totalCount: Int = 0
 //    private var workoutTime: Long = 0
 //    private var totalRestTime: Long = 0
@@ -61,7 +49,7 @@ class WOReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoreportBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val db = Room.databaseBuilder(
+        workoutDB = Room.databaseBuilder(
             this, WorkoutDB::class.java, "workout"
         )//.fallbackToDestructiveMigration()
             .build()
@@ -70,7 +58,9 @@ class WOReportActivity : AppCompatActivity() {
         getWeightById(userId!!)  // 사용자 몸무게 정보 불러오고 소모칼로리 계산.
 
         workout = intent.getParcelableExtra("workout")!!
-        Log.d("최승호","count: ${workout.count}")
+//        workoutId = workout.id!!
+        Log.d("최승호","workout id: ${workout.id}, count: ${workout.count}")
+        getCurrentCounts(workout.id)
         initView()
 
         val woreportVGraph1 = binding.woreportVGraph1
@@ -109,7 +99,7 @@ class WOReportActivity : AppCompatActivity() {
 //            restTime = 0L,
 //        )
 
-        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
+//        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, woreportVGraph2)
 
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
@@ -122,7 +112,7 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportBtnSaveReport.setOnClickListener {
             // 운동 결과 DB저장
             CoroutineScope(Dispatchers.IO).launch {
-                db.workoutDAO().insert(workout)
+                workoutDB!!.workoutDAO().insert(workout)
             }
 
             startActivity(Intent(this,WOHistoryActivity::class.java))
@@ -192,29 +182,30 @@ class WOReportActivity : AppCompatActivity() {
     }
 
     // line chart -> 데이터 최신화 및 변동 데이터 입력 처리 필요
-    fun createLineChart(xValues : ArrayList<String>, yValues : ArrayList<Int>, chart: LineChart){
+    fun createLineChart(yValues : MutableList<Float>, chart: LineChart){
         val entries = ArrayList<Entry>()
         var y = 10
+
         for(i in yValues){
-            entries.add(Entry(y.toFloat(),i.toFloat()))
+            entries.add(Entry(y.toFloat(),i))
             y += 10
         }
 
-//        val xValues = ArrayList<String>()
-//        xValues.add("Jan")
-//        xValues.add("Feb")
-//        xValues.add("Mar")
-//        xValues.add("Apr")
-//        xValues.add("May")
-//        xValues.add("Jun")
+        val xValues = ArrayList<String>()
+        xValues.add("Jan")
+        xValues.add("Feb")
+        xValues.add("Mar")
+        xValues.add("Apr")
+        xValues.add("May")
+        xValues.add("Jun")
 
-        val yValues = ArrayList<Entry>()
-        yValues.add(Entry(10f, 50F))
-        yValues.add(Entry(20f, 10F))
-        yValues.add(Entry(30f, 30F))
-        yValues.add(Entry(40f, 3F))
-        yValues.add(Entry(50f, 40F))
-        yValues.add(Entry(60f, 30F))
+//        val yValues = ArrayList<Entry>()
+//        yValues.add(Entry(10f, 50F))
+//        yValues.add(Entry(20f, 10F))
+//        yValues.add(Entry(30f, 30F))
+//        yValues.add(Entry(40f, 3F))
+//        yValues.add(Entry(50f, 40F))
+//        yValues.add(Entry(60f, 30F))
 
         chart.xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
         chart.xAxis.position = XAxis.XAxisPosition.TOP
@@ -226,7 +217,7 @@ class WOReportActivity : AppCompatActivity() {
         leftAxis.textColor = Color.WHITE
 
 
-        val dataSet = LineDataSet(yValues, "횟수")
+        val dataSet = LineDataSet(entries, "횟수")
         dataSet.apply{
             color = Color.parseColor("#6BE3CF")
             lineWidth = 1f      // 그래프 선 두께 설정
@@ -267,6 +258,39 @@ class WOReportActivity : AppCompatActivity() {
             weight?.let{
                 withContext(Dispatchers.Main){
                     binding.woreportTvCalorie.text = getCalories(workout.workoutName!!, it, workout.count!!)
+                }
+            }
+        }
+    }
+    private fun getCurrentCounts(id: Int?) {
+        var woId = id
+        CoroutineScope(Dispatchers.IO).launch {
+            if (id == null){
+                woId = workoutDB?.workoutDAO()?.getMaxId()!!
+                Log.d("최승호","maxId: $woId")
+            }
+            else {
+                woId = woId!! - 1
+            }
+            Log.d("최승호","woId: $woId")
+
+            val currentCounts = workoutDB?.workoutDAO()?.getCurrentCounts(woId!!)?.reversed()?.toMutableList()
+            Log.d("최승호","curCounts: $currentCounts")
+            woId?.let{
+                currentCounts?.let {
+                    // LineChart 데이터 가져온후 처리
+//                    if (currentCounts.size < 4) {
+//
+//                        val defaultValueSize = 4 - currentCounts.size
+//                        for (i in 1..defaultValueSize){
+//                            currentCounts.add(0)
+//                        }
+//                        Log.d("최승호","add 0 curCounts: $currentCounts")
+//                    }
+                    currentCounts.add(workout.count!!)
+                    val lineChartData = currentCounts.map { it.toFloat() }.toMutableList()
+                    Log.d("최승호", "lineCD: $lineChartData")
+                    createLineChart(lineChartData, binding.woreportVGraph2)
                 }
             }
         }
