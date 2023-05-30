@@ -10,12 +10,21 @@ import java.nio.ByteBuffer
 
 class Converter {
     companion object {
+        fun resizeBitmap(bitmap: Bitmap): Bitmap {
+            val newWidth: Int = bitmap.width / 8
+            val newHeight: Int = bitmap.height / 8
+
+            val resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+
+            return resizedBitmap
+        }
+
         fun bitmapToByteArray(bitmap: Bitmap, ext: String): ByteArray {
             val stream = ByteArrayOutputStream()
             if (ext == "png") {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream)
             } else if (ext == "jpeg") {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
             }
 
             val result = stream.toByteArray()

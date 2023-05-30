@@ -152,6 +152,7 @@ class DCameraActivity : AppCompatActivity() {
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
                             startActivity(intent)
+                            finish()
                         }
                     }.start()
                 }

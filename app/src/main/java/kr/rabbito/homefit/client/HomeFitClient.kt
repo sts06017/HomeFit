@@ -48,7 +48,8 @@ class HomeFitClient {
 
 
     fun sendImage(context: Context, bitmap: Bitmap) {
-        val imageByteArray = Converter.bitmapToByteArray(bitmap, "jpeg")
+        val resizedBitmap = Converter.resizeBitmap(bitmap)
+        val imageByteArray = Converter.bitmapToByteArray(resizedBitmap, "jpeg")
 
         val message = makeMessage(2, imageByteArray)
         try {
