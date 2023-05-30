@@ -1,11 +1,14 @@
 package kr.rabbito.homefit.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.widget.Toast
@@ -35,6 +38,10 @@ class DCameraActivity : AppCompatActivity() {
 
     private lateinit var cameraAnimationListener: Animation.AnimationListener
 
+    private var dX = 0F
+    private var dY = 0F
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityDcameraBinding.inflate(layoutInflater)
@@ -58,6 +65,20 @@ class DCameraActivity : AppCompatActivity() {
 
         binding.dcameraBtnInfoBack.setOnClickListener {
             initView()
+        }
+
+        binding.dcameraIvSpoonFrame.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dX = motionEvent.rawX - view.x
+                    dY = motionEvent.rawY - view.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    view.x = motionEvent.rawX - dX
+                    view.y = motionEvent.rawY - dY
+                }
+            }
+            true
         }
 
         // 촬영 및 사진 전송
