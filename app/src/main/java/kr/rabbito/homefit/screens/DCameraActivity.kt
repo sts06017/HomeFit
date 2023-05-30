@@ -136,8 +136,13 @@ class DCameraActivity : AppCompatActivity() {
                             binding.dcameraBtnShot.alpha = 0.5f
                         }
 
+                        val startTime = System.currentTimeMillis()
+
                         client!!.sendImage(this@DCameraActivity, bitmap)
                         val data: String? = client!!.getData(this@DCameraActivity)
+
+                        val endTime = System.currentTimeMillis()
+                        Log.d("time gap", (endTime - startTime).toString())
 
                         if (client == null) {
                             Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()

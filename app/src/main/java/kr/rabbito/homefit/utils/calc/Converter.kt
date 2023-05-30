@@ -22,9 +22,9 @@ class Converter {
         fun bitmapToByteArray(bitmap: Bitmap, ext: String): ByteArray {
             val stream = ByteArrayOutputStream()
             if (ext == "png") {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
             } else if (ext == "jpeg") {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
             }
 
             val result = stream.toByteArray()

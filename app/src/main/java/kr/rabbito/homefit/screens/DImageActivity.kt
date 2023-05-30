@@ -47,8 +47,13 @@ class DImageActivity : AppCompatActivity() {
 
                 val bitmap = Converter.imageUriToBitmap(contentResolver, imageUri)
 
-                client!!.sendImage(this, bitmap)
-                val data: String? = client!!.getData(this)
+                val startTime = System.currentTimeMillis()
+
+                client!!.sendImage(this@DImageActivity, bitmap)
+                val data: String? = client!!.getData(this@DImageActivity)
+
+                val endTime = System.currentTimeMillis()
+                Log.d("time gap", (endTime - startTime).toString())
 
                 if (client == null) {
                     Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
