@@ -63,6 +63,7 @@ class PullUpPose: WorkoutPose() {
             ) {
                 Log.d("pull_up","down")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
                 checkSetCondition()

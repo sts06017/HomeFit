@@ -1,6 +1,5 @@
 package kr.rabbito.homefit.workout
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 
 class WorkoutState {
@@ -25,9 +24,10 @@ class WorkoutState {
         // 현재 운동 진행 상태
         var set = 1 // 몇 번째 세트인지
         var count = 0   // 몇 개 했는지
+        var totalCount = 0  // 총 몇 개 했는지
         var elapSec = MutableLiveData<Long>(0)    // 경과 시간
         var remainSec = MutableLiveData<Long>(120*1000L)  // 남은 시간
-        var restTotalTime = 0L  // 총 정지한 시간
+        var totalRestTime = 0L  // 총 정지한 시간
         var calorieBurned = 0   // 소모한 칼로리
 
         // 현재 자세 진행 상태

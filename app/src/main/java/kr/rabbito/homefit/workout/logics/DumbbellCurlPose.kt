@@ -76,6 +76,7 @@ class DumbbellCurlPose: WorkoutPose() {
             ) {
                 Log.d("dumbbell_curl","up")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
             }
         } catch (_: NullPointerException) {

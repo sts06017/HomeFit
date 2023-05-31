@@ -41,6 +41,7 @@ class LegRaisePose : WorkoutPose() {
             ) {
                 Log.d("leg_raise", "down")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
                 checkSetCondition()

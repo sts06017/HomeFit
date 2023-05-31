@@ -65,6 +65,7 @@ class SquatPose: WorkoutPose() {
                 Log.d("squat","up")
                 WorkoutState.isUp = true
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
 
                 checkSetCondition()
                 checkEnd()
@@ -74,7 +75,7 @@ class SquatPose: WorkoutPose() {
     }
 
     // 세트가 끝났는지 확인
-    private fun checkSetCondition() {
+    fun checkSetCondition() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1

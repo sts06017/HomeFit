@@ -1,8 +1,11 @@
 package kr.rabbito.homefit.workout.logics
 
+import android.util.Log
 import com.google.mlkit.vision.pose.PoseLandmark
 import kotlin.math.abs
 import kotlin.math.atan2
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 fun getAngle(
     firstPoint: PoseLandmark?,
@@ -50,5 +53,40 @@ fun getYDistance(
     } else {
         return Float.MIN_VALUE
     }
+}
+
+fun getCalories(
+    workoutName: String,
+    weight: Int,
+    count: Int
+): String {
+    Log.d("최승호","$workoutName, $weight, $count")
+    when(workoutName){
+        "팔굽혀펴기"-> {
+            val kcal = weight * 4.0/3600 * 8 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+        "턱걸이"-> {
+            val kcal = weight * 5.0/3600 * 8 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+        "스쿼트"-> {
+            val kcal = weight * 5.0/3600 * 8 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+        "사이드 레터럴 레이즈"-> {
+            val kcal = weight * 4.0/3600 * 5 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+        "덤벨 컬"-> {
+            val kcal = weight * 4.0/3600 * 3 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+        "레그 레이즈"-> {
+            val kcal = weight * 5.0/3600 * 4 * count
+            return "${round(kcal).toInt()}Kcal"
+        }
+    }
+    return "0Kcal"
 }
 

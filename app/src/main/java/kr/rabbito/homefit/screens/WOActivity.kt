@@ -7,22 +7,23 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutView.WorkoutView
-import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import kr.rabbito.homefit.utils.calc.TimeCalc.Companion.milliSecFormat
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
+import kr.rabbito.homefit.workout.logics.SquatPose
 import kr.rabbito.homefit.workout.poseDetection.CameraSource
 import kr.rabbito.homefit.workout.poseDetection.PoseDetectorProcessor
 import kr.rabbito.homefit.workout.poseDetection.PreferenceUtils
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import kotlin.concurrent.timer
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class WOActivity : AppCompatActivity() {
     private var mBinding: ActivityWoBinding? = null
@@ -35,7 +36,7 @@ class WOActivity : AppCompatActivity() {
     private lateinit var countdownTimer : CountDownTimer
     private var restStartTime = 0L
     private var workoutIdx = 0
-
+    private val woStartTime = LocalDateTime.now().format(timeFormatter)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
@@ -63,7 +64,6 @@ class WOActivity : AppCompatActivity() {
 
         // 운동 정지 버튼
         binding.woBtnPause.setOnClickListener {
-//            tts!!.raiseArmTTS() // tts 출력 테스트
             WorkoutState.rest = !WorkoutState.rest
             if(WorkoutState.rest){  // 휴식 상태일 때
                 countdownTimer.cancel() // 타이머 일시정지
@@ -71,12 +71,15 @@ class WOActivity : AppCompatActivity() {
                 WorkoutState.remainSec.value = 120*1000L - WorkoutState.elapSec.value!! // '남은시간' = 2분 - '경과시간'
             }
             else{
-                WorkoutState.restTotalTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
+                WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
                 startTimer()    // 타이머 재개
             }
         }
         // 운동 종료 버튼
         binding.woBtnStop.setOnClickListener {
+            if(WorkoutState.rest){
+                WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime
+            }
             countdownTimer.cancel()
             startNextActivity()
         }
@@ -84,6 +87,8 @@ class WOActivity : AppCompatActivity() {
         // 임시 카운트 증가 버튼
 //        binding.woBtnCount.setOnClickListener {
 //            WorkoutState.count += 1
+//            WorkoutState.totalCount += 1
+//            SquatPose().checkSetCondition()
 //        }
 
         // 운동 세트 충족시 운동 종료
@@ -173,6 +178,7 @@ class WOActivity : AppCompatActivity() {
         // 기본 위젯 로드
         Log.d("index", workoutIdx.toString())
         WorkoutState.count = 0
+        WorkoutState.totalCount = 0
         WorkoutState.set = 1
         WorkoutState.mySet.value = 1    // 임시 livedata 초기화
         WorkoutState.elapSec.value = 0  // 경과 시간 초기화
@@ -213,7 +219,6 @@ class WOActivity : AppCompatActivity() {
                 // 기능1 : 남은시간, 경과시간 계산
                 // 기능2 : 남은시간, 경과시간 텍스트 수정
                 WorkoutState.remainSec.value = millisUntilFinished
-                Log.d("최승호", "$millisUntilFinished,${timeFormat.format(millisUntilFinished)}")
                 binding.woTvRemainTime.text = milliSecFormat(WorkoutState.remainSec.value!!)
                 WorkoutState.elapSec.value = WorkoutState.elapSec.value!! + 1000
                 binding.woTvElapTime.text = milliSecFormat(WorkoutState.elapSec.value!!)
@@ -226,8 +231,11 @@ class WOActivity : AppCompatActivity() {
         }.start()
     }
     private fun startNextActivity(){
+        val newWorkout = Workout(null, WorkoutData.workoutNamesKOR[workoutIdx], WorkoutState.setTotal, WorkoutState.totalCount, WorkoutState.elapSec.value, LocalDate.now(), woStartTime, WorkoutState.totalRestTime)
         val intent = Intent(this, WOReportActivity::class.java)
         intent.putExtra("index", workoutIdx)
+        intent.putExtra("workout", newWorkout)
+
         startActivity(intent)
         finish()
     }

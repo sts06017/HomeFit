@@ -89,13 +89,14 @@ class WOHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, conte
             val adapter = WOHistoryAdapter(workouts)
             recyclerView.adapter = adapter
         }
-        /** DB 테이블 확인 코드
+        //** DB 테이블 확인 코드
         CoroutineScope(Dispatchers.IO).launch {
             val workouts : List<Workout> = db.workoutDAO().getAll()
+            Log.d("최승호","----Workout DB 조회----")
             workouts.forEach { workout ->
-                Log.d("Workout", "id: ${workout.id}, Name: ${workout.workoutName}, Set: ${workout.set}, Count: ${workout.count}, Duration: ${workout.woDuration}, Date: ${workout.date}, Time: ${workout.time}")
+                Log.d("최승호", "DB id:${workout.id},      Set:${workout.set}, Count:${workout.count},     Duration:${workout.woDuration},     Date:${workout.date},   Time:${workout.time},   Name:${workout.workoutName}")
             }
-        }**/
+        }
     }
 
     private fun configureBinders(daysOfWeek: List<DayOfWeek>) {
