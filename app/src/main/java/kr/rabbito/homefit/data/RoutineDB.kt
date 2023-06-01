@@ -6,20 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Workout::class], version = 4)
+@Database(entities = [Routine::class], version = 4)
 @TypeConverters(WorkoutTypeConverters::class) // 형 변환
-abstract class WorkoutDB : RoomDatabase() {
-    abstract fun workoutDAO(): WorkoutDAO
+abstract class RoutineDB : RoomDatabase() {
+    abstract fun routineDAO(): RoutineDAO
 
     companion object {
-        private var INSTANCE: WorkoutDB? = null
+        private var INSTANCE: RoutineDB? = null
 
-        fun getInstance(context: Context): WorkoutDB? {
+        fun getInstance(context: Context): RoutineDB? {
             if (INSTANCE == null) {
-                synchronized(WorkoutDB::class) {
+                synchronized(RoutineDB::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        WorkoutDB::class.java, "Workout.db"
+                        RoutineDB::class.java, "Routine.db"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
