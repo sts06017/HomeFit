@@ -24,9 +24,11 @@ class WOHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWohistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val caledar_v = binding.wohistoryVCalendar
         val calendar_tv_weekTitles = findViewById<ViewGroup>(R.id.wohistory_v_weekTitles)
         val calendar_tv_monthTitle = binding.wohistoryTvMonth
+
         WOHistorySetCalendar(caledar_v, calendar_tv_monthTitle,this, binding.wohistoryRvResults).setting()
         binding.wohistoryBtnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

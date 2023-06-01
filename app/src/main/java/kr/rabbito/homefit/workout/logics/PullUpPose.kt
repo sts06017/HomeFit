@@ -82,6 +82,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
             ) {
                 Log.d("pull_up","down")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
                 ttsArmFlag = false

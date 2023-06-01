@@ -99,6 +99,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
             ) {
                 Log.d("dumbbell_curl","up")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
                 ttsArmFlag = false

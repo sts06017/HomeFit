@@ -78,6 +78,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
                 Log.d("squat","up")
                 WorkoutState.isUp = true
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
 
                 ttsArmFlag = false
                 poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
@@ -90,7 +91,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
     }
 
     // 세트가 끝났는지 확인
-    private fun checkSetCondition() {
+    fun checkSetCondition() {
         if (WorkoutState.count == WorkoutState.setCondition) {
             WorkoutState.count = 0
             WorkoutState.set += 1

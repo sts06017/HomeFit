@@ -111,6 +111,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
             ) {
                 Log.d("side lateral raise","up")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = true
 
                 poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts

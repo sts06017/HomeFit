@@ -60,7 +60,7 @@
 
         <com.kizitonwose.calendarview.CalendarView
             android:layout_width="312dp"
-            android:layout_height="265dp"
+            android:layout_height="wrap_content"
             android:id="@+id/dhistory_v_calendar"
             app:cv_dayViewResource="@layout/calendar_day_layout"
             app:cv_scrollMode="paged"
@@ -79,14 +79,17 @@
 <!--            app:layout_constraintTop_toBottomOf="@id/dhistory_tv_title" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/dhistory_lv_foods"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dhistory_rv_foods"
         android:layout_width="296dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:paddingTop="16dp"
         android:scrollbars="none"
+        android:paddingBottom="300dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dhistory_cl_top" />
 </androidx.constraintlayout.widget.ConstraintLayout>

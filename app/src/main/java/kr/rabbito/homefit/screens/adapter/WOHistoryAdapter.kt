@@ -9,6 +9,7 @@ import kr.rabbito.homefit.screens.viewHolder.WOHistoryViewHolder
 
 class WOHistoryAdapter(private val workouts: List<Workout>)
     : RecyclerView.Adapter<WOHistoryViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WOHistoryViewHolder {
         val binding = WohistoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WOHistoryViewHolder(binding)
@@ -20,6 +21,7 @@ class WOHistoryAdapter(private val workouts: List<Workout>)
     }
 
     override fun getItemCount() = workouts.size
+
 
 
 }

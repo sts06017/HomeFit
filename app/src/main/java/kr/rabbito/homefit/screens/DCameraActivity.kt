@@ -1,14 +1,17 @@
 package kr.rabbito.homefit.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.opengl.Visibility
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -18,10 +21,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
-import kr.rabbito.homefit.screens.navigatorBar.DReportFragment
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
-import java.net.SocketException
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -37,6 +38,10 @@ class DCameraActivity : AppCompatActivity() {
 
     private lateinit var cameraAnimationListener: Animation.AnimationListener
 
+    private var dX = 0F
+    private var dY = 0F
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityDcameraBinding.inflate(layoutInflater)
@@ -50,12 +55,8 @@ class DCameraActivity : AppCompatActivity() {
 
         // 연결, 사용자명 전송
         Thread {
-            try {
-                client!!.sendRequest()
-                client!!.sendUserName("User")
-            } catch (e: NullPointerException) {
-                Log.d("connection", "socket not initialized")
-            }
+            client!!.sendRequest()
+            client!!.sendUserName("User")
         }.start()
 
         // 안내화면
@@ -66,12 +67,25 @@ class DCameraActivity : AppCompatActivity() {
             initView()
         }
 
+        binding.dcameraIvSpoonFrame.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dX = motionEvent.rawX - view.x
+                    dY = motionEvent.rawY - view.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    view.x = motionEvent.rawX - dX
+                    view.y = motionEvent.rawY - dY
+                }
+            }
+            true
+        }
+
         // 촬영 및 사진 전송
         binding.dcameraBtnShot.setOnClickListener {
             takeAndSendPhoto()
         }
 
-        // 임시
         binding.dcameraBtnCancel.setOnClickListener {
             finish()
         }
@@ -143,16 +157,17 @@ class DCameraActivity : AppCompatActivity() {
                             binding.dcameraBtnShot.alpha = 0.5f
                         }
 
-                        client!!.sendImage(bitmap)
+                        val startTime = System.currentTimeMillis()
 
-                        var data: String? = null
-                        try {
-                            data = client!!.getData()!!
-                        } catch (e: SocketException) {
-                            // 양 추정 도중에 취소 버튼 누른 경우
-                            Log.d("connection", "socket closed")
+                        client!!.sendImage(this@DCameraActivity, bitmap)
+                        val data: String? = client!!.getData(this@DCameraActivity)
+
+                        val endTime = System.currentTimeMillis()
+                        Log.d("time gap", (endTime - startTime).toString())
+
+                        if (client == null) {
+                            Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
                         }
-
 
                         runOnUiThread {
                             binding.dcameraClLoading.visibility = View.INVISIBLE
@@ -163,7 +178,6 @@ class DCameraActivity : AppCompatActivity() {
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
                             startActivity(intent)
-                        } else {
                             finish()
                         }
                     }.start()

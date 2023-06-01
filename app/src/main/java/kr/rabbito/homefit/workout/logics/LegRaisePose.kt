@@ -53,6 +53,7 @@ class LegRaisePose(context: Context) : WorkoutPose(context) {
             ) {
                 Log.d("leg_raise", "down")
                 WorkoutState.count += 1
+                WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
                 poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts

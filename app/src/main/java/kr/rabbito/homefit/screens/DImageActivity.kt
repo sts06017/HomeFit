@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import kr.rabbito.homefit.client.HomeFitClient
-import kr.rabbito.homefit.databinding.ActivityDaddBinding
 import kr.rabbito.homefit.databinding.ActivityDimageBinding
 import kr.rabbito.homefit.utils.calc.Converter
 
@@ -24,29 +24,49 @@ class DImageActivity : AppCompatActivity() {
 
         Thread {
             client = HomeFitClient()
+            client!!.sendRequest()
+            client!!.sendUserName("User")
 
-            try {
-                client!!.sendRequest()
-                client!!.sendUserName("User")
-            } catch (e: NullPointerException) {
-                Log.d("connection", "socket not initialized")
-            }
+            getAndSendPhoto()
+        }.start()
 
+        binding.dimageBtnCancel.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun getAndSendPhoto() {
+        Thread {
             val imageUriString = intent.getStringExtra("SELECTED_IMAGE")
-            val imageUri = Uri.parse(imageUriString)
+            if (imageUriString != null) {
+                val imageUri = Uri.parse(imageUriString)
+                Log.d("selected_image", imageUriString)
+                runOnUiThread {
+                    binding.dimageIvBackground.setImageURI(imageUri)
+                }
 
-            val bitmap = Converter.imageUriToBitmap(contentResolver, imageUri)
-            runOnUiThread {
-                binding.dimageIvBackground.setImageURI(imageUri)
+                val bitmap = Converter.imageUriToBitmap(contentResolver, imageUri)
+
+                val startTime = System.currentTimeMillis()
+
+                client!!.sendImage(this@DImageActivity, bitmap)
+                val data: String? = client!!.getData(this@DImageActivity)
+
+                val endTime = System.currentTimeMillis()
+                Log.d("time gap", (endTime - startTime).toString())
+
+                if (client == null) {
+                    Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                if (data != null) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("VIEW_PAGER_INDEX", 1)
+                    intent.putExtra("DATA", data)
+                    startActivity(intent)
+                }
             }
-
-            client!!.sendImage(bitmap)
-            val data = client!!.getData()!!
-
-            val intent = Intent(this@DImageActivity, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 1)
-            intent.putExtra("DATA", data)
-            startActivity(intent)
         }.start()
     }
 
