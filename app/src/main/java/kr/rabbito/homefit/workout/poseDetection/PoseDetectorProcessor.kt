@@ -64,7 +64,7 @@ class PoseDetectorProcessor(
     detector = PoseDetection.getClient(options)
     classificationExecutor = Executors.newSingleThreadExecutor()
 
-    workoutPose = WorkoutCore.workoutPoses[workoutIdx]
+    workoutPose = WorkoutCore(context, binding).workoutPoses[workoutIdx]
     workoutView = WorkoutCore(context, binding).workoutViews[workoutIdx]
   }
 

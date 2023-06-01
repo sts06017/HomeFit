@@ -1,8 +1,9 @@
 package kr.rabbito.homefit.workout.logics
 
+import android.content.Context
 import com.google.mlkit.vision.pose.Pose
 
-abstract class WorkoutPose {
+abstract class WorkoutPose(val context: Context) {
     open fun calculate(pose: Pose) {
         val coordinate = PoseCoordinate(pose)
 
