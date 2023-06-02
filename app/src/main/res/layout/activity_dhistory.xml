@@ -45,6 +45,13 @@
             android:textColor="@color/white"
             android:textSize="32sp"
             app:layout_constraintStart_toEndOf="@id/dhistory_btn_back" />
+<!--        <Button-->
+<!--            android:id="@+id/dhistory_btn_delete"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="db삭제"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/dhistory_tv_title"/>-->
+
 
         <TextView
             android:id="@+id/dhistory_tv_month"

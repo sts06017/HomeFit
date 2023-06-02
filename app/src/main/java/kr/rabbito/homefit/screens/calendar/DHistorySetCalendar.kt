@@ -17,12 +17,17 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
+import kr.rabbito.homefit.data.Diet
+import kr.rabbito.homefit.data.DietDB
+import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.CalendarDayLayoutBinding
+import kr.rabbito.homefit.screens.adapter.DReportAdapter
 import kr.rabbito.homefit.screens.adapter.WOHistoryAdapter
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -39,11 +44,13 @@ class DHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, contex
     private val title = title_
     private val recyclerView = recyclerView
     private val context = context
+    private var dietDB: DietDB? = null
 
 //    val calendarView:CalendarView = activity.findViewById(R.id.calendarView)
-    private val db = Room.databaseBuilder(context, WorkoutDB::class.java, "workout").build()
+//    private val db = Room.databaseBuilder(context, DietDB::class.java, "diet").build()
 
     fun setting() {
+        dietDB = DietDB.getInstance(context)
         recyclerView.layoutManager = LinearLayoutManager(context)
         calendarView.monthScrollListener = {
             // Select the first day of the visible month.
@@ -79,15 +86,24 @@ class DHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, contex
 
         // 추가 - DB에서 선택날짜에 해당되는 데이터를 리스트에 출력.
         // 기능3  : DB에서 선택날짜에 해당되는 데이터 리사이클러뷰에 출력.
-        /**(context as? LifecycleOwner)?.lifecycleScope?.launch {
-            val workouts = withContext(Dispatchers.IO) {
+        (context as? LifecycleOwner)?.lifecycleScope?.launch {
+            val diets = withContext(Dispatchers.IO) {
                 // 데이터베이스에서 데이터를 가져옴.
-                db.workoutDAO().getWorkoutByDate(date)
+                dietDB!!.DietDAO().getDietByDate(date)
             }
+            Log.d("DHistory","diets: $diets")
             // 메인 스레드에서 UI를 갱신.
-            val adapter = WOHistoryAdapter(workouts)
+            val adapter = DReportAdapter(diets)
             recyclerView.adapter = adapter
-        }**/
+        }
+        //** DB 테이블 확인 코드
+        CoroutineScope(Dispatchers.IO).launch {
+            val diets = dietDB!!.DietDAO().getAll()
+            Log.d("DHistory","----Diet DB 조회----")
+            diets.forEach { diet ->
+                    Log.d("DHistory", "DB id:${diet.id}, Name:${diet.foodName},  weight:${diet.weight},  Calorie:${diet.calorie},    Fat:${diet.fat},    Carbohydrate:${diet.carbohydrate},   Protein:${diet.protein},   Date:${diet.dDate}, Time:${diet.dTime}")
+            }
+        }
     }
 
     private fun configureBinders(daysOfWeek: List<DayOfWeek>) {
