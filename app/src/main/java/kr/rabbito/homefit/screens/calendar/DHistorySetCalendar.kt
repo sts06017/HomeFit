@@ -87,10 +87,10 @@ class DHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, contex
         // 추가 - DB에서 선택날짜에 해당되는 데이터를 리스트에 출력.
         // 기능3  : DB에서 선택날짜에 해당되는 데이터 리사이클러뷰에 출력.
         (context as? LifecycleOwner)?.lifecycleScope?.launch {
-            val diets = withContext(Dispatchers.IO) {
+            val diets =
                 // 데이터베이스에서 데이터를 가져옴.
                 dietDB!!.DietDAO().getDietByDate(date)
-            }
+
             Log.d("DHistory","diets: $diets")
             // 메인 스레드에서 UI를 갱신.
             val adapter = DReportAdapter(diets)

@@ -23,6 +23,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
@@ -41,6 +42,8 @@ import java.time.LocalDateTime
 
 // 기존의 DReportActivity.kt 파일
 data class DietInfo(@SerializedName("volume(cm^3)") val volume: Double, @SerializedName("weight(g)") val weight: Double, @SerializedName("calorie(kcal)") val calorie: Double, @SerializedName("fat(g)") val fat: Double, @SerializedName("carbohydrate(g)") val carbohydrate: Double, @SerializedName("protein(g)") val protein: Double)
+data class Nutrient(val carbohydrate: Double?, val protein: Double?, val fat: Double?)
+data class DietCalorie(val dDate: LocalDate, val totalCalorie: Double)
 typealias DietMap = Map<String, DietInfo>
 class DReportFragment : Fragment() {
     private var mBinding: FragmentDreportBinding? = null
@@ -86,12 +89,6 @@ class DReportFragment : Fragment() {
         val dreportVGraph1 = binding.dreportVGraph1
         val dreportVGraph2 = binding.dreportVGraph2
 
-        val pieDateTest = mutableMapOf<String,Float>()
-        pieDateTest["탄수화물"]=100f
-        pieDateTest["단백질"]=20f
-        pieDateTest["수분"]=10f
-
-        createPieGraph(pieDateTest, dreportVGraph1)
 
         val xLineData = mutableListOf<String>()
         xLineData.add("Jan")
@@ -103,7 +100,7 @@ class DReportFragment : Fragment() {
 
         val yLineData = mutableListOf<Int>()
 
-        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, dreportVGraph2)
+//        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, dreportVGraph2)
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
@@ -122,6 +119,8 @@ class DReportFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initView()
+        initPieChart()
+        initLineChart()
     }
     private fun initView(){
         CoroutineScope(Dispatchers.IO).launch {
@@ -135,6 +134,39 @@ class DReportFragment : Fragment() {
                     binding.dreportRvFoods.adapter = DReportAdapter(it)
                 }
             }
+        }
+    }
+    private suspend fun getTodayNutrients(): List<Diet>? { return dietDB?.DietDAO()?.getDietByDate(LocalDate.now()) }
+    private suspend fun getTodayCalories(): List<DietCalorie>? { return dietDB?.DietDAO()?.getCaloriesByDate() }
+    private fun saveToNutrientMap(diets: List<Diet>?): MutableMap<String,Float>{
+        val nutrientMap = mutableMapOf("탄수화물" to 0.0f, "단백질" to 0.0f, "지방" to 0.0f)
+        diets?.forEach {
+            nutrientMap["탄수화물"] = nutrientMap["탄수화물"]!! + it.carbohydrate!!.toFloat()
+            nutrientMap["단백질"] = nutrientMap["단백질"]!! + it.protein!!.toFloat()
+            nutrientMap["지방"] = nutrientMap["지방"]!! + it.fat!!.toFloat()
+        }
+        return nutrientMap
+    }
+    private fun saveToCalorieMap(calorie: List<DietCalorie>): MutableMap<String,Float>{
+        val calorieMap = mutableMapOf<String,Float>()
+        calorie.forEach {
+            calorieMap[it.dDate.toString()] = it.totalCalorie.toFloat()
+        }
+        return calorieMap
+    }
+    private fun initPieChart(){
+        CoroutineScope(Dispatchers.Main).launch {
+            val todayDiets = getTodayNutrients()
+            val nutrientMap = saveToNutrientMap(todayDiets)
+            createPieGraph(nutrientMap,binding.dreportVGraph1)
+        }
+    }
+    private fun initLineChart(){
+        CoroutineScope(Dispatchers.Main).launch{
+            val totalCalorie = getTodayCalories()
+            Log.d("DReport","totalCalorie: $totalCalorie")
+            val calorieMap = saveToCalorieMap(totalCalorie!!)
+            createLineChart(calorieMap,binding.dreportVGraph2)
         }
     }
     private fun insertDiet(dietMap: DietMap?) {
@@ -198,21 +230,18 @@ class DReportFragment : Fragment() {
     }
 
     // line chart -> 데이터 최신화 및 변동 데이터 입력 처리 필요
-    private fun createLineChart(xValues : ArrayList<String>, yValues : ArrayList<Int>, chart: LineChart){
+    private fun createLineChart( yValues : MutableMap<String,Float>, chart: LineChart){
         val entries = ArrayList<Entry>()
         var y = 10
         for(i in yValues){
-            entries.add(Entry(y.toFloat(),i.toFloat()))
+            entries.add(Entry(y.toFloat(),i.value))
             y += 10
         }
 
-//        val xValues = ArrayList<String>()
-//        xValues.add("Jan")
-//        xValues.add("Feb")
-//        xValues.add("Mar")
-//        xValues.add("Apr")
-//        xValues.add("May")
-//        xValues.add("Jun")
+        val xValues = ArrayList<String>()
+        for (i in yValues){
+            xValues.add(i.key)
+        }
 
         val yValues = ArrayList<Entry>()
         yValues.add(Entry(10f, 2300F))
@@ -227,12 +256,12 @@ class DReportFragment : Fragment() {
         chart.xAxis.granularity = 5f
 
         val leftAxis = chart.axisLeft
-        leftAxis.axisMinimum = 2200f
+        leftAxis.axisMinimum = 0f
         leftAxis.axisMaximum = 2500f
         leftAxis.textColor = Color.WHITE
 
 
-        val dataSet = LineDataSet(yValues, "횟수")
+        val dataSet = LineDataSet(entries, "횟수")
         dataSet.apply{
             color = Color.parseColor("#6BE3CF")
             lineWidth = 1f      // 그래프 선 두께 설정
@@ -251,6 +280,7 @@ class DReportFragment : Fragment() {
             axisLeft.setDrawAxisLine(false)     // 좌측 y축 선 제거
             axisRight.setDrawAxisLine(false)    // 우측 y축 선 제거
             axisLeft.gridColor = Color.WHITE    // 가로 선 색 변경
+            axisLeft.setLabelCount(6,true)
             axisRight.isEnabled = false
             setTouchEnabled(false)
             description.isEnabled = false
