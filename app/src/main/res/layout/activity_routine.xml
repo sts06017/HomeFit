@@ -18,7 +18,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/routine_cl_top"
-        android:layout_width="312dp"
+        android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/routine_btn_back"
-            android:layout_width="8dp"
-            android:layout_height="16dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/basic_icon_back"
             app:layout_constraintBottom_toBottomOf="@id/routine_tv_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +38,13 @@
             android:id="@+id/routine_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/eulyoo1945_regular"
             android:includeFontPadding="false"
             android:text="세트설정 추가"
             android:textColor="@color/white"
             android:textSize="32sp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/routine_btn_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
