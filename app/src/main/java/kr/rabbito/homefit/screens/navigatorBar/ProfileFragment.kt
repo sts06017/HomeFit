@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kr.rabbito.homefit.data.User
 import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.databinding.FragmentProfileBinding
+import kr.rabbito.homefit.screens.InitActivity
 import kr.rabbito.homefit.screens.MainActivity
 import kr.rabbito.homefit.screens.RoutineListActivity
 
@@ -50,6 +51,10 @@ class ProfileFragment : Fragment() {
 
         binding.profileBtnSetList.setOnClickListener {
             startActivity(Intent(activity, RoutineListActivity::class.java))
+        }
+
+        binding.profileBtnEditProfile.setOnClickListener {
+            startActivity(Intent(activity, InitActivity::class.java))
         }
 
         return binding.root

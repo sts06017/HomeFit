@@ -67,6 +67,7 @@
 
         <include
             android:id="@+id/wohistory_v_weekTitles"
+            app:layout_constraintTop_toBottomOf="@id/wohistory_tv_month"
             layout="@layout/calendar_week_titles_container" />
 
         <com.kizitonwose.calendarview.CalendarView

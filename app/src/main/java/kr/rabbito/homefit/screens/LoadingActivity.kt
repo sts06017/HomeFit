@@ -7,6 +7,11 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.rabbito.homefit.data.User
+import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.databinding.ActivityLoadingBinding
 
 class LoadingActivity : AppCompatActivity() {
@@ -15,20 +20,22 @@ class LoadingActivity : AppCompatActivity() {
 
     private val CAMERA_REQUEST_CODE = 100
 
+    private var userDB: UserDB? = null
+    private var userId: Long? = null
+
+    private var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkPermission()
-    }
+        userDB = UserDB.getInstance(this)
 
-    private fun startLoading() {
-        val handler = Handler()
-        handler.postDelayed({
-            finish()
-            startActivity(Intent(this, InitActivity::class.java))
-        }, 1000)
+        userId = 0
+        loadUserById(userId!!)
+
+        checkPermission()
     }
 
     private fun checkPermission() {
@@ -58,6 +65,31 @@ class LoadingActivity : AppCompatActivity() {
                     startLoading()
                 } else {
                     finish()
+                }
+            }
+        }
+    }
+
+    private fun startLoading() {
+        val handler = Handler()
+        handler.postDelayed({
+            if (user == null) {
+                startActivity(Intent(this, InitActivity::class.java))
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("VIEW_PAGER_INDEX", 0)
+                startActivity(intent)
+            }
+            finish()
+        }, 1000)
+    }
+
+    private fun loadUserById(id: Long) {
+        if (userDB != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val users = userDB?.userDAO()?.getUserById(id)
+                if (users!!.isNotEmpty()) {
+                    user = users[0]
                 }
             }
         }
