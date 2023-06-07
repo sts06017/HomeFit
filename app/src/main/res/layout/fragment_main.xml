@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
                 <TextView
                     android:id="@+id/main_tv_title"
@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <HorizontalScrollView
@@ -175,10 +175,11 @@
                 android:layout_width="312dp"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:clipToPadding="false"
+                android:paddingTop="8dp"
                 android:numColumns="auto_fit"
-                android:paddingBottom="400dp"
+                android:paddingBottom="500dp"
                 android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
