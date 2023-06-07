@@ -1,6 +1,7 @@
 package kr.rabbito.homefit.screens.navigatorBar
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,9 @@ import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.databinding.FragmentMainBinding
+import kr.rabbito.homefit.screens.DHistoryActivity
 import kr.rabbito.homefit.screens.MainActivity
+import kr.rabbito.homefit.screens.WOHistoryActivity
 import kr.rabbito.homefit.screens.WoImageAdapter
 import kr.rabbito.homefit.utils.design.GridSpacingItemDecoration
 
@@ -36,6 +39,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
+
+        binding.mainBtnHistory.setOnClickListener {
+            startActivity(Intent(activity, WOHistoryActivity::class.java))
+        }
 
         // 운동 태그 리스트
         var tagBtns = arrayOf(binding.mainBtnAll, binding.mainBtnChest, binding.mainBtnShoulder, binding.mainBtnArm, binding.mainBtnWaist)
