@@ -6,13 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import kr.rabbito.homefit.R
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 
-class WoImageAdapter(private val context: Context, private val imageList: Array<Int>) : BaseAdapter(){
+class WoImageAdapter(private val context: Context, private val imageList: Array<Int>) :
+    RecyclerView.Adapter<WoImageAdapter.ViewHolder>() {
 
     private val woImages = mutableListOf(
         R.drawable.temp_push_up_tile,
@@ -25,85 +24,66 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
 
     var hiddenItems = mutableSetOf<Int>()
 
-    override fun getCount(): Int = woImages.size
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.gridview_imageview)
+    }
 
-    override fun getItem(position: Int): Any = woImages[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.gridview_wo_item, parent, false)
+        return ViewHolder(itemView)
+    }
 
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.imageView.setImageResource(woImages[position])
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
-        var imageView = convertView
-
-        if(convertView == null){
-//            imageView = ImageView(context)
-//            imageView.run{
-//                layoutParams = ViewGroup.LayoutParams(350,350)
-//                scaleType = ImageView.ScaleType.FIT_CENTER
-//                setPadding(10,10,10,10)
-            imageView = LayoutInflater.from(parent?.context).inflate(R.layout.gridview_wo_item,parent,false)
-            }
-//        }else{
-//        var imageView = convertView as ImageView
-//    }
-        imageView?.findViewById<ImageView>(R.id.gridview_imageview)?.setImageResource(woImages[position])
-        imageView?.setOnClickListener{
+        holder.imageView.setOnClickListener {
             val intent = Intent(context, WODetailActivity::class.java)
-            when (woImages[position]){
+            when (woImages[position]) {
                 imageList[0] -> {
-                    Log.d("gv test","push up")
-                    intent.putExtra("index",0)
-                    context.startActivity(intent)
+                    Log.d("gv test", "push up")
+                    intent.putExtra("index", 0)
                 }
                 imageList[1] -> {
-                    Log.d("gv test","chin up")
-                    intent.putExtra("index",1)
-                    context.startActivity(intent)
+                    Log.d("gv test", "chin up")
+                    intent.putExtra("index", 1)
                 }
                 imageList[2] -> {
                     Log.d("gv test", "squat")
-                    intent.putExtra("index",2)
-                    context.startActivity(intent)
+                    intent.putExtra("index", 2)
                 }
                 imageList[3] -> {
                     Log.d("gv test", "side lateral raise")
-                    intent.putExtra("index",3)
-                    context.startActivity(intent)
+                    intent.putExtra("index", 3)
                 }
                 imageList[4] -> {
-                    Log.d("gv test","dumbbell curl")
-                    intent.putExtra("index",4)
-                    context.startActivity(intent)
+                    Log.d("gv test", "dumbbell curl")
+                    intent.putExtra("index", 4)
                 }
                 imageList[5] -> {
                     Log.d("gv test", "leg raise")
-                    intent.putExtra("index",5)
-                    context.startActivity(intent)
+                    intent.putExtra("index", 5)
                 }
             }
+            context.startActivity(intent)
         }
-//        if(hiddenItems.contains(position)){
-//            imageView?.visibility = View.GONE
-//            notifyDataSetChanged()
-//        }else{
-//            imageView?.visibility = View.VISIBLE
-//        }
 
-        return imageView
+        if (hiddenItems.contains(position)) {
+            holder.itemView.visibility = View.GONE
+        } else {
+            holder.itemView.visibility = View.VISIBLE
+        }
     }
-    fun removeItem(){
+
+    override fun getItemCount(): Int = woImages.size
+
+    fun removeItem() {
         woImages.clear()
         notifyDataSetChanged()
     }
-    fun showItem(position: Array<Int>){
-//        for(i in position.iterator()){
-//            if (backup[i] != null){
-//                woImages.add(i, backup[i]!!)
-//                backup.removeAt(i)
-//            }else{
-//                woImages.add(i, R.drawable.main_iv_tag_lg)
-//            }
-//        }
-        for(i in position.indices) {
+
+    fun showItem(position: Array<Int>) {
+        for (i in position.indices) {
             woImages.add(position[i])
         }
         notifyDataSetChanged()

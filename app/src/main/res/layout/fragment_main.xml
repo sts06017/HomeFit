@@ -16,52 +16,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_cl_top"
-        android:layout_width="296dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_ab_top"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="48dp"
+        android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/main_tv_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_cl_top"
+            android:layout_width="296dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/eulyoo1945_regular"
-            android:includeFontPadding="false"
-            android:text="운동을 선택하세요."
-            android:textColor="@color/white"
-            android:textSize="32sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/init_tv_sub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:includeFontPadding="false"
-            android:text="운동을 선택해 시작하세요.\n자세 교정, 횟수 측정과 운동 결과 분석 기능을 제공합니다."
-            android:textColor="@color/lightGray"
-            android:textSize="15sp"
+            android:paddingTop="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_tv_title" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/main_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/eulyoo1945_regular"
+                android:includeFontPadding="false"
+                android:text="운동을 선택하세요."
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/init_tv_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:includeFontPadding="false"
+                android:text="운동을 선택해 시작하세요.\n자세 교정, 횟수 측정과 운동 결과 분석 기능을 제공합니다."
+                android:textColor="@color/lightGray"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_tv_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <HorizontalScrollView
+        android:id="@+id/main_lv_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_lv_tags"
         android:layout_marginTop="32dp"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_cl_top">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_ab_top">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,90 +82,86 @@
 
             <View
                 android:layout_width="32dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <Button
                 android:id="@+id/main_btn_all"
                 android:layout_width="70dp"
                 android:layout_height="32dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/main_iv_tag_s_clicked"
-                android:text="# 전체"
-                android:textSize="15sp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="# 전체"
                 android:textColor="@color/black"
-                android:layout_marginRight="10dp"/>
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/main_btn_chest"
                 android:layout_width="70dp"
                 android:layout_height="32dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/main_iv_tag_s"
-                android:text="# 가슴"
-                android:textSize="15sp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="# 가슴"
                 android:textColor="@color/white"
-                android:layout_marginRight="10dp"/>
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/main_btn_shoulder"
                 android:layout_width="70dp"
                 android:layout_height="32dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/main_iv_tag_s"
-                android:text="# 어깨"
-                android:textSize="15sp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="# 어깨"
                 android:textColor="@color/white"
-                android:layout_marginRight="10dp"/>
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/main_btn_arm"
                 android:layout_width="70dp"
                 android:layout_height="32dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/main_iv_tag_s"
-                android:text="# 팔"
-                android:textSize="15sp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="# 팔"
                 android:textColor="@color/white"
-                android:layout_marginRight="10dp"/>
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/main_btn_waist"
                 android:layout_width="70dp"
                 android:layout_height="32dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/main_iv_tag_s"
-                android:text="# 허리"
-                android:textSize="15sp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="# 허리"
                 android:textColor="@color/white"
-                android:layout_marginRight="10dp"/>
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="256dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ListView
-        android:id="@+id/main_lv_tags2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_cl_top" />
-
-    <GridView
-        android:id="@+id/main_gv_wos"
-        android:layout_width="296dp"
-        android:layout_height="450dp"
-        android:gravity="center"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="16dp"
-        android:horizontalSpacing="16dp"
-        android:scrollbars="none"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_rv_wos"
+        android:layout_width="312dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:numColumns="auto_fit"
+        android:paddingBottom="400dp"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_lv_tags" />
