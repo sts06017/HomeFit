@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Routine::class], version = 4)
+@Database(entities = [Routine::class], version = 1)
 @TypeConverters(WorkoutTypeConverters::class) // 형 변환
 abstract class RoutineDB : RoomDatabase() {
     abstract fun routineDAO(): RoutineDAO

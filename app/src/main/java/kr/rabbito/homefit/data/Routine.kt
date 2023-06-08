@@ -5,37 +5,38 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Routine")
 class Routine(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    @ColumnInfo(name = "setName") val setName: String?,
-    @ColumnInfo(name = "workoutName") val workoutName: String?,
-    @ColumnInfo(name = "set") val set: Int?,
-    @ColumnInfo(name = "count") val count: Int?,
-    @ColumnInfo(name = "restTime") val restTime: Long?
+    @ColumnInfo(name = "setName") var setName: String?,
+    @ColumnInfo(name = "workoutName") var workoutName: String?,
+    @ColumnInfo(name = "set") var set: Int?,
+    @ColumnInfo(name = "count") var count: Int?,
+    @ColumnInfo(name = "restTime") var restTime: Long?
 
-): Parcelable { // DB 객체 단위로 전달하기 위함
-    constructor(parcel: Parcel?): this(
-        parcel!!.readValue(Int::class.java.classLoader) as? Int,
+): Serializable{ // DB 객체 단위로 전달하기 위함
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Long::class.java.classLoader) as? Long?,
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readLong()
     )
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(id)
-        parcel.writeValue(setName)
-        parcel.writeString(workoutName)
-        parcel.writeValue(set)
-        parcel.writeValue(count)
-        parcel.writeValue(restTime)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
+//    override fun writeToParcel(parcel: Parcel, flags: Int) {
+//        parcel.writeValue(id)
+//        parcel.writeValue(setName)
+//        parcel.writeString(workoutName)
+//        parcel.writeValue(set)
+//        parcel.writeValue(count)
+//        parcel.writeValue(restTime)
+//    }
+//
+//    override fun describeContents(): Int {
+//        return 0
+//    }
     companion object CREATOR : Parcelable.Creator<Routine> {
         override fun createFromParcel(parcel: Parcel): Routine {
             return Routine(parcel)

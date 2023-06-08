@@ -51,32 +51,32 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
             when (woImages[position]){
                 imageList[0] -> {
                     Log.d("gv test","push up")
-                    intent.putExtra("index",0)
+                    intent.putExtra("workoutIndex",0)
                     context.startActivity(intent)
                 }
                 imageList[1] -> {
                     Log.d("gv test","chin up")
-                    intent.putExtra("index",1)
+                    intent.putExtra("workoutIndex",1)
                     context.startActivity(intent)
                 }
                 imageList[2] -> {
                     Log.d("gv test", "squat")
-                    intent.putExtra("index",2)
+                    intent.putExtra("workoutIndex",2)
                     context.startActivity(intent)
                 }
                 imageList[3] -> {
                     Log.d("gv test", "side lateral raise")
-                    intent.putExtra("index",3)
+                    intent.putExtra("workoutIndex",3)
                     context.startActivity(intent)
                 }
                 imageList[4] -> {
                     Log.d("gv test","dumbbell curl")
-                    intent.putExtra("index",4)
+                    intent.putExtra("workoutIndex",4)
                     context.startActivity(intent)
                 }
                 imageList[5] -> {
                     Log.d("gv test", "leg raise")
-                    intent.putExtra("index",5)
+                    intent.putExtra("workoutIndex",5)
                     context.startActivity(intent)
                 }
             }
