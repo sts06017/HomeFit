@@ -17,7 +17,7 @@ class Workout(
     @ColumnInfo(name = "date") val date: LocalDate?,
     @ColumnInfo(name = "time") val time: String?,
     @ColumnInfo(name = "restTime") val restTime: Long?,
-): Parcelable {
+): Parcelable { // DB 객체 단위로 전달하기 위함
     constructor(parcel: Parcel?): this(
         parcel!!.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),

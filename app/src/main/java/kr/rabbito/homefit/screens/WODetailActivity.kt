@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
+import kr.rabbito.homefit.data.Routine
 import kr.rabbito.homefit.databinding.ActivityWodetailBinding
 import kr.rabbito.homefit.workout.WorkoutData
 import kr.rabbito.homefit.workout.WorkoutState
@@ -16,35 +17,59 @@ import kr.rabbito.homefit.workout.WorkoutState
 class WODetailActivity : AppCompatActivity() {
     private var mBinding: ActivityWodetailBinding? = null
     private val binding get() = mBinding!!
+
+    private var Screen_Type = "from_WODetailActivity"
+    private lateinit var routine: Routine
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWodetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val workoutIndex = intent.getIntExtra("workoutIndex", 0)
 
-        val index = intent.getIntExtra("index", 0)
+        try { // 세트 불러오기 정보 적용
+            routine = (intent.getSerializableExtra("routine") as Routine?)!!
+            var count = binding.wodetailEtSetCount
+            Log.e("setnum",routine.set.toString() )
+            routine.set?.let { count.setText(it.toString()) } //
 
-        binding.wodetailTvTitle.text = WorkoutData.workoutNamesKOR[index]
-        binding.wodetailTvSubTitle.text = WorkoutData.workoutNamesENG[index]
-        binding.wodetailIvWo.setImageResource(WorkoutData.workoutImages[index])
-        binding.wodetailTvDetail.text = WorkoutData.workoutExplain[index]
+            var rest = binding.wodetailEtRestCount
+            routine.restTime?.let { rest.setText(it.toString()) }
+        } catch (e: NullPointerException) {
+            // routine이 null인 경우에 대한 처리
+            // 예를 들어, 초기 값을 설정하거나 에러 메시지를 표시할 수 있습니다.
+            Log.e("null routine", "routine 객체를 받지 않음")
+        } catch (e: Exception) {
+            // Parcelable 객체 읽기 실패에 대한 처리
+            // 예를 들어, 초기 값을 설정하거나 에러 메시지를 표시할 수 있습니다.
+            Log.e("parcelable error", "Parcelable 객체 읽기 실패")
+        }
 
-        if (index == 3) {
+        binding.wodetailTvTitle.text = WorkoutData.workoutNamesKOR[workoutIndex]
+        binding.wodetailTvSubTitle.text = WorkoutData.workoutNamesENG[workoutIndex]
+        binding.wodetailIvWo.setImageResource(WorkoutData.workoutImages[workoutIndex])
+        binding.wodetailTvDetail.text = WorkoutData.workoutExplain[workoutIndex]
+
+        if (workoutIndex == 3) {
             binding.wodetailTvTitle.textSize = 22F
             binding.wodetailTvSubTitle.textSize = 10F
         }
         // WorkoutState.setTotal = 3
 
+
         binding.wodetailBtnStartWo.setOnClickListener {
             // 임시
             // 운동 시작 버튼
             val intent = Intent(this, WOActivity::class.java)
-            intent.putExtra("index", index)
+            intent.putExtra("workoutIndex", workoutIndex)
             startActivity(intent)
         }
         binding.wodetailBtnLoad.setOnClickListener {
             // 세트 불러오기 버튼
             val intent = Intent(this, RoutineListActivity::class.java)
+            intent.putExtra("Starting Point", Screen_Type) // 화면 시작 위치
+            intent.putExtra("workoutIndex", workoutIndex)
             startActivity(intent)
         }
         binding.wodetailBtnSetCountSub.setOnClickListener{
@@ -60,7 +85,7 @@ class WODetailActivity : AppCompatActivity() {
             WorkoutState.setTotal = count.text.toString().toInt()
         }
         binding.wodetailBtnSetCountAdd.setOnClickListener {
-            // 세 증가버튼
+            // 세트 증가버튼
 
             var count = binding.wodetailEtSetCount
             if(!count.text.isNullOrEmpty()){

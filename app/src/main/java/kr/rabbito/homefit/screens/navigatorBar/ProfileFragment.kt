@@ -19,6 +19,7 @@ import kr.rabbito.homefit.databinding.FragmentProfileBinding
 import kr.rabbito.homefit.screens.InitActivity
 import kr.rabbito.homefit.screens.MainActivity
 import kr.rabbito.homefit.screens.RoutineListActivity
+import kr.rabbito.homefit.screens.WODetailActivity
 
 // 기존의 ProfileActivity.kt 파일
 class ProfileFragment : Fragment() {
@@ -30,6 +31,7 @@ class ProfileFragment : Fragment() {
 
     private var user: User? = null
 
+    private var Screen_Type = "from_ProfileActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,7 +42,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         mBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
@@ -49,9 +51,13 @@ class ProfileFragment : Fragment() {
         userId = 0L  // 임시
         loadUserById(userId!!)  // 사용자 정보 불러오고 TextView에 적용
 
-        binding.profileBtnSetList.setOnClickListener {
-            startActivity(Intent(activity, RoutineListActivity::class.java))
+        binding.profileBtnSetList.setOnClickListener {// 세트 추가 버튼
+            Log.e("buttontest001", "profile")
+            val intent = Intent(activity, RoutineListActivity::class.java)
+            intent.putExtra("Starting Point", Screen_Type) // 화면 시작 위치
+            startActivity(intent)
         }
+
 
         binding.profileBtnEditProfile.setOnClickListener {
             startActivity(Intent(activity, InitActivity::class.java))

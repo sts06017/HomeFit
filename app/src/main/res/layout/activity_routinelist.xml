@@ -47,16 +47,19 @@
             app:layout_constraintStart_toEndOf="@id/routinelist_btn_back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/routinelist_lv_sets"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/routine_rv_list"
         android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingTop="16dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="300dp"
         android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/routinelist_cl_top" />
+        android:layout_marginTop="118dp" />
+
 
     <Button
         android:id="@+id/dreport_btn_add"

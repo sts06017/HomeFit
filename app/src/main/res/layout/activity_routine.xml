@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    \
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/routine_cl_top"
         android:layout_width="336dp"
@@ -138,13 +139,22 @@
                         android:textSize="15sp" />
 
                     <!-- 드롭다운 라이브러리 -->
-                    <View
+<!--                    <View-->
+<!--                        android:id="@+id/routine_btn_album"-->
+<!--                        android:layout_width="296dp"-->
+<!--                        android:layout_height="44dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:background="@drawable/routine_iv_dropdown"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/routine_tv_select_wo" />-->
+                    <Spinner
                         android:id="@+id/routine_btn_album"
                         android:layout_width="296dp"
                         android:layout_height="44dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/routine_iv_dropdown"
                         app:layout_constraintTop_toBottomOf="@id/routine_tv_select_wo" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- 임시 항목 -->

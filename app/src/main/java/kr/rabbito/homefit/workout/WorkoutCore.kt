@@ -6,17 +6,17 @@ import kr.rabbito.homefit.screens.workoutView.*
 import kr.rabbito.homefit.workout.logics.*
 
 class WorkoutCore(val context: Context, val binding: ActivityWoBinding) {
-    companion object {
+
         // 로직 적용 위한 객체
         val workoutPoses = arrayListOf(
-            PushUpPose(),
-            PullUpPose(),
-            SquatPose(),
-            SideLateralRaisePose(),
-            DumbbellCurlPose(),
-            LegRaisePose()
+            PushUpPose(context),
+            PullUpPose(context),
+            SquatPose(context),
+            SideLateralRaisePose(context),
+            DumbbellCurlPose(context),
+            LegRaisePose(context)
         )
-    }
+
 
     // 위젯, 시각효과 적용 위한 객체
     val workoutViews = arrayListOf(
