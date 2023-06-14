@@ -9,7 +9,7 @@ import java.io.Serializable
 
 @Entity(tableName = "Routine")
 class Routine(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @PrimaryKey(autoGenerate = true) var id: Int?,
     @ColumnInfo(name = "setName") var setName: String?,
     @ColumnInfo(name = "workoutName") var workoutName: String?,
     @ColumnInfo(name = "set") var set: Int?,

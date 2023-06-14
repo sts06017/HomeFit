@@ -65,9 +65,6 @@ class RoutineListActivity : AppCompatActivity() {
         // 어댑터 연결 및 데이터베이스 작업
         GlobalScope.launch(Dispatchers.IO) {
             routine = db!!.routineDAO().getAll()
-            routine!!.forEach { routine ->
-                Log.e("routinelisttest", routine.setName.toString())
-            }
             withContext(Dispatchers.Main) {
                 binding.routineRvList.layoutManager = LinearLayoutManager(this@RoutineListActivity)
                 binding.routineRvList.adapter = RoutineListAdapter(routine!!, Screen_Type, workoutIndex)

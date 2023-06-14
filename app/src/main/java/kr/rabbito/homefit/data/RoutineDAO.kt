@@ -27,6 +27,9 @@ interface RoutineDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(routine: Routine)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(routine: Routine)
+
     @Query("DELETE FROM Routine WHERE id = :id")
     fun deleteRecord(id: Int)
 
