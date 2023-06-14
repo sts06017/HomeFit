@@ -35,8 +35,7 @@
                 android:paddingTop="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/main_tv_title"
@@ -178,9 +177,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:clipToPadding="false"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:numColumns="auto_fit"
-                android:paddingBottom="350dp"
+                android:paddingBottom="300dp"
                 android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
