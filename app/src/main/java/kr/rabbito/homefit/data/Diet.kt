@@ -11,35 +11,38 @@ import java.time.LocalDate
 class Diet(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "foodName") val foodName: String?,
-    @ColumnInfo(name = "calorie") val calorie: Int?,
+    @ColumnInfo(name = "weight") val weight: Double?,
+    @ColumnInfo(name = "calorie") val calorie: Double?,
+    @ColumnInfo(name = "carbohydrate") val carbohydrate: Double?,
+    @ColumnInfo(name = "protein") val protein: Double?,
+    @ColumnInfo(name = "fat") val fat: Double?,
     @ColumnInfo(name = "dDate") val dDate: LocalDate?,
     @ColumnInfo(name = "dTime") val dTime: String?,
-    @ColumnInfo(name = "carbohydrates") val carbohydrates: Long?,
-    @ColumnInfo(name = "protein") val protein: Long?,
-    @ColumnInfo(name = "fat") val fat: Long?,
-    @ColumnInfo(name = "water") val water: Long?,
+    @ColumnInfo(name = "jsonHash") val jsonHash: Int?,
 ): Parcelable {
     constructor(parcel: Parcel?): this(
         parcel!!.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(LocalDate::class.java.classLoader) as? LocalDate,
         parcel.readString(),
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
         parcel.writeString(foodName)
+        parcel.writeValue(weight)
         parcel.writeValue(calorie)
-        parcel.writeValue(dDate)
-        parcel.writeValue(dTime)
-        parcel.writeValue(carbohydrates)
+        parcel.writeValue(carbohydrate)
         parcel.writeValue(protein)
         parcel.writeValue(fat)
-        parcel.writeValue(water)
+        parcel.writeValue(dDate)
+        parcel.writeValue(dTime)
+        parcel.writeValue(jsonHash)
     }
 
     override fun describeContents(): Int {
