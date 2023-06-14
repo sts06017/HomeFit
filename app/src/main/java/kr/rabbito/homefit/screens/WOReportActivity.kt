@@ -93,6 +93,13 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportTvStopTime.text = TimeCalc.milliSecFormat(workout.restTime!!)
         binding.woreportTvDate.text = workout.date!!.format(dateFormatter_ko) // 임시
 
+        if(workout.id != null){
+            binding.woreportBtnSaveReport.text = "뒤로가기"
+            binding.woreportBtnSaveReport.setOnClickListener {
+                finish()
+            }
+        }
+
     }
 
     private fun createPieGraph(data: Map<String,Float>, chart: PieChart){

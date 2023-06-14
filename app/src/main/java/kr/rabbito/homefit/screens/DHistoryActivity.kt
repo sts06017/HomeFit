@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.R.*
+import kr.rabbito.homefit.data.DietDB
 import kr.rabbito.homefit.databinding.ActivityDhistoryBinding
 import kr.rabbito.homefit.screens.calendar.DHistorySetCalendar
 import kr.rabbito.homefit.screens.calendar.daysOfWeek
@@ -18,12 +22,13 @@ import java.util.Locale
 class DHistoryActivity : AppCompatActivity() {
     private var mBinding: ActivityDhistoryBinding? = null
     private val binding get() = mBinding!!
+    private var dietDB: DietDB? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityDhistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        dietDB = DietDB.getInstance(this)
         val calendar_v = binding.dhistoryVCalendar
         val calendar_tv_weekTitles = findViewById<ViewGroup>(R.id.dhistory_v_weekTitles)
         val calendar_v_monthTitle = binding.dhistoryTvMonth
@@ -36,6 +41,9 @@ class DHistoryActivity : AppCompatActivity() {
             intent.putExtra("VIEW_PAGER_INDEX",3)
             startActivity(intent)
         }
+//        binding.dhistoryBtnDelete.setOnClickListener {
+//            CoroutineScope(Dispatchers.IO).launch{ dietDB!!.DietDAO().deleteAll() }
+//        }
 
         calendar_tv_weekTitles.children
             .map { it as TextView }
