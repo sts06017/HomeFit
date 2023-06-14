@@ -61,7 +61,7 @@ class MainFragment : Fragment() {
         val woRecyclerView = binding.mainRvWos // 변경: GridView -> RecyclerView
 
         // custom adapter 객체 생성
-        val adapter = WoImageAdapter(requireContext(),woImages)
+        val adapter = WoImageAdapter(requireContext(), woImages)
 
         val layoutManager = GridLayoutManager(requireContext(), 2)
         woRecyclerView.layoutManager = layoutManager

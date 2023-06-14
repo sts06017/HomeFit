@@ -43,32 +43,26 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
                 imageList[0] -> {
                     Log.d("gv test","push up")
                     intent.putExtra("workoutIndex",0)
-                    context.startActivity(intent)
                 }
                 imageList[1] -> {
                     Log.d("gv test","chin up")
                     intent.putExtra("workoutIndex",1)
-                    context.startActivity(intent)
                 }
                 imageList[2] -> {
                     Log.d("gv test", "squat")
                     intent.putExtra("workoutIndex",2)
-                    context.startActivity(intent)
                 }
                 imageList[3] -> {
                     Log.d("gv test", "side lateral raise")
                     intent.putExtra("workoutIndex",3)
-                    context.startActivity(intent)
                 }
                 imageList[4] -> {
                     Log.d("gv test","dumbbell curl")
                     intent.putExtra("workoutIndex",4)
-                    context.startActivity(intent)
                 }
                 imageList[5] -> {
                     Log.d("gv test", "leg raise")
                     intent.putExtra("workoutIndex",5)
-                    context.startActivity(intent)
                 }
             }
             context.startActivity(intent)
