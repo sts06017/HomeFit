@@ -1,12 +1,16 @@
 package kr.rabbito.homefit.workout.logics
 
+import android.content.Context
 import android.util.Log
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
+import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 
-class SquatPose: WorkoutPose() {
+class SquatPose(context: Context): WorkoutPose(context) {
+    private val poseAdviceTTS = PoseAdviceTTS(context)
+    private var ttsArmFlag : Boolean = false
 
     override fun guidePose(c: PoseCoordinate) {
         try {
@@ -19,6 +23,15 @@ class SquatPose: WorkoutPose() {
             } else {
                 PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
                 PoseGraphic.leftElbowToLeftWristPaint = whitePaint
+            }
+
+            if(!ttsArmFlag
+                && (
+                        getAngle(c.leftHand, c.leftShoulder, c.leftHip) < 60    // 팔을 내리거나
+                        || getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 140  // 팔을 굽히면
+                        ) ){
+                poseAdviceTTS.frontStraightArmTTS()
+                ttsArmFlag = true
             }
 
             if (
@@ -67,6 +80,9 @@ class SquatPose: WorkoutPose() {
                 WorkoutState.count += 1
                 WorkoutState.totalCount += 1
 
+                ttsArmFlag = false
+                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+
                 checkSetCondition()
                 checkEnd()
             }
@@ -81,7 +97,10 @@ class SquatPose: WorkoutPose() {
             WorkoutState.set += 1
             WorkoutState.mySet.value = (WorkoutState.mySet.value!!) + 1 // 임시 live data 증가 코드
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
-        }
+
+            if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
+                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+            }        }
     }
 
     // 운동이 끝났는지 확인
@@ -89,6 +108,8 @@ class SquatPose: WorkoutPose() {
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
             Log.d("squat", "finish")
+
+            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
         }
     }
 }

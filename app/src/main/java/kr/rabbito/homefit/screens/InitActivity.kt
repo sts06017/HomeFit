@@ -24,6 +24,8 @@ class InitActivity : AppCompatActivity() {
         mBinding = ActivityInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val type = intent.getStringExtra("INIT_FROM")
+
         userDB = UserDB.getInstance(this)
 
         userId = 0L  // 임시

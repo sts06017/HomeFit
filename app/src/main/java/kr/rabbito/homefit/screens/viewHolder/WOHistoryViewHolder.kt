@@ -41,7 +41,7 @@ class WOHistoryViewHolder(private val binding: WohistoryItemBinding)
     override fun onClick(v: View?) {
         if (this.workout != null) {
             val intent = Intent(itemView.context, WOReportActivity::class.java).apply {
-                putExtra("workout", workout)
+                putExtra("workout", workout) // DB workout 객체
             }
             itemView.context.startActivity(intent)
         }

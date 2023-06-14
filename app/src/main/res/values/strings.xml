@@ -34,6 +34,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="routine_btn_album_items">
+        <item>팔굽혀펴기</item>
+        <item>턱걸이</item>
+        <item>스쿼트</item>
+        <item>사이드 레터럴 레이즈</item>
+        <item>덤벨 컬</item>
+        <item>레그 레이즈</item>
+    </string-array>
+
+
 
     <string name="dcamera_shot_guide">화면을 가로로 돌린 후,\n<b>숟가락</b>이 <b>좌측 사각형</b>에\n들어올 거리에서 촬영하세요.</string>
 </resources>
