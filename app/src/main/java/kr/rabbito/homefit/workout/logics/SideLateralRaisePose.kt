@@ -6,12 +6,10 @@ import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
+import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import kotlin.math.absoluteValue
 
-import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
-
-class SideLateralRaisePose(context: Context): WorkoutPose(context) {
-    private val poseAdviceTTS = PoseAdviceTTS(context)
+class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts) {
     private var ttsLowerFlag : Boolean = false
     private var ttsStraightFlag : Boolean = false
 
@@ -36,7 +34,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
             if(!ttsStraightFlag
                 && getAngle(c.rightHand, c.rightElbow, c.rightShoulder) < 130
                 && getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 130){
-                poseAdviceTTS.straightArmTTS() // 팔을 너무 구부린 경우 tts
+                tts.straightArmTTS() // 팔을 너무 구부린 경우 tts
                 ttsStraightFlag = true
             }
 
@@ -87,7 +85,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
                 }
 
                 if(!ttsLowerFlag && getYDistance(c.rightElbow, c.rightShoulder) <= -15 && getYDistance(c.leftElbow, c.leftShoulder) <= -15){
-                    poseAdviceTTS.lowerArmTTS()
+                    tts.lowerArmTTS()
                     ttsLowerFlag =true
                 }
             }
@@ -114,7 +112,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
                 WorkoutState.totalCount += 1
                 WorkoutState.isUp = true
 
-                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+                tts.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
                 ttsLowerFlag = false
                 ttsStraightFlag = false
 
@@ -144,7 +142,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
 
             if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
-                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+                tts.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
             }
         }
     }
@@ -155,7 +153,7 @@ class SideLateralRaisePose(context: Context): WorkoutPose(context) {
             // 운동 종료
             Log.d("side lateral raise pose", "운동 종료")
 
-            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
+            tts.WorkoutFinish() // 운동 종료 tts
         }
     }
 }

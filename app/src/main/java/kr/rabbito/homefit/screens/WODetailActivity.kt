@@ -27,6 +27,7 @@ class WODetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val workoutIndex = intent.getIntExtra("workoutIndex", 0)
+//        Log.d("workoutIndex", workoutIndex.toString())
 
         try { // 세트 불러오기 정보 적용
             routine = (intent.getSerializableExtra("routine") as Routine?)!!

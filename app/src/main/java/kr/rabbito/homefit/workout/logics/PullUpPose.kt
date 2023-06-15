@@ -8,8 +8,7 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 
-class PullUpPose(context: Context): WorkoutPose(context) {
-    private val poseAdviceTTS = PoseAdviceTTS(context)
+class PullUpPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts) {
     private var ttsHandShoulderFlag : Boolean = false
     private var ttsArmFlag : Boolean = false
 
@@ -34,7 +33,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
             if(!ttsHandShoulderFlag
                 && getYDistance(c.rightShoulder, c.rightHand) < 0
                 && getYDistance(c.leftShoulder, c.leftHand) < 0){
-                poseAdviceTTS.highShoulderTTS() // 너무 높이 올라간 경우 tts
+                tts.highShoulderTTS() // 너무 높이 올라간 경우 tts
                 ttsHandShoulderFlag = true
             }
 
@@ -62,7 +61,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
                 if(!ttsArmFlag
                     && getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
                     && getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170){
-                    poseAdviceTTS.understretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
+                    tts.understretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
                     ttsArmFlag = true
                 }
             }
@@ -87,7 +86,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
 
                 ttsArmFlag = false
                 ttsHandShoulderFlag = false
-                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+                tts.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
 
                 checkSetCondition()
                 checkEnd()
@@ -114,7 +113,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
 
             if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
-                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+                tts.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
             }        }
     }
 
@@ -124,7 +123,7 @@ class PullUpPose(context: Context): WorkoutPose(context) {
             // 운동 종료
             Log.d("pull up pose", "운동 종료")
 
-            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
+            tts.WorkoutFinish() // 운동 종료 tts
         }
     }
 }

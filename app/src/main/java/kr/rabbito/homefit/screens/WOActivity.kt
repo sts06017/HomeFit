@@ -36,10 +36,14 @@ class WOActivity : AppCompatActivity() {
     private var restStartTime = 0L
     private var workoutIdx = 0
     private val woStartTime = LocalDateTime.now().format(timeFormatter)
+    private lateinit var tts: PoseAdviceTTS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityWoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 음성 안내 객체 생성
+        tts = PoseAdviceTTS(this)
 
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
@@ -49,7 +53,7 @@ class WOActivity : AppCompatActivity() {
          */
 
         // 임시
-        workoutIdx = intent.getIntExtra("index", 0)
+        workoutIdx = intent.getIntExtra("workoutIndex", 0)
 
         // 운동에 맞게 화면 초기화, 위젯 제시
         initView(workoutIdx)
@@ -124,6 +128,7 @@ class WOActivity : AppCompatActivity() {
                     true,
                     binding,
                     workoutIdx,
+                    tts
                 )
             )
 
@@ -168,7 +173,7 @@ class WOActivity : AppCompatActivity() {
          */
 
         // 선택한 운동에 맞게 위젯 로드
-        val workoutView: WorkoutView = WorkoutCore(this, binding).workoutViews[workoutIdx]
+        val workoutView: WorkoutView = WorkoutCore(this, binding, tts).workoutViews[workoutIdx]
         workoutView.generateWidgets()
 
         // 기본 위젯 로드
@@ -258,6 +263,7 @@ class WOActivity : AppCompatActivity() {
         if (cameraSource != null) {
             cameraSource?.release()
         }
+        tts.finish()
     }
 
     companion object {

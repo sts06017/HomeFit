@@ -88,4 +88,8 @@ class PoseAdviceTTS(val context: Context) {
     fun customTTS(string: String) {
         tts?.speak(string, TextToSpeech.QUEUE_FLUSH, null, "")
     }
+
+    fun finish() {
+        tts?.shutdown()
+    }
 }

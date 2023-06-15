@@ -8,8 +8,7 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 
-class LegRaisePose(context: Context) : WorkoutPose(context) {
-    private val poseAdviceTTS = PoseAdviceTTS(context)
+class LegRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(context, tts) {
     private var ttsFlag : Boolean = false
 
     override fun guidePose(c: PoseCoordinate) {
@@ -34,7 +33,7 @@ class LegRaisePose(context: Context) : WorkoutPose(context) {
                 && getAngle(c.leftFeet, c.leftHip, c.leftShoulder) < 80
                 && getAngle(c.rightFeet, c.rightHip, c.rightShoulder) < 80){
                 // 다리를 너무 올린 경우 tts
-                poseAdviceTTS.lowerLegTTS()
+                tts.lowerLegTTS()
                 ttsFlag = true
             }
         } catch (_: NullPointerException) {
@@ -56,7 +55,7 @@ class LegRaisePose(context: Context) : WorkoutPose(context) {
                 WorkoutState.totalCount += 1
                 WorkoutState.isUp = false
 
-                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+                tts.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
                 ttsFlag = false
 
                 checkSetCondition()
@@ -86,7 +85,7 @@ class LegRaisePose(context: Context) : WorkoutPose(context) {
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
 
             if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
-                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+                tts.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
             }        }
     }
 
@@ -96,7 +95,7 @@ class LegRaisePose(context: Context) : WorkoutPose(context) {
             // 운동 종료
             Log.d("leg_raise", "finish")
 
-            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
+            tts.WorkoutFinish() // 운동 종료 tts
         }
     }
 }

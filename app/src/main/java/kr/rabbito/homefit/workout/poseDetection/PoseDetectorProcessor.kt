@@ -31,6 +31,7 @@ import kr.rabbito.homefit.screens.workoutView.WorkoutView
 import kr.rabbito.homefit.workout.WorkoutCore
 import kr.rabbito.homefit.workout.logics.WorkoutPose
 import kr.rabbito.homefit.workout.poseDetection.classification.PoseClassifierProcessor
+import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 import java.util.ArrayList
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -45,7 +46,8 @@ class PoseDetectorProcessor(
   private val runClassification: Boolean,
   private val isStreamMode: Boolean,
   private val binding: ActivityWoBinding,
-  private val workoutIdx: Int
+  private val workoutIdx: Int,
+  private val tts: PoseAdviceTTS
 ) : VisionProcessorBase<PoseDetectorProcessor.PoseWithClassification>(context) {
 
   private val detector: PoseDetector
@@ -64,8 +66,8 @@ class PoseDetectorProcessor(
     detector = PoseDetection.getClient(options)
     classificationExecutor = Executors.newSingleThreadExecutor()
 
-    workoutPose = WorkoutCore(context, binding).workoutPoses[workoutIdx]
-    workoutView = WorkoutCore(context, binding).workoutViews[workoutIdx]
+    workoutPose = WorkoutCore(context, binding, tts).workoutPoses[workoutIdx]
+    workoutView = WorkoutCore(context, binding, tts).workoutViews[workoutIdx]
   }
 
   override fun stop() {

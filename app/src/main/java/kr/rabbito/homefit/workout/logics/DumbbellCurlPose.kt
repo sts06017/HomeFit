@@ -6,12 +6,11 @@ import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
-import kotlin.math.absoluteValue
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
+import kotlin.math.absoluteValue
 
 
-class DumbbellCurlPose(context: Context): WorkoutPose(context) {
-    private val poseAdviceTTS = PoseAdviceTTS(context)
+class DumbbellCurlPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts) {
     private var ttsArmFlag : Boolean = false
     private var ttsElbowFlag : Boolean = false
 
@@ -36,7 +35,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
             if(!ttsElbowFlag
                 && getXDistance(c.rightShoulder, c.rightElbow).absoluteValue > 20
                 && getXDistance(c.leftShoulder, c.leftElbow).absoluteValue > 20){
-                poseAdviceTTS.wrongElbowTTS() // 팔꿈치가 옆구리에서 너무 멀어진 경우 tts
+                tts.wrongElbowTTS() // 팔꿈치가 옆구리에서 너무 멀어진 경우 tts
                 ttsElbowFlag = true
 
             }
@@ -65,7 +64,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
                 if(!ttsArmFlag
                     && getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
                     && getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170){
-                    poseAdviceTTS.understretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
+                    tts.understretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
                     ttsArmFlag = true
                 }
 
@@ -104,7 +103,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
 
                 ttsArmFlag = false
                 ttsElbowFlag = false
-                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+                tts.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
             }
         } catch (_: NullPointerException) {
         }
@@ -119,7 +118,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
 
             if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
-                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+                tts.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
             }
         }
     }
@@ -130,7 +129,7 @@ class DumbbellCurlPose(context: Context): WorkoutPose(context) {
             // 운동 종료
             Log.d("dumbbell curl pose", "운동 종료")
 
-            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
+            tts.WorkoutFinish() // 운동 종료 tts
 
         }
     }

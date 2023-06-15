@@ -8,8 +8,7 @@ import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
 
-class SquatPose(context: Context): WorkoutPose(context) {
-    private val poseAdviceTTS = PoseAdviceTTS(context)
+class SquatPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts) {
     private var ttsArmFlag : Boolean = false
 
     override fun guidePose(c: PoseCoordinate) {
@@ -30,7 +29,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
                         getAngle(c.leftHand, c.leftShoulder, c.leftHip) < 60    // 팔을 내리거나
                         || getAngle(c.leftHand, c.leftElbow, c.leftShoulder) < 140  // 팔을 굽히면
                         ) ){
-                poseAdviceTTS.frontStraightArmTTS()
+                tts.frontStraightArmTTS()
                 ttsArmFlag = true
             }
 
@@ -81,7 +80,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
                 WorkoutState.totalCount += 1
 
                 ttsArmFlag = false
-                poseAdviceTTS.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
+                tts.countTTS(WorkoutState.count)// 운동 횟수 카운트 tts
 
                 checkSetCondition()
                 checkEnd()
@@ -99,7 +98,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
             Log.d("디버깅","mySet plus 1 : ${WorkoutState.mySet.value}")
 
             if (!(WorkoutState.set == WorkoutState.setTotal + 1)){
-                poseAdviceTTS.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
+                tts.countSetTTS(WorkoutState.set) // 세트 수 증가 tts
             }        }
     }
 
@@ -109,7 +108,7 @@ class SquatPose(context: Context): WorkoutPose(context) {
             // 운동 종료
             Log.d("squat", "finish")
 
-            poseAdviceTTS.WorkoutFinish() // 운동 종료 tts
+            tts.WorkoutFinish() // 운동 종료 tts
         }
     }
 }
