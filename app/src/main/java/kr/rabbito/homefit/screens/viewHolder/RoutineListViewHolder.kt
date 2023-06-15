@@ -36,16 +36,21 @@ class RoutineListViewHolder(private val binding: RoutinelistItemBinding)
                 itemView.context.startActivity(intent)
             }
         } else { // 세트 수정
-
+            binding.routinelistItemIvTempItemBackground.setOnClickListener{
+                val intent = Intent(itemView.context, RoutineActivity::class.java).apply {
+                    putExtra("routine", routine) // DB routine 객체
+                }
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
     override fun onClick(v: View?) { // binding을 통해 setOnClickListener 실행, 현재 코드 실행 X
-        if (this.routine != null) {
-            val intent = Intent(itemView.context, RoutineActivity::class.java).apply {
-                putExtra("routine", routine) // DB routine 객체
-            }
-            itemView.context.startActivity(intent)
-        }
+//        if (this.routine != null) {
+//            val intent = Intent(itemView.context, RoutineActivity::class.java).apply {
+//                putExtra("routine", routine) // DB routine 객체
+//            }
+//            itemView.context.startActivity(intent)
+//        }
     }
 }

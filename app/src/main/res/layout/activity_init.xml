@@ -305,7 +305,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- 드롭다운 라이브러리 -->
-                        <View
+                        <Spinner
                             android:id="@+id/init_v_fav_workout"
                             android:layout_width="296dp"
                             android:layout_height="44dp"
@@ -313,7 +313,9 @@
                             android:background="@drawable/routine_iv_dropdown"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/init_tv_fav_workout" />
+                            app:layout_constraintTop_toBottomOf="@id/init_tv_fav_workout"
+                            android:dropDownHeight="600dp"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

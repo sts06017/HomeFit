@@ -58,7 +58,6 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-
         binding.profileBtnEditProfile.setOnClickListener {
             startActivity(Intent(activity, InitActivity::class.java))
         }
