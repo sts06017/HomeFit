@@ -27,6 +27,7 @@ import kr.rabbito.homefit.data.DietDB
 import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.CalendarDayLayoutBinding
+import kr.rabbito.homefit.screens.adapter.DHistoryAdapter
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
 import kr.rabbito.homefit.screens.adapter.WOHistoryAdapter
 import java.time.DayOfWeek
@@ -93,7 +94,7 @@ class DHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, contex
 
             Log.d("DHistory","diets: $diets")
             // 메인 스레드에서 UI를 갱신.
-            val adapter = DReportAdapter(diets)
+            val adapter = DHistoryAdapter(diets)
             recyclerView.adapter = adapter
         }
         //** DB 테이블 확인 코드
