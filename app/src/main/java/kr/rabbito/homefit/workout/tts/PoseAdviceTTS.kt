@@ -42,11 +42,11 @@ class PoseAdviceTTS(val context: Context) {
     }
 
     fun straightArmTTS(){
-        tts?.speak("팔을 곧게 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
+        tts?.speak("팔을 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun frontStraightArmTTS(){
-        tts?.speak("팔을 전방으로 곧게 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
+        tts?.speak("팔을 앞으로 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun understretchArmTTS(){

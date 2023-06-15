@@ -161,9 +161,10 @@
         android:layout_height="0dp"
         android:scrollbars="none"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/woreport_cl_bot"
         app:layout_constraintTop_toBottomOf="@id/woreport_cl_top_2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -287,44 +288,43 @@
                         app:layout_constraintTop_toTopOf="@id/woreport_tv_stop_time_title" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- margin 추후 수정 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/woreport_cl_bot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="188dp"
-                android:paddingBottom="32dp"
-                app:layout_constraintTop_toBottomOf="@id/woreport_cl_mid">
-
-                <Button
-                    android:id="@+id/woreport_btn_save_report"
-                    android:layout_width="148dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/woreport_btn_small"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:includeFontPadding="false"
-                    android:text="결과 저장"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <Button
-                    android:id="@+id/woreport_btn_delete_report"
-                    android:layout_width="148dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/woreport_btn_small"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:includeFontPadding="false"
-                    android:text="결과 삭제"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/woreport_cl_bot"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/woreport_btn_save_report"
+            android:layout_width="148dp"
+            android:layout_height="40dp"
+            android:background="@drawable/woreport_btn_small"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:text="결과 저장"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/woreport_btn_delete_report"
+            android:layout_width="148dp"
+            android:layout_height="40dp"
+            android:background="@drawable/woreport_btn_small"
+            android:fontFamily="@font/pretendard_semibold"
+            android:includeFontPadding="false"
+            android:text="결과 삭제"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,6 @@ class WOActivity : AppCompatActivity() {
     private var selectedModel = POSE_DETECTION
     private lateinit var mat: android.opengl.Matrix
     private var workoutState = WorkoutState()
-    private var tts: PoseAdviceTTS? = null
     private lateinit var countdownTimer : CountDownTimer
     private var restStartTime = 0L
     private var workoutIdx = 0
@@ -44,9 +43,6 @@ class WOActivity : AppCompatActivity() {
 
         createCameraSource(selectedModel)
         cameraSource?.setFacing(CameraSource.CAMERA_FACING_FRONT)
-
-        // tts 출력 위한 부분 - 추후 로직 검사 파일로 이동시킬 수도 있음
-        tts = PoseAdviceTTS(this)
 
         /*
         구상: 특정 운동 타일 선택해 넘어오면, intent 이용해서 운동 인덱스 전달됨 -> 해당 인덱스로 initView 호출
@@ -85,11 +81,11 @@ class WOActivity : AppCompatActivity() {
         }
 
         // 임시 카운트 증가 버튼
-//        binding.woBtnCount.setOnClickListener {
-//            WorkoutState.count += 1
-//            WorkoutState.totalCount += 1
-//            SquatPose().checkSetCondition()
-//        }
+        binding.woBtnCount.setOnClickListener {
+            WorkoutState.count += 1
+            WorkoutState.totalCount += 1
+            SquatPose(this).checkSetCondition()
+        }
 
         // 운동 세트 충족시 운동 종료
         WorkoutState.mySet.observe(this, Observer{
