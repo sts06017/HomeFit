@@ -32,9 +32,10 @@ class MainActivity : AppCompatActivity() {
     private fun configureBottomNavigation(pageNum : Int = 0){
 
         val result = intent.getStringExtra("DATA")
+        val date = intent.getStringExtra("DATE")
 
         // 네비게이터 adapter 연결
-        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, result)   // fragmentCount 인자는 넣을 페이지 수
+        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, result, date)   // fragmentCount 인자는 넣을 페이지 수
 
         binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
 

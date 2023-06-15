@@ -81,11 +81,11 @@ class WOActivity : AppCompatActivity() {
         }
 
         // 임시 카운트 증가 버튼
-        binding.woBtnCount.setOnClickListener {
-            WorkoutState.count += 1
-            WorkoutState.totalCount += 1
-            SquatPose(this).checkSetCondition()
-        }
+//        binding.woBtnCount.setOnClickListener {
+//            WorkoutState.count += 1
+//            WorkoutState.totalCount += 1
+//            SquatPose().checkSetCondition()
+//        }
 
         // 운동 세트 충족시 운동 종료
         WorkoutState.mySet.observe(this, Observer{

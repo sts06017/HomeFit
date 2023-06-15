@@ -12,6 +12,7 @@ class NavigatorAdapter(
     fm: FragmentManager,
     private val fragmentCount: Int,
     private var data: String?,
+    private var date: String?,
 ) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         Log.d("디버깅", "call adapter")
@@ -23,6 +24,7 @@ class NavigatorAdapter(
 
                 val bundle = Bundle()
                 bundle.putString("RESULT_JSON", data)
+                bundle.putString("DATE", date)
 
                 dReportFragment.arguments = bundle
                 return dReportFragment

@@ -36,6 +36,7 @@ import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DAddTypeSelectActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
+import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -51,6 +52,9 @@ class DReportFragment : Fragment() {
     private var dietDB: DietDB? = null
 
     private var dietMap: DietMap? = null
+    private var resultJson: String? = null
+    private var date: LocalDate? = null
+    private var dateString: String? = null
     private val layoutManager = LinearLayoutManager(this.context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +64,15 @@ class DReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var resultJson = arguments?.getString("RESULT_JSON")
-
+        resultJson = arguments?.getString("RESULT_JSON")
+        dateString = arguments?.getString("DATE")
+        if(dateString != null) {
+            date = LocalDate.parse(dateString)
+        }
+//        var resultDiet = arguments?.getParcelable<Diet>("RESULT_DIET")
+//        Log.d("최승호","$resultDiet")
         if (resultJson != null) {
-            Log.d("jsonFile", resultJson)
+            Log.d("jsonFile", resultJson!!)
 
             val resultMap = parseJSONString(resultJson)
             val gson = Gson()
@@ -125,19 +134,20 @@ class DReportFragment : Fragment() {
     private fun initView(){
         CoroutineScope(Dispatchers.IO).launch {
             dietDB = DietDB.getInstance(requireContext())
-            val todayDiets = dietDB!!.DietDAO().getDietByDate(LocalDate.now())
+            val todayDiets = dietDB!!.DietDAO().getDietByDate(date?: LocalDate.now())
 
             todayDiets?.let{
                 Log.d("DReport","todayDiets: $it")
                 withContext(Dispatchers.Main){
+                    binding.dreportTvDate.text = date?.format(Converter.dateFormatter_ko)?: LocalDate.now().format(Converter.dateFormatter_ko)
                     binding.dreportRvFoods.layoutManager = layoutManager
                     binding.dreportRvFoods.adapter = DReportAdapter(it)
                 }
             }
         }
     }
-    private suspend fun getTodayNutrients(): List<Diet>? { return dietDB?.DietDAO()?.getDietByDate(LocalDate.now()) }
-    private suspend fun getTodayCalories(): List<DietCalorie>? { return dietDB?.DietDAO()?.getCaloriesByDate() }
+    private suspend fun getTodayNutrients(): List<Diet>? { return dietDB?.DietDAO()?.getDietByDate(date?: LocalDate.now()) }
+    private suspend fun getTodayCalories(): List<DietCalorie>? { return dietDB?.DietDAO()?.getCaloriesByDate(dateString?: LocalDate.now().toString()) }
     private fun saveToNutrientMap(diets: List<Diet>?): MutableMap<String,Float>{
         val nutrientMap = mutableMapOf("탄수화물" to 0.0f, "단백질" to 0.0f, "지방" to 0.0f)
         diets?.forEach {
@@ -179,7 +189,7 @@ class DReportFragment : Fragment() {
             if (existingDiet == null){
                 dietMap?.forEach {(foodName, foodInfo) ->
                     val diet = Diet(
-                        id = null, foodName = foodName, weight = foodInfo.volume, calorie = foodInfo.calorie, carbohydrate = foodInfo.carbohydrate, protein = foodInfo.protein, fat = foodInfo.fat, dDate = currentDate, dTime = currentTime, jsonHash = jsonHash
+                        id = null, foodName = foodName, weight = foodInfo.volume, calorie = foodInfo.calorie, carbohydrate = foodInfo.carbohydrate, protein = foodInfo.protein, fat = foodInfo.fat, dDate = currentDate, dTime = currentTime, jsonHash = jsonHash//, json = resultJson
                     )
                     dietDB?.DietDAO()?.insert(diet)
                 }

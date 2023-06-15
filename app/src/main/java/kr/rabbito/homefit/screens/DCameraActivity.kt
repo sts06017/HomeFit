@@ -23,6 +23,7 @@ import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
+import java.time.LocalDate
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -177,6 +178,7 @@ class DCameraActivity : AppCompatActivity() {
                             val intent = Intent(this@DCameraActivity, MainActivity::class.java)
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
+                            intent.putExtra("DATE", LocalDate.now().toString())
                             startActivity(intent)
                             finish()
                         }
