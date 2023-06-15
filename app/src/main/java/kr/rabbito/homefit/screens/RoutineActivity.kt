@@ -56,9 +56,9 @@ class RoutineActivity : AppCompatActivity() {
             if(routine != null){ // 받아온 routine 객체가 존재할 시 객체 정보 적용
                 binding.routineEtSetName.setText(routine.setName.toString())
                 binding.routineEtSetCount.setText(routine.set.toString())
-                binding.routineEtRestCount.setText(routine.restTime.toString())
+                binding.routineEtRepsFerSet.setText(routine.count.toString())
 
-                spinnerRoutineText = routine.workoutName.toString() // 스피너 내용 변경
+                spinnerRoutineText = routine.workoutName.toString() // 스피너 불러온 내용 적용
                 for (i in 0 until routineSpinner.adapter.count) {
                     val item = routineSpinner.adapter.getItem(i)
                     if (item.toString() == spinnerRoutineText) {
@@ -131,33 +131,33 @@ class RoutineActivity : AppCompatActivity() {
             WorkoutState.setTotal = count.text.toString().toInt()
         }
 
-        binding.routineBtnRestCountAdd.setOnClickListener {
-            // 휴식 증가버튼
+        binding.routineBtnRepsFerSetAdd.setOnClickListener {
+            // 세트당 횟수 증가버튼
 
-            var rest = binding.routineEtRestCount
-            if(!rest.text.isNullOrEmpty()){
-                rest.setText((rest.text.toString().toInt()+1).toString())
-                routine.restTime = rest.text.toString().toLong()
+            var repsFerSet = binding.routineEtRepsFerSet
+            if(!repsFerSet.text.isNullOrEmpty()){
+                repsFerSet.setText((repsFerSet.text.toString().toInt()+1).toString())
+                routine.count = repsFerSet.text.toString().toInt()
             }
             else{
-                rest.setText("1")
-                routine.restTime = 1
+                repsFerSet.setText("1")
+                routine.count = 1
             }
-            WorkoutState.restTotal = rest.text.toString().toInt()
+            WorkoutState.count = repsFerSet.text.toString().toInt()
         }
 
-        binding.routineBtnRestCountSub.setOnClickListener {
-            // 휴식 감소버튼
+        binding.routineBtnRepsFerSetSub.setOnClickListener {
+            // 세트당 횟수 감소버튼
 
-            var rest = binding.routineEtRestCount
-            if(!rest.text.isNullOrEmpty() && rest.text.toString().toInt() > 0) {
-                rest.setText((rest.text.toString().toInt()-1).toString())
-                routine.restTime = rest.text.toString().toLong()
+            var repsFerSet = binding.routineEtRepsFerSet
+            if(!repsFerSet.text.isNullOrEmpty() && repsFerSet.text.toString().toInt() > 0) {
+                repsFerSet.setText((repsFerSet.text.toString().toInt()-1).toString())
+                routine.count = repsFerSet.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.restTotal = rest.text.toString().toInt()
+            WorkoutState.count = repsFerSet.text.toString().toInt()
         }
 
         binding.routineBtnAddSet.setOnClickListener {
@@ -166,7 +166,7 @@ class RoutineActivity : AppCompatActivity() {
                 routine.id = routineId
                 routine.setName = binding.routineEtSetName.text.toString()
                 routine.set = (binding.routineEtSetCount.text.toString().toInt())
-                routine.restTime = (binding.routineEtRestCount.text.toString().toLong())
+                routine.count = (binding.routineEtRepsFerSet.text.toString().toInt())
                 CoroutineScope(Dispatchers.IO).launch {// DB에 세트 추가
                     routineDB!!.routineDAO().update(routine)
                 }

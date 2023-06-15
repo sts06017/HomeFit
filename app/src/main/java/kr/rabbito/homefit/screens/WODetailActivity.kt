@@ -34,8 +34,8 @@ class WODetailActivity : AppCompatActivity() {
             Log.e("setnum",routine.set.toString() )
             routine.set?.let { count.setText(it.toString()) } //
 
-            var rest = binding.wodetailEtRestCount
-            routine.restTime?.let { rest.setText(it.toString()) }
+            var repsFerSet = binding.wodetailEtRepsFerSet
+            routine.count?.let { repsFerSet.setText(it.toString()) }
         } catch (e: NullPointerException) {
             // routine이 null인 경우에 대한 처리
             // 예를 들어, 초기 값을 설정하거나 에러 메시지를 표시할 수 있습니다.
@@ -96,29 +96,29 @@ class WODetailActivity : AppCompatActivity() {
             }
             WorkoutState.setTotal = count.text.toString().toInt()
         }
-        binding.wodetailBtnRestCountSub.setOnClickListener {
-            // 휴식 감소버튼
+        binding.wodetailBtnRepsFerSetSub.setOnClickListener {
+            // 세트당 횟수 감소버튼
 
-            var rest = binding.wodetailEtRestCount
-            if(!rest.text.isNullOrEmpty() && rest.text.toString().toInt() > 0) {
-                rest.setText((rest.text.toString().toInt()-1).toString())
+            var repsFerSet = binding.wodetailEtRepsFerSet
+            if(!repsFerSet.text.isNullOrEmpty() && repsFerSet.text.toString().toInt() > 0) {
+                repsFerSet.setText((repsFerSet.text.toString().toInt()-1).toString())
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.restTotal = rest.text.toString().toInt()
+            WorkoutState.count = repsFerSet.text.toString().toInt()
         }
-        binding.wodetailBtnRestCountAdd.setOnClickListener {
-            // 휴식 증가버튼
+        binding.wodetailBtnRepsFerSetAdd.setOnClickListener {
+            // 세트당 횟수 증가버튼
 
-            var rest = binding.wodetailEtRestCount
-            if(!rest.text.isNullOrEmpty()){
-                rest.setText((rest.text.toString().toInt()+1).toString())
+            var repsFerSet = binding.wodetailEtRepsFerSet
+            if(!repsFerSet.text.isNullOrEmpty()){
+                repsFerSet.setText((repsFerSet.text.toString().toInt()+1).toString())
             }
             else{
-                rest.setText("1")
+                repsFerSet.setText("1")
             }
-            WorkoutState.restTotal = rest.text.toString().toInt()
+            WorkoutState.count = repsFerSet.text.toString().toInt()
         }
         binding.wodetailEtSetCount.doAfterTextChanged {
             try {
@@ -127,9 +127,9 @@ class WODetailActivity : AppCompatActivity() {
                 Log.d("ed test","ed can't formatting")
             }
         }
-        binding.wodetailEtRestCount.doAfterTextChanged {
+        binding.wodetailEtRepsFerSet.doAfterTextChanged {
             try {
-                WorkoutState.restTotal = binding.wodetailEtRestCount.text.toString().toInt()
+                WorkoutState.count = binding.wodetailEtRepsFerSet.text.toString().toInt()
             }catch (e : java.lang.NumberFormatException){
                 Log.d("ed test","ed can't formatting")
             }

@@ -197,7 +197,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/wodetail_cl_rest_count"
+                    android:id="@+id/wodetail_cl_reps_fer_set"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -206,12 +206,12 @@
                     app:layout_constraintTop_toBottomOf="@id/wodetail_cl_set_count">
 
                     <TextView
-                        android:id="@+id/wodetail_tv_rest_count"
+                        android:id="@+id/wodetail_tv_reps_fer_set"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_semibold"
                         android:includeFontPadding="false"
-                        android:text="휴식 수"
+                        android:text="세트당 횟수"
                         android:textColor="@color/white"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -219,7 +219,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/wodetail_et_rest_count"
+                        android:id="@+id/wodetail_et_reps_fer_set"
                         android:layout_width="53dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="8dp"
@@ -233,28 +233,28 @@
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/wodetail_btn_rest_count_add"
+                        app:layout_constraintEnd_toStartOf="@id/wodetail_btn_reps_fer_set_add"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/wodetail_btn_rest_count_sub"
+                        android:id="@+id/wodetail_btn_reps_fer_set_sub"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/wodetail_btn_sub"
-                        app:layout_constraintBottom_toBottomOf="@id/wodetail_et_rest_count"
-                        app:layout_constraintEnd_toStartOf="@id/wodetail_et_rest_count"
-                        app:layout_constraintTop_toTopOf="@id/wodetail_et_rest_count" />
+                        app:layout_constraintBottom_toBottomOf="@id/wodetail_et_reps_fer_set"
+                        app:layout_constraintEnd_toStartOf="@id/wodetail_et_reps_fer_set"
+                        app:layout_constraintTop_toTopOf="@id/wodetail_et_reps_fer_set" />
 
                     <Button
-                        android:id="@+id/wodetail_btn_rest_count_add"
+                        android:id="@+id/wodetail_btn_reps_fer_set_add"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/wodetail_btn_add"
-                        app:layout_constraintBottom_toBottomOf="@id/wodetail_et_rest_count"
+                        app:layout_constraintBottom_toBottomOf="@id/wodetail_et_reps_fer_set"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/wodetail_et_rest_count" />
+                        app:layout_constraintTop_toTopOf="@id/wodetail_et_reps_fer_set" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
