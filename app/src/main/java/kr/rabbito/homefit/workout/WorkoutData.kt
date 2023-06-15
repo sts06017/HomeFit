@@ -10,8 +10,8 @@ class WorkoutData(val context: Context){
         val workoutNamesKOR = arrayListOf("팔굽혀펴기", "턱걸이", "스쿼트", "사이드 레터럴 레이즈", "덤벨 컬", "레그 레이즈")
 
         // 운동 사진
-        val workoutImages =  arrayListOf(R.drawable.push_up, R.drawable.pull_up, R.drawable.squat,
-            R.drawable.side_lateral_raise, R.drawable.dumbbell_curl, R.drawable.leg_raise)
+        val workoutImages =  arrayListOf(R.drawable.wodetail_iv_push_up, R.drawable.wodetail_iv_pull_up, R.drawable.wodetail_iv_squat,
+            R.drawable.wodetail_iv_side_lateral_raise, R.drawable.wodetail_iv_dumbbell_curl, R.drawable.wodetail_iv_leg_raise)
 
         // 운동 설명
         val workoutExplain = arrayListOf(
@@ -26,7 +26,7 @@ class WorkoutData(val context: Context){
             "양 손에 덤벨을 들고 팔을 앞으로 굽혔다 펴는 팔 운동입니다.\n" +
                     "팔을 옆구리 앞쪽에 고정시키고 손바닥이 전면을 향하도록 합니다. ",
             "누운 상태에서 다리를 올렸다 내리는 복근 운동입니다.\n" +
-                    "다리를 쭉 편채로 상체와 직각이 될 때까지 올렸다 내립니다.\n" +
+                    "다리를 상체 가까이 올렸다 내립니다.\n" +
                     "내릴 때 다리가 바닥에 닿지 않도록 합니다."
         )
     }
