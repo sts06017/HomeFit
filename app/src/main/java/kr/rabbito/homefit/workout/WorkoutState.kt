@@ -35,5 +35,9 @@ class WorkoutState {
 
         var myCount = MutableLiveData<Int>(0)
         var mySet = MutableLiveData<Int>(1)
+
+        // 음성 출력 딜레이
+        var ttsDelay = 0
+        var ttsDelayLimit = 7
     }
 }
