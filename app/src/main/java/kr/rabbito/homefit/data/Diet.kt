@@ -41,7 +41,7 @@ class Diet(
         parcel.writeValue(protein)
         parcel.writeValue(fat)
         parcel.writeValue(dDate)
-        parcel.writeValue(dTime)
+        parcel.writeString(dTime)
         parcel.writeValue(jsonHash)
     }
 

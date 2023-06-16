@@ -98,19 +98,6 @@ class DReportFragment : Fragment() {
         val dreportVGraph1 = binding.dreportVGraph1
         val dreportVGraph2 = binding.dreportVGraph2
 
-
-        val xLineData = mutableListOf<String>()
-        xLineData.add("Jan")
-        xLineData.add("Feb")
-        xLineData.add("Mar")
-        xLineData.add("Apr")
-        xLineData.add("May")
-        xLineData.add("Jun")
-
-        val yLineData = mutableListOf<Int>()
-
-//        createLineChart(xLineData as ArrayList<String>, yLineData as ArrayList<Int>, dreportVGraph2)
-
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
         }

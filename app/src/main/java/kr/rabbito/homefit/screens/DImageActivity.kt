@@ -9,6 +9,7 @@ import android.widget.Toast
 import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDimageBinding
 import kr.rabbito.homefit.utils.calc.Converter
+import java.time.LocalDate
 
 class DImageActivity : AppCompatActivity() {
     private var mBinding: ActivityDimageBinding? = null
@@ -64,6 +65,7 @@ class DImageActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("VIEW_PAGER_INDEX", 1)
                     intent.putExtra("DATA", data)
+                    intent.putExtra("DATE", LocalDate.now().toString())
                     startActivity(intent)
                 }
             }
