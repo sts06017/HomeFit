@@ -102,7 +102,7 @@ class DHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, contex
             val diets = dietDB!!.DietDAO().getAll()
             Log.d("DHistory","----Diet DB 조회----")
             diets.forEach { diet ->
-                    Log.d("DHistory", "DB id:${diet.id}, Name:${diet.foodName},  weight:${diet.weight},  Calorie:${diet.calorie},    Fat:${diet.fat},    Carbohydrate:${diet.carbohydrate},   Protein:${diet.protein},   Date:${diet.dDate}, Time:${diet.dTime}")
+                    Log.d("DHistory", "DB id:${diet.id}, Name:${diet.foodName},  weight:${diet.weight},  Calorie:${diet.calorie},    Fat:${diet.fat},    Carbohydrate:${diet.carbohydrate},   Protein:${diet.protein},   Date:${diet.dDate}, Time:${diet.dTime}, Hash:${diet.jsonHash}")
             }
         }
     }
