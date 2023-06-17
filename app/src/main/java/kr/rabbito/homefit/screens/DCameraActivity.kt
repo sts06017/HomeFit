@@ -24,6 +24,7 @@ import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -183,6 +184,7 @@ class DCameraActivity : AppCompatActivity() {
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
                             intent.putExtra("DATE", LocalDate.now().toString())
+                            intent.putExtra("TIME", LocalDateTime.now().toString())
                             startActivity(intent)
                             finish()
                         }
