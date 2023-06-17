@@ -166,8 +166,12 @@ class DCameraActivity : AppCompatActivity() {
                         val endTime = System.currentTimeMillis()
                         Log.d("time gap", (endTime - startTime).toString())
 
-                        if (client == null) {
-                            Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        if (client == null || data == null) {
+                            runOnUiThread {
+                                Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            finish()
                         }
 
                         runOnUiThread {
