@@ -13,7 +13,7 @@ import java.net.Socket
 import java.net.SocketException
 
 class HomeFitClient {
-    private var serverIP = "192.168.219.107"
+    private var serverIP = "192.168.35.69"
     private var serverPort = 10001
 
     lateinit var socket: Socket
@@ -27,7 +27,7 @@ class HomeFitClient {
             outputStream = socket.getOutputStream()
             Log.d("connection", "$socket")
         } catch (e: ConnectException) {
-            Log.d("connection", "server not started")
+            Log.d("connection", "server not started (request)")
         }
     }
 
@@ -88,6 +88,8 @@ class HomeFitClient {
                     }
 
                     val jsonFileString = byteArrayOutputStream.toString()
+//                    Log.d("check json", jsonFileString)
+//                    Log.d("check json", jsonFileString.length.toString())
 
                     return jsonFileString
                 }
@@ -98,7 +100,9 @@ class HomeFitClient {
             // 양 추정 도중에 소켓이 닫힌 경우
             Log.d("connection", "socket closed")
         } catch (e: UninitializedPropertyAccessException) {
-            Log.d("connection", "server not started")
+            Log.d("connection", "server not started (data)")
+        } catch (e: java.lang.NullPointerException) {
+            Log.d("connection", "server not started (data)")
         }
 
         return null
