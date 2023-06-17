@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.github.mikephil.charting.animation.Easing
@@ -56,6 +57,9 @@ class DReportFragment : Fragment() {
     private var date: LocalDate? = null
     private var dateString: String? = null
     private val layoutManager = LinearLayoutManager(this.context)
+
+    private var nutrinetAdvice: String = ""
+    private var calorieAdvice: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,39 +150,145 @@ class DReportFragment : Fragment() {
             }
         }
     }
+
     private suspend fun getTodayNutrients(): List<Diet>? { return dietDB?.DietDAO()?.getDietByDate(date?: LocalDate.now()) }
+    // 해당 날짜 영양소 합
+
     private suspend fun getTodayCalories(): List<DietCalorie>? { return dietDB?.DietDAO()?.getCaloriesByDate(dateString?: LocalDate.now().toString()) }
-    private fun saveToNutrientMap(diets: List<Diet>?): MutableMap<String,Float>{
+    // 해당 날짜 칼로리 합
+    data class NutrientData(val nutrientMap: MutableMap<String, Float>, val carbohydrate: Float, val protein: Float, val fat: Float)
+
+    private fun saveToNutrientMap(diets: List<Diet>?): NutrientData {
         val nutrientMap = mutableMapOf("탄수화물" to 0.0f, "단백질" to 0.0f, "지방" to 0.0f)
+        var carbohydrate: Float = 0.0f
+        var protein: Float = 0.0f
+        var fat: Float = 0.0f
+
         diets?.forEach {
             nutrientMap["탄수화물"] = nutrientMap["탄수화물"]!! + it.carbohydrate!!.toFloat()
             nutrientMap["단백질"] = nutrientMap["단백질"]!! + it.protein!!.toFloat()
             nutrientMap["지방"] = nutrientMap["지방"]!! + it.fat!!.toFloat()
+            carbohydrate = it.carbohydrate!!.toFloat()
+            protein = it.protein!!.toFloat()
+            fat = it.fat!!.toFloat()
+
         }
-        return nutrientMap
+        return NutrientData(nutrientMap, carbohydrate, protein, fat)
     }
-    private fun saveToCalorieMap(calorie: List<DietCalorie>): MutableMap<String,Float>{
+
+    data class CalorieData(val calorieMap: MutableMap<String, Float>, val totalCalorie: Float)
+
+    private fun saveToCalorieMap(calorie: List<DietCalorie>): CalorieData {
         val calorieMap = mutableMapOf<String,Float>()
+        var totalCalorie: Float = 0.0f
+
         calorie.forEach {
             calorieMap[it.dDate.toString()] = it.totalCalorie.toFloat()
+            totalCalorie = it.totalCalorie.toFloat()
         }
-        return calorieMap
+        return CalorieData(calorieMap, totalCalorie)
     }
-    private fun initPieChart(){
+    private fun initPieChart() {
         CoroutineScope(Dispatchers.Main).launch {
             val todayDiets = getTodayNutrients()
-            val nutrientMap = saveToNutrientMap(todayDiets)
-            createPieGraph(nutrientMap,binding.dreportVGraph1)
+            val (nutrientMap, carbohydrate, protein, fat) = saveToNutrientMap(todayDiets)
+
+            val comment = nutrinetComment(carbohydrate, protein, fat)
+            Log.e("nutrient", nutrientMap.toString())
+            if (nutrientMap.toString() != "{탄수화물=0.0, 단백질=0.0, 지방=0.0}") {
+                createPieGraph(nutrientMap, binding.dreportVGraph1)
+                binding.dreportVGraph1.visibility = View.VISIBLE
+                Log.e("nutrient", comment)
+                editDreportComment(comment, "nutrient")
+            } else {
+                editDreportComment("입력된 정보가 없습니다.", "nutrient")
+                binding.dreportVGraph1.visibility = View.GONE
+            }
         }
     }
-    private fun initLineChart(){
-        CoroutineScope(Dispatchers.Main).launch{
+
+    private fun nutrinetComment(carbohydrate: Float, protein: Float, fat: Float): String {
+        var comment: String? = null
+        var carbohydrateCaloaries = 4*carbohydrate
+        var proteinCalories = 4*protein
+        var fatCalories = 9*fat
+
+        // 탄수화물, 단백질, 지방의 비율 계산
+        val totalCalories = carbohydrateCaloaries + proteinCalories + fatCalories
+        val carbRatio = carbohydrateCaloaries / totalCalories
+        val proteinRatio = proteinCalories / totalCalories
+        val fatRatio = fatCalories / totalCalories
+
+        // 비율에 따른 조언 작성
+        if (carbRatio > 0.7) {
+            comment += "탄수화물 비율이 너무 높습니다. 적절한 탄수화물 섭취를 고려해보세요. "
+        } else if (carbRatio < 0.4) {
+            comment += "탄수화물 비율이 낮습니다. 충분한 에너지 공급을 위해 탄수화물 섭취를 늘려보세요. "
+        }
+
+        if (proteinRatio > 0.4) {
+            comment += "단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
+        } else if (proteinRatio < 0.05) {
+            comment += "단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
+        }
+
+        if (fatRatio > 0.4) {
+            comment += "지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
+        } else if (fatRatio < 0.15) {
+            comment += "지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
+        }
+
+        if(comment == null){
+            comment = "적절한 식습관을 유지하고 있습니다."
+        }
+
+        return comment
+    }
+
+    private fun initLineChart() {
+        CoroutineScope(Dispatchers.Main).launch {
             val totalCalorie = getTodayCalories()
-            Log.d("DReport","totalCalorie: $totalCalorie")
-            val calorieMap = saveToCalorieMap(totalCalorie!!)
-            createLineChart(calorieMap,binding.dreportVGraph2)
+            val (calorieMap, calorie) = saveToCalorieMap(totalCalorie!!)
+            
+//            val comment = calorieCommnet(calorie)
+
+//            Log.e("calorie", totalCalorie.toString())
+            if (calorieMap.isNotEmpty()) {
+                Log.e("calorie", calorie.toString())
+                createLineChart(calorieMap, binding.dreportVGraph2)
+                binding.dreportVGraph2.visibility = View.VISIBLE
+//                if (comment != null) {
+//                    editDreportComment(comment, "calorie")
+//                }
+            } else {
+                binding.dreportVGraph2.visibility  = View.GONE
+            }
         }
     }
+
+//    private fun calorieCommnet(calorie: Float): String? {
+//        var comment: String? = null
+//
+//        if(calorie > 3000){
+//            comment = "칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. "
+//        }else if(calorie < 2000 && calorie > 0){
+//            comment = "칼로리 섭취량이 너무 적습니다. 충분한 에너지를 위해 충분한 칼로리를 섭취하고 있는지 확인하세요. "
+//        }
+//        return comment
+//    }
+
+    private fun editDreportComment(comment: String, from: String) {
+        if (from == "nutrient") {
+            nutrinetAdvice = comment
+        } else if (from == "calorie") {
+            calorieAdvice = comment
+        }
+
+        val totalComment = "$nutrinetAdvice\n$calorieAdvice"
+        binding.dreportTvComment.text = totalComment
+    }
+
+
     private fun insertDiet(dietMap: DietMap?) {
         val currentDate = LocalDate.now()
         val currentTime = LocalDateTime.now().format(timeFormatter)
