@@ -15,6 +15,7 @@ import kr.rabbito.homefit.data.User
 import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.databinding.ActivityInitBinding
 import android.widget.AdapterView
+import android.widget.Toast
 
 class InitActivity : AppCompatActivity() {
     private var mBinding: ActivityInitBinding? = null
@@ -101,19 +102,36 @@ class InitActivity : AppCompatActivity() {
 
         binding.initBtnRegister.setOnClickListener {
             val userName = binding.initEtName.text.toString()
-            val height = binding.initEtHeight.text.toString().toInt()
-            val weight = binding.initEtWeight.text.toString().toInt()
-            val mealCount = binding.initEtMealCount.text.toString().toInt()
+            val heightText = binding.initEtHeight.text.toString()
+            val weightText = binding.initEtWeight.text.toString()
+            val mealCountText = binding.initEtMealCount.text.toString()
 
-            if (user == null) { // 사용자 정보를 불러오지 못한 경우
-                val newUser = User(0, userName, height, weight, mealCount, favWorkout, basicDiet)
-                insertUser(newUser)
-            } else {    // 사용자 정보를 불러온 경우
-                Log.e("favWorkout", favWorkout)
-                updateUserById(userId!!, userName, height, weight, mealCount, favWorkout, basicDiet)
+            if (isAllTextNotEmpty(userName, heightText, weightText)) {
+                val height = heightText.toInt()
+                val weight = weightText.toInt()
+                val mealCount = mealCountText.toInt()
+
+                if (user == null) { // 사용자 정보를 불러오지 못한 경우
+                    val newUser = User(0, userName, height, weight, mealCount, favWorkout, basicDiet)
+                    insertUser(newUser)
+                } else {    // 사용자 정보를 불러온 경우
+                    Log.e("favWorkout", favWorkout)
+                    updateUserById(userId!!, userName, height, weight, mealCount, favWorkout, basicDiet)
+                }
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                Toast.makeText(this, "모든 사용자 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
-            startActivity(Intent(this, MainActivity::class.java))
         }
+    }
+
+    private fun isAllTextNotEmpty(vararg texts: String): Boolean {
+        for (text in texts) {
+            if (text.isEmpty()) {
+                return false
+            }
+        }
+        return true
     }
 
     private fun initChangeText(screenType: String){

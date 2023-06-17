@@ -161,33 +161,40 @@ class RoutineActivity : AppCompatActivity() {
         }
 
         binding.routineBtnAddSet.setOnClickListener {
-            // 세트 추가 버튼
-            if(binding.routineBtnAddSet.text == "세트설정 변경"){ // 세트 수정
-                routine.id = routineId
-                routine.setName = binding.routineEtSetName.text.toString()
-                routine.set = (binding.routineEtSetCount.text.toString().toInt())
-                routine.count = (binding.routineEtRepsFerSet.text.toString().toInt())
-                CoroutineScope(Dispatchers.IO).launch {// DB에 세트 추가
-                    routineDB!!.routineDAO().update(routine)
-                }
-                startActivity(Intent(this, RoutineListActivity::class.java))
-            }else{ // 세트 추가
-                val newRoutine = Routine(
-                    id = null,
-                    setName = binding.routineEtSetName.text.toString(),
-                    workoutName = routine.workoutName,
-                    set = routine.set,
-                    count = routine.count,
-                    restTime = routine.restTime
-                )
+            if (binding.routineEtSetName.text.isNullOrEmpty()) {
+                // 텍스트가 비어 있는 경우에 대한 처리
+                Toast.makeText(this, "세트 이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                // 텍스트가 비어 있지 않은 경우에 대한 처리
+                if (binding.routineBtnAddSet.text == "세트설정 변경") {
+                    // 세트 수정
+                    routine.id = routineId
+                    routine.setName = binding.routineEtSetName.text.toString()
+                    routine.set = binding.routineEtSetCount.text.toString().toInt()
+                    routine.count = binding.routineEtRepsFerSet.text.toString().toInt()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        // DB에 세트 추가
+                        routineDB!!.routineDAO().update(routine)
+                    }
+                    startActivity(Intent(this, RoutineListActivity::class.java))
+                } else {
+                    // 세트 추가
+                    val newRoutine = Routine(
+                        id = null,
+                        setName = binding.routineEtSetName.text.toString(),
+                        workoutName = routine.workoutName,
+                        set = routine.set,
+                        count = routine.count,
+                        restTime = routine.restTime
+                    )
 
-                CoroutineScope(Dispatchers.IO).launch {// DB에 세트 추가
-                    routineDB!!.routineDAO().insert(newRoutine)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        // DB에 세트 추가
+                        routineDB!!.routineDAO().insert(newRoutine)
+                    }
+                    startActivity(Intent(this, RoutineListActivity::class.java))
                 }
-                startActivity(Intent(this, RoutineListActivity::class.java))
             }
-
-
         }
     }
 }
