@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.math.roundToInt
 
 class Converter {
     companion object {
@@ -70,6 +71,10 @@ class Converter {
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd")
         val timeFormatter = DateTimeFormatter.ofPattern( "a hh시 mm분").withLocale(Locale.forLanguageTag("ko"))
 
+        fun dpToPx(resources: Resources, dp: Int): Int {
+            val density = resources.displayMetrics.density
+            return (dp * density).roundToInt()
+        }
     }
 }
 
