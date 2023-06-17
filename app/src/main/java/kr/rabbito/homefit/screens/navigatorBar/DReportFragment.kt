@@ -199,7 +199,7 @@ class DReportFragment : Fragment() {
     }
 
     private fun nutrinetComment(carbohydrate: Float, protein: Float, fat: Float): String {
-        var comment: String? = null
+        var comment: String? = ""
         var carbohydrateCaloaries = 4*carbohydrate
         var proteinCalories = 4*protein
         var fatCalories = 9*fat
@@ -217,23 +217,40 @@ class DReportFragment : Fragment() {
             comment += "탄수화물 비율이 낮습니다. 충분한 에너지 공급을 위해 탄수화물 섭취를 늘려보세요. "
         }
 
-        if (proteinRatio > 0.4) {
-            comment += "단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
-        } else if (proteinRatio < 0.05) {
-            comment += "단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
+        if(comment != ""){
+            if (proteinRatio > 0.4) {
+                comment += "\n단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
+            } else if (proteinRatio < 0.05) {
+                comment += "\n단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
+            }
+        }else{
+            if (proteinRatio > 0.4) {
+                comment += "단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
+            } else if (proteinRatio < 0.05) {
+                comment += "단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
+            }
         }
 
-        if (fatRatio > 0.4) {
-            comment += "지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
-        } else if (fatRatio < 0.15) {
-            comment += "지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
+        if(comment != ""){
+            if (fatRatio > 0.4) {
+                comment += "\n지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
+            } else if (fatRatio < 0.15) {
+                comment += "\n지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
+            }
+        }else{
+            if (fatRatio > 0.4) {
+                comment += "지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
+            } else if (fatRatio < 0.15) {
+                comment += "지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
+            }
         }
 
-        if(comment == null){
+
+        if(comment == ""){
             comment = "적절한 식습관을 유지하고 있습니다."
         }
 
-        return comment
+        return comment.toString()
     }
 
     private fun initLineChart() {
@@ -260,7 +277,7 @@ class DReportFragment : Fragment() {
     }
 
     private fun calorieCommnet(calorie: Float): String? {
-        var comment: String? = null
+        var comment: String? = ""
         Log.e("calorie", calorie.toString())
         if(calorie > 3000){
             comment = "칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. "
