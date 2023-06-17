@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="312dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -60,7 +60,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:paddingTop="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
                     android:includeFontPadding="false"
-                    android:text="음식의 영양정보를 입력해주세요.\n항목을 선택 시 표준 영양정보가 자동으로 입력됩니다."
+                    android:text="음식의 영양정보를 입력해주세요.\n음식 무게를 입력 시 표준 영양정보가 자동으로 입력됩니다."
                     android:textColor="@color/lightGray"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +89,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- 드롭다운 라이브러리 -->
-                <View
+                <Spinner
                     android:id="@+id/dadd_v_dropdown"
                     android:layout_width="296dp"
                     android:layout_height="44dp"
@@ -96,69 +99,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_tv_comment" />
 
+                <!-- 임시 항목 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/dadd_cl_selected_food"
+                    android:id="@+id/dadd_cl_fix_weight"
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="32dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dadd_v_dropdown">
 
-                    <ImageView
-                        android:id="@+id/dadd_iv_selected_food"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
-                        android:src="@drawable/dadd_iv_temp"
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_food_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="무게"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/dadd_tv_selected_food"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/pretendard_semibold"
-                        android:includeFontPadding="false"
-                        android:text="샌드위치"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
-                        app:layout_constraintTop_toTopOf="@id/dadd_iv_selected_food" />
-
-                    <!-- 다중 레이블 분류 구현 시 ListView 형태로 변경 -->
-                    <TextView
-                        android:id="@+id/dadd_tv_selected_food_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:includeFontPadding="false"
-                        android:text="1개"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
-                        app:layout_constraintTop_toBottomOf="@id/dadd_tv_selected_food" />
-
                     <EditText
-                        android:id="@+id/dadd_et_selected_food_calorie"
-                        android:layout_width="93dp"
+                        android:id="@+id/dadd_et_fix_weight"
+                        android:layout_width="106dp"
                         android:layout_height="36dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/dadd_et_small"
+                        android:background="@drawable/init_et_small"
                         android:fontFamily="@font/pretendard_regular"
-                        android:hint="0"
+                        android:hint="무게"
                         android:includeFontPadding="false"
                         android:padding="8dp"
                         android:paddingEnd="44dp"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@id/dadd_tv_selected_food_count"
-                        app:layout_constraintStart_toEndOf="@id/dadd_tv_selected_food_count"
-                        app:layout_constraintTop_toTopOf="@id/dadd_tv_selected_food_count" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,113 +144,42 @@
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/pretendard_regular"
                         android:includeFontPadding="false"
-                        android:text="kcal"
+                        android:text="g"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_selected_food_calorie"
-                        app:layout_constraintEnd_toEndOf="@id/dadd_et_selected_food_calorie"
-                        app:layout_constraintTop_toTopOf="@id/dadd_et_selected_food_calorie" />
-                    
-                    <Button
-                        android:id="@+id/dadd_btn_album"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/dadd_btn_album_small"
-                        app:layout_constraintStart_toEndOf="@id/dadd_iv_selected_food"
-                        app:layout_constraintBottom_toBottomOf="@id/dadd_iv_selected_food" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_weight"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/dadd_tv_fix"
+                    android:id="@+id/dadd_tv_detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:fontFamily="@font/eulyoo1945_regular"
+                    android:layout_marginTop="44dp"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:includeFontPadding="false"
                     android:text="상세정보"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_selected_food" />
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_weight" />
 
-                <!-- 임시 항목 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/dadd_cl_fix_food_count"
+                    android:id="@+id/dadd_cl_fix_calorie"
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="22dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_fix">
+                    app:layout_constraintTop_toBottomOf="@id/dadd_tv_detail_title">
 
                     <TextView
-                        android:id="@+id/dadd_tv_fix_food_count"
+                        android:id="@+id/dadd_tv_fix_calorie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_semibold"
-                        android:includeFontPadding="false"
-                        android:text="음식 수"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/dadd_et_fix_food_count"
-                        android:layout_width="53dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/wodetail_et_num"
                         android:fontFamily="@font/pretendard_regular"
-                        android:gravity="center_horizontal"
-                        android:hint="0"
                         android:includeFontPadding="false"
-                        android:padding="8dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/gray"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/dadd_btn_fix_food_count_add"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/dadd_btn_fix_food_count_sub"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/wodetail_btn_sub"
-                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_fix_food_count"
-                        app:layout_constraintEnd_toStartOf="@id/dadd_et_fix_food_count"
-                        app:layout_constraintTop_toTopOf="@id/dadd_et_fix_food_count" />
-
-                    <Button
-                        android:id="@+id/dadd_btn_fix_food_count_add"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/wodetail_btn_add"
-                        app:layout_constraintBottom_toBottomOf="@id/dadd_et_fix_food_count"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/dadd_et_fix_food_count" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- 임시 항목 -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/dadd_cl_fix_total_calorie"
-                    android:layout_width="296dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_food_count">
-
-                    <TextView
-                        android:id="@+id/dadd_tv_fix_total_calorie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_semibold"
-                        android:includeFontPadding="false"
-                        android:text="총 칼로리"
+                        android:text="칼로리"
                         android:textColor="@color/white"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -280,7 +187,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/dadd_et_fix_total_calorie"
+                        android:id="@+id/dadd_et_fix_calorie"
                         android:layout_width="106dp"
                         android:layout_height="36dp"
                         android:background="@drawable/init_et_small"
@@ -306,7 +213,163 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_total_calorie"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_calorie"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_fix_carbohydrate"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_calorie">
+
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_carbohydrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="탄수화물"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/dadd_et_fix_carbohydrate"
+                        android:layout_width="106dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/init_et_small"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="탄수화물"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:paddingEnd="40dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="g"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_carbohydrate"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_fix_protein"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_carbohydrate">
+
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_protein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="단백질"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/dadd_et_fix_protein"
+                        android:layout_width="106dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/init_et_small"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="단백질"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:paddingEnd="44dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="g"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_protein"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dadd_cl_fix_fat"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dadd_cl_fix_protein">
+
+                    <TextView
+                        android:id="@+id/dadd_tv_fix_fat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="지방"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/dadd_et_fix_fat"
+                        android:layout_width="106dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/init_et_small"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:hint="지방"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:paddingEnd="40dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:includeFontPadding="false"
+                        android:text="g"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/dadd_et_fix_fat"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -326,10 +389,9 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dadd_cl_bot" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

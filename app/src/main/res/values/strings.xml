@@ -54,6 +54,14 @@
         <item>저지방</item>
     </string-array>
 
+    <string-array name="diet_items">
+        <item>짜장면</item>
+        <item>샐러드</item>
+        <item>김치볶음밥</item>
+        <item>제육볶음</item>
+        <item>순대국밥</item>
+    </string-array>
+
 
 
     <string name="dcamera_shot_guide">화면을 가로로 돌린 후,\n<b>숟가락</b>이 <b>좌측 사각형</b>에\n들어올 거리에서 촬영하세요.</string>

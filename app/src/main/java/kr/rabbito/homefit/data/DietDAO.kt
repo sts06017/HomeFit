@@ -24,6 +24,8 @@ interface DietDAO {
     @Query("SELECT carbohydrate, protein, fat FROM Diet WHERE dDate = :dDate")
     fun selectNutrient(dDate: LocalDate): List<Nutrient>
 
+    @Query("UPDATE Diet SET foodName = :foodName, weight = :weight, calorie = :calorie, carbohydrate = :carbohydrate, protein = :protein, fat = :fat WHERE id = :id")
+    suspend fun updateDietById(id: Int, foodName: String, weight: Double, calorie: Double, carbohydrate: Double, protein: Double, fat: Double)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(diet: Diet)
 
