@@ -15,6 +15,8 @@ interface DietDAO {
 
     @Query("SELECT dDate, SUM(calorie) AS totalCalorie FROM Diet WHERE dDate >= date(:selectedDate,'-5 days') GROUP BY dDate ORDER BY dDate LIMIT 6")
     suspend fun getCaloriesByDate(selectedDate: String): List<DietCalorie>
+    @Query("SELECT SUM(calorie) AS totalCalorie FROM Diet WHERE dDate = date(:selectedDate) GROUP BY dDate ORDER BY dDate ")
+    suspend fun getTodayCalories(selectedDate: String): Float
 
 //    @Query("SELECT dDate FROM Diet WHERE dDate >= date(:selectedDate,'-5 days') GROUP BY dDate ORDER BY dDate LIMIT 6")
 //    suspend fun getDates(selectedDate: String): List<LocalDate>

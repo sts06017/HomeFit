@@ -60,6 +60,7 @@ class DReportFragment : Fragment() {
 
     private var nutrinetAdvice: String = ""
     private var calorieAdvice: String = ""
+    private lateinit var totalComment: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +144,13 @@ class DReportFragment : Fragment() {
 
     private suspend fun getTodayCalories(): List<DietCalorie>? { return dietDB?.DietDAO()?.getCaloriesByDate(dateString?: LocalDate.now().toString()) }
     // 해당 날짜 칼로리 합
+
+    private suspend fun getNowCalories(): Float {
+        val dietDAO = dietDB?.DietDAO()
+        val todayCalories = dietDAO?.getTodayCalories(dateString ?: LocalDate.now().toString())
+        return todayCalories ?: 0.0f
+    }
+
     data class NutrientData(val nutrientMap: MutableMap<String, Float>, val carbohydrate: Float, val protein: Float, val fat: Float)
 
     private fun saveToNutrientMap(diets: List<Diet>?): NutrientData {
@@ -160,20 +168,17 @@ class DReportFragment : Fragment() {
             fat = it.fat!!.toFloat()
 
         }
+        Log.d("nutrient", carbohydrate.toString())
         return NutrientData(nutrientMap, carbohydrate, protein, fat)
     }
 
-    data class CalorieData(val calorieMap: MutableMap<String, Float>, val totalCalorie: Float)
-
-    private fun saveToCalorieMap(calorie: List<DietCalorie>): CalorieData {
+    private fun saveToCalorieMap(calorie: List<DietCalorie>): MutableMap<String, Float> {
         val calorieMap = mutableMapOf<String,Float>()
-        var totalCalorie: Float = 0.0f
 
         calorie.forEach {
             calorieMap[it.dDate.toString()] = it.totalCalorie.toFloat()
-            totalCalorie = it.totalCalorie.toFloat()
         }
-        return CalorieData(calorieMap, totalCalorie)
+        return calorieMap
     }
     private fun initPieChart() {
         CoroutineScope(Dispatchers.Main).launch {
@@ -185,11 +190,13 @@ class DReportFragment : Fragment() {
             if (nutrientMap.toString() != "{탄수화물=0.0, 단백질=0.0, 지방=0.0}") {
                 createPieGraph(nutrientMap, binding.dreportVGraph1)
                 binding.dreportVGraph1.visibility = View.VISIBLE
+                binding.dreportVGraph2.visibility = View.VISIBLE
                 Log.e("nutrient", comment)
                 editDreportComment(comment, "nutrient")
             } else {
                 editDreportComment("입력된 정보가 없습니다.", "nutrient")
                 binding.dreportVGraph1.visibility = View.GONE
+                binding.dreportVGraph2.visibility  = View.GONE
             }
         }
     }
@@ -235,34 +242,35 @@ class DReportFragment : Fragment() {
     private fun initLineChart() {
         CoroutineScope(Dispatchers.Main).launch {
             val totalCalorie = getTodayCalories()
-            val (calorieMap, calorie) = saveToCalorieMap(totalCalorie!!)
-            
-//            val comment = calorieCommnet(calorie)
+            val calorieMap = saveToCalorieMap(totalCalorie!!)
 
-//            Log.e("calorie", totalCalorie.toString())
+            var calorie:Float? = 0.0f
+            calorie = getNowCalories()
+
+            val comment = calorieCommnet(calorie!!)
+
             if (calorieMap.isNotEmpty()) {
-                Log.e("calorie", calorie.toString())
                 createLineChart(calorieMap, binding.dreportVGraph2)
-                binding.dreportVGraph2.visibility = View.VISIBLE
-//                if (comment != null) {
-//                    editDreportComment(comment, "calorie")
-//                }
+//                binding.dreportVGraph2.visibility = View.VISIBLE
+                if (comment != null) {
+                    editDreportComment(comment, "calorie")
+                }
             } else {
-                binding.dreportVGraph2.visibility  = View.GONE
+//                binding.dreportVGraph2.visibility  = View.GONE
             }
         }
     }
 
-//    private fun calorieCommnet(calorie: Float): String? {
-//        var comment: String? = null
-//
-//        if(calorie > 3000){
-//            comment = "칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. "
-//        }else if(calorie < 2000 && calorie > 0){
-//            comment = "칼로리 섭취량이 너무 적습니다. 충분한 에너지를 위해 충분한 칼로리를 섭취하고 있는지 확인하세요. "
-//        }
-//        return comment
-//    }
+    private fun calorieCommnet(calorie: Float): String? {
+        var comment: String? = null
+        Log.e("calorie", calorie.toString())
+        if(calorie > 3000){
+            comment = "칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. "
+        }else if(calorie < 2000 && calorie > 0.0){
+            comment = "칼로리 섭취량이 너무 적습니다. 충분한 에너지를 위해 충분한 칼로리를 섭취하고 있는지 확인하세요. "
+        }
+        return comment
+    }
 
     private fun editDreportComment(comment: String, from: String) {
         if (from == "nutrient") {
@@ -271,7 +279,12 @@ class DReportFragment : Fragment() {
             calorieAdvice = comment
         }
 
-        val totalComment = "$nutrinetAdvice\n$calorieAdvice"
+        if(calorieAdvice.isNullOrEmpty()){
+            totalComment = "$nutrinetAdvice"
+        }else{
+            totalComment = "$nutrinetAdvice\n$calorieAdvice"
+        }
+
         binding.dreportTvComment.text = totalComment
     }
 
