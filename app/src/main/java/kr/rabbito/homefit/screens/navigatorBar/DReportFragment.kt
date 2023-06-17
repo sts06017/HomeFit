@@ -66,6 +66,8 @@ class DReportFragment : Fragment() {
 
         resultJson = arguments?.getString("RESULT_JSON")
         dateString = arguments?.getString("DATE")
+        val timeString = arguments?.getString("TIME")
+
         if(dateString != null) {
             date = LocalDate.parse(dateString)
         }
@@ -78,7 +80,7 @@ class DReportFragment : Fragment() {
             val gson = Gson()
             dietMap = gson.fromJson(resultJson, object : TypeToken<DietMap>() {}.type)
             dietDB = DietDB.getInstance(requireContext())
-            insertDiet(dietMap)
+            insertDiet(dietMap, timeString)
             Log.d("jsonFileKeys", resultMap.keys.toString())
 
         }
@@ -166,20 +168,25 @@ class DReportFragment : Fragment() {
             createLineChart(calorieMap,binding.dreportVGraph2)
         }
     }
-    private fun insertDiet(dietMap: DietMap?) {
+    private fun insertDiet(dietMap: DietMap?, timeString: String?) {
         val currentDate = LocalDate.now()
         val currentTime = LocalDateTime.now().format(timeFormatter)
-        val jsonHash = dietMap.hashCode()
+        val dietMapStirng = dietMap.toString() + timeString
+        val dietMapHash = dietMapStirng.hashCode()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val existingDiet = dietDB!!.DietDAO().findByJsonHash(jsonHash)
+            val existingDiet = dietDB!!.DietDAO().findByJsonHash(dietMapHash)
             if (existingDiet == null){
                 dietMap?.forEach {(foodName, foodInfo) ->
                     val diet = Diet(
-                        id = null, foodName = foodName, weight = foodInfo.volume, calorie = foodInfo.calorie, carbohydrate = foodInfo.carbohydrate, protein = foodInfo.protein, fat = foodInfo.fat, dDate = currentDate, dTime = currentTime, jsonHash = jsonHash//, json = resultJson
+                        id = null, foodName = foodName, weight = foodInfo.volume, calorie = foodInfo.calorie, carbohydrate = foodInfo.carbohydrate, protein = foodInfo.protein, fat = foodInfo.fat, dDate = currentDate, dTime = currentTime, jsonHash = dietMapHash//, json = resultJson
                     )
                     dietDB?.DietDAO()?.insert(diet)
                 }
+            }
+            else{
+                Log.d("DReportFragment","같은 해쉬코드의 데이터 저장되어있음\n원인1: dietMap: $dietMap\n원인2:\n이미존재한 객체->${existingDiet.jsonHash}\n새로생성한 해쉬->$dietMapHash")
+                Log.d("DReportFragment","이미존재한 음식이름: ${existingDiet.foodName}, w: ${existingDiet.weight}, cal: ${existingDiet.calorie}, fat: ${existingDiet.fat}, car: ${existingDiet.carbohydrate}, pro: ${existingDiet.protein}")
             }
         }
     }
