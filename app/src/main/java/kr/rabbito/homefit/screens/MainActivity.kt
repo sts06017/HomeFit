@@ -33,9 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         val result = intent.getStringExtra("DATA")
         val date = intent.getStringExtra("DATE")
+        val time = intent.getStringExtra("TIME")
 
         // 네비게이터 adapter 연결
-        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, result, date)   // fragmentCount 인자는 넣을 페이지 수
+        binding.mainVpViewpager.adapter = NavigatorAdapter(supportFragmentManager, 4, result, date, time)   // fragmentCount 인자는 넣을 페이지 수
 
         binding.mainTlMenubar.setupWithViewPager(binding.mainVpViewpager)
 

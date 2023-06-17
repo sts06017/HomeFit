@@ -27,6 +27,5 @@ class DReportAdapter(private val results: List<Diet>):
     override fun onBindViewHolder(holder: DReportViewHolder, position: Int) {
 //        holder.bind(keyList[position], results)
         holder.bind(results[position])
-        Log.d("최승호","$results")
     }
 }

@@ -24,6 +24,7 @@ import kr.rabbito.homefit.databinding.ActivityDcameraBinding
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.PermissionChecker
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.concurrent.ExecutorService
 
 class DCameraActivity : AppCompatActivity() {
@@ -166,8 +167,12 @@ class DCameraActivity : AppCompatActivity() {
                         val endTime = System.currentTimeMillis()
                         Log.d("time gap", (endTime - startTime).toString())
 
-                        if (client == null) {
-                            Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        if (client == null || data == null) {
+                            runOnUiThread {
+                                Toast.makeText(this@DCameraActivity, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            finish()
                         }
 
                         runOnUiThread {
@@ -179,6 +184,7 @@ class DCameraActivity : AppCompatActivity() {
                             intent.putExtra("VIEW_PAGER_INDEX", 1)
                             intent.putExtra("DATA", data)
                             intent.putExtra("DATE", LocalDate.now().toString())
+                            intent.putExtra("TIME", LocalDateTime.now().toString())
                             startActivity(intent)
                             finish()
                         }

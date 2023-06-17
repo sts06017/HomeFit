@@ -28,9 +28,9 @@ class PoseAdviceTTS(val context: Context) {
     구상: 기본적인 동작에 대한 음성 안내를 함수 형태로 구성하고, 각 파일에서 PoseAdviceTTS 객체 생성후 함수 호출해 사용
      */
 
-    private fun checkDelay(): Boolean {
+    private fun checkCondition(): Boolean {
         // 지정한 제한 시간 지난 후에만 음성 출력
-        if (WorkoutState.ttsDelay >= WorkoutState.ttsDelayLimit) {
+        if (WorkoutState.ttsDelay >= WorkoutState.ttsDelayLimit && WorkoutState.count >= 1) {
             WorkoutState.ttsDelay = 0
             return true
         } else {
@@ -39,47 +39,47 @@ class PoseAdviceTTS(val context: Context) {
     }
 
     fun wrongPoseTTS() {
-        if (checkDelay()) tts?.speak("잘못된 자세입니다.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("잘못된 자세입니다.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun raiseArmTTS() {
-        if (checkDelay()) tts?.speak("팔이 너무 낮아요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔이 너무 낮아요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun lowerArmTTS(){
-        if (checkDelay()) tts?.speak("팔이 너무 높아요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔이 너무 높아요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun straightArmTTS(){
-        if (checkDelay()) tts?.speak("팔을 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔을 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun frontStraightArmTTS(){
-        if (checkDelay()) tts?.speak("팔을 앞으로 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔을 앞으로 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun understretchArmTTS(){
-        if (checkDelay()) tts?.speak("팔을 너무 쭉 피지 마세요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔을 너무 쭉 피지 마세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun raiseLegTTS() {
-        if (checkDelay()) tts?.speak("다리가 너무 낮아요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("다리가 너무 낮아요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun lowerLegTTS(){
-        if (checkDelay()) tts?.speak("다리가 너무 높아요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("다리가 너무 높아요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun wrongElbowTTS(){
-        if (checkDelay()) tts?.speak("팔꿈치를 옆구리에 붙이세요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("팔꿈치를 옆구리에 붙이세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun highShoulderTTS(){
-        if (checkDelay()) tts?.speak("너무 높이 올라갔어요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("너무 높이 올라갔어요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
     fun raiseUpperbodyTTS(){
-        if (checkDelay()) tts?.speak("상체를 너무 많이 내렸어요.", TextToSpeech.QUEUE_ADD, null, "")
+        if (checkCondition()) tts?.speak("상체를 너무 많이 내렸어요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun countTTS(count: Int){
@@ -97,7 +97,7 @@ class PoseAdviceTTS(val context: Context) {
     }
 
     fun customTTS(string: String) {
-        if (checkDelay()) tts?.speak(string, TextToSpeech.QUEUE_FLUSH, null, "")
+        if (checkCondition()) tts?.speak(string, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
     fun finish() {

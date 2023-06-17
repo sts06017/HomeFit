@@ -64,29 +64,29 @@ fun getCalories(
     when(workoutName){
         "팔굽혀펴기"-> {
             val kcal = weight * 4.0/3600 * 8 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
         "턱걸이"-> {
             val kcal = weight * 5.0/3600 * 8 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
         "스쿼트"-> {
             val kcal = weight * 5.0/3600 * 8 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
         "사이드 레터럴 레이즈"-> {
             val kcal = weight * 4.0/3600 * 5 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
         "덤벨 컬"-> {
             val kcal = weight * 4.0/3600 * 3 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
         "레그 레이즈"-> {
             val kcal = weight * 5.0/3600 * 4 * count
-            return "${round(kcal).toInt()}Kcal"
+            return String.format("%.3f", kcal) + "kcal"
         }
     }
-    return "0Kcal"
+    return "0kcal"
 }
 

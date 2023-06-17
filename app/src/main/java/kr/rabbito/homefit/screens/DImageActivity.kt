@@ -10,6 +10,7 @@ import kr.rabbito.homefit.client.HomeFitClient
 import kr.rabbito.homefit.databinding.ActivityDimageBinding
 import kr.rabbito.homefit.utils.calc.Converter
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class DImageActivity : AppCompatActivity() {
     private var mBinding: ActivityDimageBinding? = null
@@ -56,9 +57,12 @@ class DImageActivity : AppCompatActivity() {
                 val endTime = System.currentTimeMillis()
                 Log.d("time gap", (endTime - startTime).toString())
 
-                if (client == null) {
-                    Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
-                        .show()
+                if (client == null || data == null) {
+                    runOnUiThread {
+                        Toast.makeText(this, "서버 연결에 실패했습니다.\n연결 상태를 확인해주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    finish()
                 }
 
                 if (data != null) {
@@ -66,6 +70,7 @@ class DImageActivity : AppCompatActivity() {
                     intent.putExtra("VIEW_PAGER_INDEX", 1)
                     intent.putExtra("DATA", data)
                     intent.putExtra("DATE", LocalDate.now().toString())
+                    intent.putExtra("TIME", LocalDateTime.now().toString())
                     startActivity(intent)
                 }
             }
