@@ -88,6 +88,8 @@ class HomeFitClient {
                     }
 
                     val jsonFileString = byteArrayOutputStream.toString()
+//                    Log.d("check json", jsonFileString)
+//                    Log.d("check json", jsonFileString.length.toString())
 
                     return jsonFileString
                 }
