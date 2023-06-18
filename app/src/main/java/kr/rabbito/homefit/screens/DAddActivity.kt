@@ -62,7 +62,12 @@ class DAddActivity : AppCompatActivity() {
         }
 
         binding.daddBtnBack.setOnClickListener{
-            finish()
+            if(binding.daddTvTitle.text == "식단정보 변경"){
+                finish()
+            }else{
+                val intent = Intent(this, DAddTypeSelectActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
