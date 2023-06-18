@@ -64,6 +64,10 @@ class WOReportActivity : AppCompatActivity() {
 
         createPieGraph(woTimeData,binding.woreportVGraph1)
 
+        binding.woreportBtnBack.setOnClickListener {
+            finish()
+        }
+
         binding.woreportBtnHistory.setOnClickListener {
             startActivity(Intent(this, WOHistoryActivity::class.java))
         }

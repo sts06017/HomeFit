@@ -54,7 +54,8 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/routine_btn_add_set"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/routine_cl_top">
@@ -78,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_regular"
                     android:includeFontPadding="false"
-                    android:text="세트설정을 추가하면, 운동을 시작할 때 '불러오기' 기능을 통해 설정을 편리하게 적용할 수 있습니다."
+                    android:text="세트설정을 추가하면, 운동 시작 화면에서 불러오기 기능을 사용해 편리하게 적용할 수 있습니다."
                     android:textColor="@color/lightGray"
                     android:textSize="15sp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -152,6 +153,8 @@
                         android:layout_height="44dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/routine_iv_dropdown"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/routine_tv_select_wo" />
 
 
@@ -163,6 +166,8 @@
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/routine_cl_select_wo">
 
                     <TextView
@@ -278,23 +283,22 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/routine_btn_add_set"
-                android:layout_width="312dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="64dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/init_btn_basic"
-                android:fontFamily="@font/pretendard_semibold"
-                android:includeFontPadding="false"
-                android:text="세트설정 추가"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/routine_cl_bot" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/routine_btn_add_set"
+        android:layout_width="312dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/init_btn_basic"
+        android:fontFamily="@font/pretendard_semibold"
+        android:includeFontPadding="false"
+        android:text="세트설정 추가"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
