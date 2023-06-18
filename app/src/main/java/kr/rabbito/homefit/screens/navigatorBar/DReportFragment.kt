@@ -188,12 +188,21 @@ class DReportFragment : Fragment() {
                 createPieGraph(nutrientMap, binding.dreportVGraph1)
                 binding.dreportVGraph1.visibility = View.VISIBLE
                 binding.dreportVGraph2.visibility = View.VISIBLE
+
+                val params = binding.dreportTvComment.layoutParams as ViewGroup.MarginLayoutParams
+                params.topMargin = Converter.dpToPx(resources, 200)
+                binding.dreportTvComment.layoutParams = params
+
                 Log.e("nutrient", comment)
                 editDreportComment(comment, "nutrient")
             } else {
-                editDreportComment("입력된 정보가 없습니다.", "nutrient")
+                editDreportComment("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.", "nutrient")
                 binding.dreportVGraph1.visibility = View.GONE
                 binding.dreportVGraph2.visibility  = View.GONE
+
+                val params = binding.dreportTvComment.layoutParams as ViewGroup.MarginLayoutParams
+                params.topMargin = Converter.dpToPx(resources, 52)
+                binding.dreportTvComment.layoutParams = params
             }
         }
     }

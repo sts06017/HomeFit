@@ -85,14 +85,14 @@
             android:id="@+id/dreport_tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="200dp"
             android:fontFamily="@font/pretendard_regular"
             android:includeFontPadding="false"
             android:text="단백질 섭취가 부족합니다.\n어제보다 탄수화물 섭취가 늘었습니다."
             android:textColor="@color/lightGray"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dreport_v_graph_1" />
+            app:layout_constraintTop_toBottomOf="@id/dreport_tv_date"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

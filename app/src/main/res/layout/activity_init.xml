@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
-        android:layout_width="312dp"
+        android:layout_width="336dp"
         android:layout_height="0dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,24 +34,43 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/init_cl_top"
-                android:layout_width="match_parent"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/init_btn_back"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:visibility="gone"
+                    android:src="@drawable/basic_icon_back"
+                    app:layout_constraintBottom_toBottomOf="@id/init_tv_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/init_tv_title" />
 
                 <TextView
                     android:id="@+id/init_tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:fontFamily="@font/eulyoo1945_regular"
                     android:includeFontPadding="false"
-                    android:text="환영합니다."
+                    android:text="환영합니다"
                     android:textColor="@color/white"
                     android:textSize="32sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/init_cl_mid"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/init_cl_top">
 
                 <TextView
                     android:id="@+id/init_tv_sub"
@@ -65,13 +84,13 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/init_tv_title" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/init_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="44dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:includeFontPadding="false"
                     android:text="이름"
@@ -369,7 +388,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/init_cl_top" />
+                app:layout_constraintTop_toBottomOf="@id/init_cl_mid" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
