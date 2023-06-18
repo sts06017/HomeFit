@@ -75,6 +75,7 @@ class WOReportActivity : AppCompatActivity() {
             }
 
             startActivity(Intent(this,WOHistoryActivity::class.java))
+            finish()
         }
         binding.woreportBtnDeleteReport.setOnClickListener {
             // 운동 결과 DB삭제
@@ -84,6 +85,7 @@ class WOReportActivity : AppCompatActivity() {
                 }
             }
             startActivity(Intent(this,MainActivity::class.java))
+            finish()
         }
 
     }
