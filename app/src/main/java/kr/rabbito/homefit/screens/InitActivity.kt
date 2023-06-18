@@ -114,11 +114,15 @@ class InitActivity : AppCompatActivity() {
                 if (user == null) { // 사용자 정보를 불러오지 못한 경우
                     val newUser = User(0, userName, height, weight, mealCount, favWorkout, basicDiet)
                     insertUser(newUser)
+                    startActivity(Intent(this, MainActivity::class.java))
                 } else {    // 사용자 정보를 불러온 경우
                     Log.e("favWorkout", favWorkout)
                     updateUserById(userId!!, userName, height, weight, mealCount, favWorkout, basicDiet)
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("VIEW_PAGER_INDEX", 2)
+                    startActivity(intent)
                 }
-                startActivity(Intent(this, MainActivity::class.java))
+
             } else {
                 Toast.makeText(this, "모든 사용자 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
