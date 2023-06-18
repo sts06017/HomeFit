@@ -45,6 +45,12 @@ class DHistoryActivity : AppCompatActivity() {
 //            CoroutineScope(Dispatchers.IO).launch{ dietDB!!.DietDAO().deleteAll() }
 //        }
 
+        binding.dhistoryBtnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX", 1)
+            startActivity(intent)
+        }
+
         calendar_tv_weekTitles.children
             .map { it as TextView }
             .forEachIndexed { idx, textView ->

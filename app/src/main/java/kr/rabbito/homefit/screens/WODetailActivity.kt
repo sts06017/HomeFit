@@ -137,7 +137,9 @@ class WODetailActivity : AppCompatActivity() {
         }
 
         binding.wodetailBtnBack.setOnClickListener {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX", 0)
+            startActivity(intent)
         }
     }
 }
