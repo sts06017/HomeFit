@@ -39,8 +39,9 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
             }
 
             if (!WorkoutState.isUp) { // 올라가는 시점
+                Log.d("사레레 팔 각도", "${getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder)}")
                 if (
-                    getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 130
+                    getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 140
                 ) {   // 팔을 너무 낮게 들면 안내선 빨갛게
                     PoseGraphic.rightShoulderToRightElbowPaint = redPaint
                     PoseGraphic.rightElbowToRightWristPaint = redPaint
@@ -50,7 +51,7 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
                 }
 
                 if (
-                    getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 130
+                    getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 140
                 ) {
                     PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
                     PoseGraphic.leftElbowToLeftWristPaint = redPaint
@@ -112,8 +113,8 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
                 }, R:${getXDistance(c.rightShoulder, c.rightHand).absoluteValue.toInt()}"
             )
             if (
-                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) > 80)
-                && (getAngle(c.rightElbow, c.rightShoulder, c.rightHip) > 80)
+                (getAngle(c.leftElbow, c.leftShoulder, c.leftHip) > 85)
+                && (getAngle(c.rightElbow, c.rightShoulder, c.rightHip) > 85)
                 && getXDistance(
                     c.rightShoulder,
                     c.rightHand
