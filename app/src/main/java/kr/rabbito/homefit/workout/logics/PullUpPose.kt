@@ -72,9 +72,10 @@ class PullUpPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts
 
     override fun checkCount(c: PoseCoordinate) {
         try {
+            Log.d("풀업 각도", "${getAngle(c.leftHand, c.leftElbow, c.leftShoulder)}")
             if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 90)
-                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 90)
+                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 95)
+                && (getAngle(c.rightHand, c.rightElbow,c. rightShoulder) > 95)
                 && getYDistance(c.rightShoulder, c.rightHand) > 60  // 한 번에 여러번 검사되는 것 방지, 정확도 향상
                 && getYDistance(c.leftShoulder, c.leftHand) > 60
                 && WorkoutState.isUp
@@ -91,8 +92,8 @@ class PullUpPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts
                 checkSetCondition()
                 checkEnd()
             } else if (
-                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 90)
-                && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 90)
+                (getAngle(c.leftHand, c.leftElbow, c.leftShoulder) <= 95)
+                && (getAngle(c.rightHand, c.rightElbow, c.rightShoulder) <= 95)
                 && getYDistance(c.rightShoulder, c.rightHand) <= 60
                 && getYDistance(c.leftShoulder, c.leftHand) <= 60
                 && !WorkoutState.isUp
