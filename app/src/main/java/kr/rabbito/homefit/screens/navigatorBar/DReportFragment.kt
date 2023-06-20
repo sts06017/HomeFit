@@ -428,7 +428,7 @@ class DReportFragment : Fragment() {
 
         val leftAxis = chart.axisLeft
         leftAxis.axisMinimum = 0f
-        leftAxis.axisMaximum = 2500f
+        leftAxis.axisMaximum = 5000f
         leftAxis.textColor = Color.WHITE
 
 
