@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens.viewHolder
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -34,6 +35,7 @@ class RoutineListViewHolder(private val binding: RoutinelistItemBinding)
                     putExtra("workoutIndex", workoutIndex)
                 }
                 itemView.context.startActivity(intent)
+                (itemView.context as Activity).finish()
             }
         } else { // 세트 수정
             binding.routinelistItemIvTempItemBackground.setOnClickListener{
@@ -41,6 +43,7 @@ class RoutineListViewHolder(private val binding: RoutinelistItemBinding)
                     putExtra("routine", routine) // DB routine 객체
                 }
                 itemView.context.startActivity(intent)
+                (itemView.context as Activity).finish()
             }
         }
     }
