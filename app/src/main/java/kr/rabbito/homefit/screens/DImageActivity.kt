@@ -72,6 +72,7 @@ class DImageActivity : AppCompatActivity() {
                     intent.putExtra("DATE", LocalDate.now().toString())
                     intent.putExtra("TIME", LocalDateTime.now().toString())
                     startActivity(intent)
+                    finish()
                 }
             }
         }.start()
