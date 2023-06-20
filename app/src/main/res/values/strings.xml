@@ -62,7 +62,13 @@
         <item>순대국밥</item>
     </string-array>
 
-
+    <string name="dreport_result_basic">적절한 식습관을 유지하고 있습니다.</string>
+    <string name="dreport_result_carb_high">탄수화물 비율이 너무 높습니다. 탄수화물 섭취를 조절해 보세요.</string>
+    <string name="dreport_result_carb_low">탄수화물 비율이 낮습니다. 충분한 에너지 공급을 위해 탄수화물 섭취를 늘려보세요.</string>
+    <string name="dreport_result_protein_high">단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요.</string>
+    <string name="dreport_result_protein_low">단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요.</string>
+    <string name="dreport_result_fat_high">지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요.</string>
+    <string name="dreport_result_fat_low">지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요.</string>
 
     <string name="dcamera_shot_guide">화면을 가로로 돌린 후,\n<b>숟가락</b>이 <b>좌측 사각형</b>에\n들어올 거리에서 촬영하세요.</string>
 </resources>

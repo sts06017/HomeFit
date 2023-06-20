@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
@@ -24,16 +22,13 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
 import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.data.Diet
 import kr.rabbito.homefit.data.DietDB
-import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
-import kr.rabbito.homefit.screens.DAddActivity
 import kr.rabbito.homefit.screens.DAddTypeSelectActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
@@ -182,8 +177,10 @@ class DReportFragment : Fragment() {
             val todayDiets = getTodayNutrients()
             val (nutrientMap, carbohydrate, protein, fat) = saveToNutrientMap(todayDiets)
 
-            val comment = nutrinetComment(carbohydrate, protein, fat)
-            Log.e("nutrient", nutrientMap.toString())
+            val comment = nutrientComment(carbohydrate, protein, fat)
+//            Log.d("nutrient", nutrientMap.toString())
+            Log.d("check comment result", comment)
+
             if (nutrientMap.toString() != "{탄수화물=0.0, 단백질=0.0, 지방=0.0}") {
                 createPieGraph(nutrientMap, binding.dreportVGraph1)
                 binding.dreportVGraph1.visibility = View.VISIBLE
@@ -193,7 +190,7 @@ class DReportFragment : Fragment() {
                 params.topMargin = Converter.dpToPx(resources, 200)
                 binding.dreportTvComment.layoutParams = params
 
-                Log.e("nutrient", comment)
+                Log.d("nutrient", comment)
                 editDreportComment(comment, "nutrient")
             } else {
                 editDreportComment("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.", "nutrient")
@@ -207,8 +204,7 @@ class DReportFragment : Fragment() {
         }
     }
 
-    private fun nutrinetComment(carbohydrate: Float, protein: Float, fat: Float): String {
-        var comment: String? = ""
+    private fun nutrientComment(carbohydrate: Float, protein: Float, fat: Float): String {
         var carbohydrateCaloaries = 4*carbohydrate
         var proteinCalories = 4*protein
         var fatCalories = 9*fat
@@ -219,47 +215,33 @@ class DReportFragment : Fragment() {
         val proteinRatio = proteinCalories / totalCalories
         val fatRatio = fatCalories / totalCalories
 
+        val commentList = ArrayList<String>()
+
         // 비율에 따른 조언 작성
         if (carbRatio > 0.7) {
-            comment += "탄수화물 비율이 너무 높습니다. 적절한 탄수화물 섭취를 고려해보세요. "
+            commentList.add(getString(R.string.dreport_result_carb_high))
         } else if (carbRatio < 0.4) {
-            comment += "탄수화물 비율이 낮습니다. 충분한 에너지 공급을 위해 탄수화물 섭취를 늘려보세요. "
+            commentList.add(getString(R.string.dreport_result_carb_low))
         }
 
-        if(comment != ""){
-            if (proteinRatio > 0.4) {
-                comment += "\n단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
-            } else if (proteinRatio < 0.05) {
-                comment += "\n단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
-            }
-        }else{
-            if (proteinRatio > 0.4) {
-                comment += "단백질 비율이 높습니다. 적절한 단백질 섭취를 유지하세요. "
-            } else if (proteinRatio < 0.05) {
-                comment += "단백질 비율이 낮습니다. 근육 유지 및 회복에 필요한 단백질 섭취를 늘려보세요. "
-            }
+        if (proteinRatio > 0.4) {
+            commentList.add(getString(R.string.dreport_result_protein_high))
+        } else if (proteinRatio < 0.05) {
+            commentList.add(getString(R.string.dreport_result_protein_low))
         }
 
-        if(comment != ""){
-            if (fatRatio > 0.4) {
-                comment += "\n지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
-            } else if (fatRatio < 0.15) {
-                comment += "\n지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
-            }
-        }else{
-            if (fatRatio > 0.4) {
-                comment += "지방 비율이 높습니다. 적절한 지방 섭취를 유지하세요. "
-            } else if (fatRatio < 0.15) {
-                comment += "지방 비율이 낮습니다. 비타민 흡수와 필수 기능에 필요한 지방 섭취를 늘려보세요. "
-            }
+        if (fatRatio > 0.4) {
+            commentList.add(getString(R.string.dreport_result_fat_high))
+        } else if (fatRatio < 0.15) {
+            commentList.add(getString(R.string.dreport_result_fat_low))
         }
 
+        commentList.add(getString(R.string.dreport_result_basic))
+        Log.d("check result", commentList.joinToString("\n"))
 
-        if(comment == ""){
-            comment = "적절한 식습관을 유지하고 있습니다."
-        }
+        val result = commentList.take(2).joinToString("\n")
 
-        return comment.toString()
+        return result
     }
 
     private fun initLineChart() {
@@ -270,7 +252,7 @@ class DReportFragment : Fragment() {
             var calorie:Float? = 0.0f
             calorie = getNowCalories()
 
-            val comment = calorieCommnet(calorie!!)
+            val comment = calorieComment(calorie!!)
 
 
             if (calorieMap.isNotEmpty()) {
@@ -285,9 +267,9 @@ class DReportFragment : Fragment() {
         }
     }
 
-    private fun calorieCommnet(calorie: Float): String? {
+    private fun calorieComment(calorie: Float): String? {
         var comment: String? = ""
-        Log.e("calorie", calorie.toString())
+        Log.d("calorie", calorie.toString())
         if(calorie > 3000){
             comment = "칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. "
         }else if(calorie < 2000 && calorie > 0.0){
