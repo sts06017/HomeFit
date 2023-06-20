@@ -100,6 +100,7 @@ class RoutineActivity : AppCompatActivity() {
         
         binding.routineBtnBack.setOnClickListener {// 뒤로 가기 버튼
             startActivity(Intent(this, RoutineListActivity::class.java))
+            finish()
         }
 
         binding.routineBtnSetCountAdd.setOnClickListener {
@@ -177,6 +178,7 @@ class RoutineActivity : AppCompatActivity() {
                         routineDB!!.routineDAO().update(routine)
                     }
                     startActivity(Intent(this, RoutineListActivity::class.java))
+                    finish()
                 } else {
                     // 세트 추가
                     val newRoutine = Routine(
@@ -193,8 +195,15 @@ class RoutineActivity : AppCompatActivity() {
                         routineDB!!.routineDAO().insert(newRoutine)
                     }
                     startActivity(Intent(this, RoutineListActivity::class.java))
+                    finish()
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, RoutineListActivity::class.java))
+        finish()
     }
 }

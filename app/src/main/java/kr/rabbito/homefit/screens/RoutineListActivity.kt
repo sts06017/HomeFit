@@ -33,7 +33,7 @@ class RoutineListActivity : AppCompatActivity() {
 
         Screen_Type = intent.getStringExtra("Starting Point").toString()
 
-        if(Screen_Type == "from_WODetailActivity"){ // 세트 불러오기
+        if (Screen_Type == "from_WODetailActivity") { // 세트 불러오기
             workoutIndex = intent.getIntExtra("workoutIndex", 0)
             binding.routinelistTvTitle.text = "세트설정 선택"
             binding.dreportBtnAdd.visibility = View.GONE
@@ -43,11 +43,12 @@ class RoutineListActivity : AppCompatActivity() {
         }
 
         binding.routinelistBtnBack.setOnClickListener {// 뒤로 가기 버튼
-            if(Screen_Type == "from_WODetailActivity"){
+            if (Screen_Type == "from_WODetailActivity"){
                 val intent = Intent(this, WODetailActivity::class.java)
                 intent.putExtra("workoutIndex", workoutIndex)
                 startActivity(intent)
-            }else{
+                finish()
+            } else{
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("VIEW_PAGER_INDEX", 2)
                 startActivity(intent)
@@ -57,6 +58,7 @@ class RoutineListActivity : AppCompatActivity() {
         binding.dreportBtnAdd.setOnClickListener {// 세트 추가 버튼
             Log.e("buttontest001", "list")
             startActivity(Intent(this, RoutineActivity::class.java))
+            finish()
         }
 
         // 데이터베이스 빌드
@@ -69,6 +71,16 @@ class RoutineListActivity : AppCompatActivity() {
                 binding.routineRvList.layoutManager = LinearLayoutManager(this@RoutineListActivity)
                 binding.routineRvList.adapter = RoutineListAdapter(routine!!, Screen_Type, workoutIndex)
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (Screen_Type == "from_WODetailActivity") {
+            val intent = Intent(this, WODetailActivity::class.java)
+            intent.putExtra("workoutIndex", workoutIndex)
+            startActivity(intent)
+            finish()
         }
     }
 }

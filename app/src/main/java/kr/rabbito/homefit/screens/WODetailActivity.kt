@@ -72,6 +72,7 @@ class WODetailActivity : AppCompatActivity() {
             intent.putExtra("Starting Point", Screen_Type) // 화면 시작 위치
             intent.putExtra("workoutIndex", workoutIndex)
             startActivity(intent)
+            finish()
         }
         binding.wodetailBtnSetCountSub.setOnClickListener{
             // 세트 감소버튼
