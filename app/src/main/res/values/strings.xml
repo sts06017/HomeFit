@@ -62,6 +62,8 @@
         <item>순대국밥</item>
     </string-array>
 
+    <string name="wo_result_basic">적절한 운동량이 유지되고 있습니다.</string>
+
     <string name="dreport_result_basic">적절한 식습관을 유지하고 있습니다.</string>
     <string name="dreport_result_carb_high">탄수화물 비율이 너무 높습니다. 탄수화물 섭취를 조절해 보세요.</string>
     <string name="dreport_result_carb_low">탄수화물 비율이 낮습니다. 충분한 에너지 공급을 위해 탄수화물 섭취를 늘려보세요.</string>

@@ -29,6 +29,7 @@ import kr.rabbito.homefit.databinding.ActivityWoreportBinding
 import kr.rabbito.homefit.utils.calc.Converter.Companion.dateFormatter_ko
 import kr.rabbito.homefit.utils.calc.TimeCalc
 import kr.rabbito.homefit.workout.logics.getCalories
+import java.lang.Math.abs
 
 class WOReportActivity : AppCompatActivity() {
     private var mBinding: ActivityWoreportBinding? = null
@@ -157,7 +158,7 @@ class WOReportActivity : AppCompatActivity() {
         }
     }
 
-    fun createLineChart(yValues : MutableList<Float>, chart: LineChart){
+    private fun createLineChart(yValues : MutableList<Float>, chart: LineChart){
         val entries = ArrayList<Entry>()
         var y = 10
 
@@ -248,5 +249,35 @@ class WOReportActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // 이 함수가 어느 위치에 들어가야 하는지
+    // 코멘트를 문자열로 반환 - binding.woreportTvComment.text = createWorkoutComment(prevCount, nowCount) 형태로 적용하면 됨
+    // 응용은 DReportFragment의 createNutrientComment() 참고
+    private fun createWorkoutComment(prevCount: Int, nowCount: Int): String? {
+        // count 등을 꼭 인자로 받을 필요는 없음, 함수 내에서 DB 호출해도 괜찮고, 편한대로
+
+        if (prevCount == -1) {
+            return null
+        }
+
+        val commentList = ArrayList<String>()
+        commentList.add(getString(R.string.wo_result_basic))    // 기본 문자열
+
+        val gap = abs(prevCount - nowCount)
+        if (prevCount < nowCount) {
+            commentList.add("이전보다 ${gap}회 더 많이 했습니다.")
+        } else if (prevCount > nowCount) {
+            commentList.add("이전보다 ${gap}회 더 적게 했습니다.")
+        }
+
+        /*
+        식단 연계 코멘트 추가 - 논의 필요
+         */
+
+//        Log.d("check result", commentList.joinToString("\n"))
+        val result = commentList.takeLast(2).joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
+
+        return result
     }
 }
