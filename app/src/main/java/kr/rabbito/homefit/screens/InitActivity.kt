@@ -137,7 +137,9 @@ class InitActivity : AppCompatActivity() {
             val weightText = binding.initEtWeight.text.toString()
             val mealCountText = binding.initEtMealCount.text.toString()
 
-            if (isAllTextNotEmpty(userName, heightText, weightText)) {
+            if (isFieldsEmpty()) {
+                return@setOnClickListener
+            } else {
                 val height = heightText.toInt()
                 val weight = weightText.toInt()
                 val mealCount = mealCountText.toInt()
@@ -154,16 +156,30 @@ class InitActivity : AppCompatActivity() {
                     intent.putExtra("VIEW_PAGER_INDEX", 2)
                     startActivity(intent)
                 }
-
-            } else {
-                Toast.makeText(this, "모든 사용자 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun isFieldsEmpty(): Boolean {
+        val userName = binding.initEtName.text.toString()
+        val heightText = binding.initEtHeight.text.toString()
+        val weightText = binding.initEtWeight.text.toString()
+        val mealCountText = binding.initEtMealCount.text.toString()
+
+        if (userName.isNullOrEmpty() || heightText.isNullOrEmpty() || weightText.isNullOrEmpty() || mealCountText.isNullOrEmpty()) {
+            Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }else if(heightText == "0" || weightText == "0" || mealCountText == "0"){
+            Toast.makeText(this, "0 이상의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        return false
     }
 
     private fun isAllTextNotEmpty(vararg texts: String): Boolean {
         for (text in texts) {
             if (text.isNullOrEmpty()) {
+                Toast.makeText(this, "모든 사용자 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return false
             }
         }

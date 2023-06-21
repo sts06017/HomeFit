@@ -163,6 +163,7 @@ class RoutineActivity : AppCompatActivity() {
 
         binding.routineBtnAddSet.setOnClickListener {
             if (isFieldsEmpty()) { // 텍스트가 비어 있는 경우에 대한 처리
+                return@setOnClickListener
             } else {
                 // 텍스트가 비어 있지 않은 경우에 대한 처리
                 if (binding.routineBtnAddSet.text == "세트설정 변경") {
@@ -211,6 +212,9 @@ class RoutineActivity : AppCompatActivity() {
 
         if (setName.isNullOrEmpty() || repsFerSet.isNullOrEmpty() || setCount.isNullOrEmpty()) {
             Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }else if(repsFerSet == "0" || setCount == "0"){
+            Toast.makeText(this, "0 이상의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
             return true
         }
 
