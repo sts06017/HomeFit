@@ -14,6 +14,8 @@ interface WorkoutDAO {
     @Query("SELECT count FROM Workout WHERE id <= :id ORDER BY id  DESC LIMIT 4")
     fun getCurrentCounts(id: Int): List<Int>
 
+    @Query("SELECT count FROM Workout WHERE id = :id")
+    fun getCountById(id: Int): Int
     @Query("SELECT MAX(id) FROM Workout")
     fun getMaxId(): Int
 
