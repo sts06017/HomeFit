@@ -173,7 +173,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/wodetail_btn_set_count_add"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/wodetail_btn_set_count_sub"
@@ -234,7 +235,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/wodetail_btn_reps_fer_set_add"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/wodetail_btn_reps_fer_set_sub"

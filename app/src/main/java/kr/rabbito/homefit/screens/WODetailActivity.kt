@@ -58,13 +58,16 @@ class WODetailActivity : AppCompatActivity() {
         }
         // WorkoutState.setTotal = 3
 
-
         binding.wodetailBtnStartWo.setOnClickListener {
             // 임시
             // 운동 시작 버튼
-            val intent = Intent(this, WOActivity::class.java)
-            intent.putExtra("workoutIndex", workoutIndex)
-            startActivity(intent)
+            if (isFieldsEmpty()) {
+                return@setOnClickListener
+            }else{
+                val intent = Intent(this, WOActivity::class.java)
+                intent.putExtra("workoutIndex", workoutIndex)
+                startActivity(intent)
+            }
         }
         binding.wodetailBtnLoad.setOnClickListener {
             // 세트 불러오기 버튼
@@ -80,11 +83,11 @@ class WODetailActivity : AppCompatActivity() {
             var count = binding.wodetailEtSetCount
             if(!count.text.isNullOrEmpty() && count.text.toString().toInt() > 0) {
                 count.setText((count.text.toString().toInt()-1).toString())
+                WorkoutState.setTotal = count.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.setTotal = count.text.toString().toInt()
         }
         binding.wodetailBtnSetCountAdd.setOnClickListener {
             // 세트 증가버튼
@@ -104,11 +107,12 @@ class WODetailActivity : AppCompatActivity() {
             var repsFerSet = binding.wodetailEtRepsFerSet
             if(!repsFerSet.text.isNullOrEmpty() && repsFerSet.text.toString().toInt() > 0) {
                 repsFerSet.setText((repsFerSet.text.toString().toInt()-1).toString())
+                WorkoutState.count = repsFerSet.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.count = repsFerSet.text.toString().toInt()
+
         }
         binding.wodetailBtnRepsFerSetAdd.setOnClickListener {
             // 세트당 횟수 증가버튼
@@ -134,6 +138,7 @@ class WODetailActivity : AppCompatActivity() {
                 WorkoutState.count = binding.wodetailEtRepsFerSet.text.toString().toInt()
             }catch (e : java.lang.NumberFormatException){
                 Log.d("ed test","ed can't formatting")
+
             }
         }
 
@@ -142,5 +147,16 @@ class WODetailActivity : AppCompatActivity() {
             intent.putExtra("VIEW_PAGER_INDEX", 0)
             startActivity(intent)
         }
+    }
+    private fun isFieldsEmpty(): Boolean {
+        val setCount = binding.wodetailEtSetCount.text.toString()
+        val repsFerSet = binding.wodetailEtRepsFerSet.text.toString()
+
+        if (setCount.isNullOrEmpty() || repsFerSet.isNullOrEmpty()) {
+            Toast.makeText(this, "세트 수와 세트당 횟수를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        return false
     }
 }
