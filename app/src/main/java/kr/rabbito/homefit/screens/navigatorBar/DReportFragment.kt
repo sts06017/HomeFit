@@ -216,6 +216,7 @@ class DReportFragment : Fragment() {
                 binding.dreportTvComment.text = commentList.takeLast(2)
                     .joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
             } else {
+                commentList.clear()
                 commentList.add("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.")
                 binding.dreportTvComment.text = commentList.takeLast(2).joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
 
@@ -228,15 +229,18 @@ class DReportFragment : Fragment() {
             }
 
             if (commentList.size == 0) {
+                commentList.clear()
                 commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
             }
         }
     }
 
     private suspend fun setNutrientComment(carbohydrate: Float, protein: Float, fat: Float) {
-        var carbohydrateCalories = 4 * carbohydrate
-        var proteinCalories = 4 * protein
-        var fatCalories = 9 * fat
+        commentList.clear()
+
+        val carbohydrateCalories = 4 * carbohydrate
+        val proteinCalories = 4 * protein
+        val fatCalories = 9 * fat
 
         // 탄수화물, 단백질, 지방의 비율 계산
         val totalCalories = carbohydrateCalories + proteinCalories + fatCalories

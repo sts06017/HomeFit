@@ -281,6 +281,8 @@ class WOReportActivity : AppCompatActivity() {
     }
 
     private suspend fun setWorkoutComment() = withContext(Dispatchers.IO) {
+        commentList.clear()
+
         val nowCount = workout.count!!
 
         var prevCount = -1
