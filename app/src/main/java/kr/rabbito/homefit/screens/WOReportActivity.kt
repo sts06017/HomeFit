@@ -293,6 +293,8 @@ class WOReportActivity : AppCompatActivity() {
             workoutDB?.workoutDAO()?.getCountById(workout.id!! - 1)!!
         }
 
+        val userWeight = userDB?.userDAO()?.getWeightById(0)
+
         val todayCalories = getTodayCalorie()   // workoutDB에 담겨있는 날짜정보로 calorie 가져옴
         val commentData =
             commentData(prevCount, nowCount, todayCalories) // 이전count, 현재count, 총calorie 정보 객체
@@ -312,8 +314,10 @@ class WOReportActivity : AppCompatActivity() {
                 }
             }
 
-            val lowLimitCal = 1000
-            val highLimitCal = 2700
+            val lowLimitCal = if (userWeight != null) userWeight * 22 else 1000
+            val highLimitCal = if (userWeight != null) userWeight * 40 else 2700
+//            Log.d("cal low", lowLimitCal.toString())
+//            Log.d("cal high", highLimitCal.toString())
 
             if (it.todayCalorie != null) {
                 if (it.todayCalorie > highLimitCal) {
