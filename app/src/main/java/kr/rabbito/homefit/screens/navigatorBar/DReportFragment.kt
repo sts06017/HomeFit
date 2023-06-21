@@ -203,7 +203,6 @@ class DReportFragment : Fragment() {
             val (nutrientMap, carbohydrate, protein, fat) = saveToNutrientMap(todayDiets)
 
             if (nutrientMap.toString() != "{탄수화물=0.0, 단백질=0.0, 지방=0.0}") {
-                commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
 
                 createPieGraph(nutrientMap, binding.dreportVGraph1)
                 binding.dreportVGraph1.visibility = View.VISIBLE
@@ -226,6 +225,10 @@ class DReportFragment : Fragment() {
                 val params = binding.dreportTvComment.layoutParams as ViewGroup.MarginLayoutParams
                 params.topMargin = Converter.dpToPx(resources, 52)
                 binding.dreportTvComment.layoutParams = params
+            }
+
+            if (commentList.size == 0) {
+                commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
             }
         }
     }

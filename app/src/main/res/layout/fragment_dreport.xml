@@ -88,7 +88,7 @@
             android:layout_marginTop="200dp"
             android:fontFamily="@font/pretendard_regular"
             android:includeFontPadding="false"
-            android:text="단백질 섭취가 부족합니다.\n어제보다 탄수화물 섭취가 늘었습니다."
+            android:text=""
             android:textColor="@color/lightGray"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
