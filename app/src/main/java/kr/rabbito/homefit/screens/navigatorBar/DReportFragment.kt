@@ -230,7 +230,7 @@ class DReportFragment : Fragment() {
 
             if (commentList.size == 0) {
                 commentList.clear()
-                commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
+                commentList.add(getString(R.string.dreport_comment_basic))   // 기본 코멘트
             }
         }
     }
@@ -250,21 +250,21 @@ class DReportFragment : Fragment() {
 
         // 비율에 따른 조언 작성
         if (carbRatio > 0.7) {
-            commentList.add(getString(R.string.dreport_result_carb_high))
+            commentList.add(getString(R.string.dreport_comment_carb_high))
         } else if (carbRatio < 0.4) {
-            commentList.add(getString(R.string.dreport_result_carb_low))
+            commentList.add(getString(R.string.dreport_comment_carb_low))
         }
 
         if (proteinRatio > 0.4) {
-            commentList.add(getString(R.string.dreport_result_protein_high))
+            commentList.add(getString(R.string.dreport_comment_protein_high))
         } else if (proteinRatio < 0.05) {
-            commentList.add(getString(R.string.dreport_result_protein_low))
+            commentList.add(getString(R.string.dreport_comment_protein_low))
         }
 
         if (fatRatio > 0.4) {
-            commentList.add(getString(R.string.dreport_result_fat_high))
+            commentList.add(getString(R.string.dreport_comment_fat_high))
         } else if (fatRatio < 0.15) {
-            commentList.add(getString(R.string.dreport_result_fat_low))
+            commentList.add(getString(R.string.dreport_comment_fat_low))
         }
 
 

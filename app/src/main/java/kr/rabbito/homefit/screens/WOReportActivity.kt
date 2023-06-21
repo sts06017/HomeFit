@@ -323,11 +323,11 @@ class WOReportActivity : AppCompatActivity() {
 
             if (it.todayCalorie != null) {
                 if (it.todayCalorie > highLimitCal) {
-                    commentList.add("식사량이 많으니 강도를 높여 운동해보세요.")
+                    commentList.add(getString(R.string.wo_comment_cal_high))
                 } else if (it.todayCalorie < lowLimitCal && nowCount > 7) {
-                    commentList.add("충분한 영양분 섭취도 운동만큼이나 중요합니다.")
+                    commentList.add(getString(R.string.wo_comment_cal_low))
                 } else if (it.todayCalorie < lowLimitCal && nowCount < 3) {
-                    commentList.add("식사량과 운동량을 함께 늘리시길 권장드립니다.")
+                    commentList.add(getString(R.string.wo_comment_cal_count_low))
                 }
             }
 
