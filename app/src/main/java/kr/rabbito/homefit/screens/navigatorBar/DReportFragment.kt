@@ -66,6 +66,8 @@ class DReportFragment : Fragment() {
     private var calorieAdvice: String = ""
     private lateinit var totalComment: String
 
+    private val commentList = ArrayList<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -200,11 +202,9 @@ class DReportFragment : Fragment() {
             val todayDiets = getTodayNutrients()
             val (nutrientMap, carbohydrate, protein, fat) = saveToNutrientMap(todayDiets)
 
-            val comment = createNutrientComment(carbohydrate, protein, fat)
-//            Log.d("nutrient", nutrientMap.toString())
-            Log.d("check comment result", comment)
-
             if (nutrientMap.toString() != "{탄수화물=0.0, 단백질=0.0, 지방=0.0}") {
+                commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
+
                 createPieGraph(nutrientMap, binding.dreportVGraph1)
                 binding.dreportVGraph1.visibility = View.VISIBLE
                 binding.dreportVGraph2.visibility = View.VISIBLE
@@ -213,10 +213,13 @@ class DReportFragment : Fragment() {
                 params.topMargin = Converter.dpToPx(resources, 200)
                 binding.dreportTvComment.layoutParams = params
 
-                Log.d("nutrient", comment)
-                editDreportComment(comment, "nutrient")
+                setNutrientComment(carbohydrate, protein, fat)
+                binding.dreportTvComment.text = commentList.takeLast(2)
+                    .joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
             } else {
-                editDreportComment("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.", "nutrient")
+                commentList.add("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.")
+                binding.dreportTvComment.text = commentList.takeLast(2).joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
+
                 binding.dreportVGraph1.visibility = View.GONE
                 binding.dreportVGraph2.visibility = View.GONE
 
@@ -227,7 +230,7 @@ class DReportFragment : Fragment() {
         }
     }
 
-    private fun createNutrientComment(carbohydrate: Float, protein: Float, fat: Float): String {
+    private suspend fun setNutrientComment(carbohydrate: Float, protein: Float, fat: Float) {
         var carbohydrateCalories = 4 * carbohydrate
         var proteinCalories = 4 * protein
         var fatCalories = 9 * fat
@@ -237,9 +240,6 @@ class DReportFragment : Fragment() {
         val carbRatio = carbohydrateCalories / totalCalories
         val proteinRatio = proteinCalories / totalCalories
         val fatRatio = fatCalories / totalCalories
-
-        val commentList = ArrayList<String>()
-        commentList.add(getString(R.string.dreport_result_basic))   // 기본 코멘트
 
         // 비율에 따른 조언 작성
         if (carbRatio > 0.7) {
@@ -260,14 +260,13 @@ class DReportFragment : Fragment() {
             commentList.add(getString(R.string.dreport_result_fat_low))
         }
 
-        /*
-        운동 연계 코멘트 추가
-         */
 
-//        Log.d("check result", commentList.joinToString("\n"))
-        val result = commentList.takeLast(2).joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
+        if (getNowCalories() > 3000) {
+            commentList.add("칼로리 섭취량이 너무 많습니다. 더 나은 균형을 위해 칼로리 섭취량을 줄이는 것이 좋습니다. ")
+        } else if (getNowCalories() < 2000 && getNowCalories() > 0.0) {
+            commentList.add("칼로리 섭취량이 너무 적습니다. 충분한 에너지를 위해 충분한 칼로리를 섭취하고 있는지 확인하세요. ")
+        }
 
-        return result
     }
 
     private fun initLineChart() {
@@ -284,9 +283,6 @@ class DReportFragment : Fragment() {
             if (calorieMap.isNotEmpty()) {
                 createLineChart(calorieMap, binding.dreportVGraph2)
 //                binding.dreportVGraph2.visibility = View.VISIBLE
-                if (comment != null) {
-                    editDreportComment(comment, "calorie")
-                }
             } else {
 //                binding.dreportVGraph2.visibility  = View.GONE
             }
@@ -303,23 +299,6 @@ class DReportFragment : Fragment() {
         }
         return comment
     }
-
-    private fun editDreportComment(comment: String, from: String) {
-        if (from == "nutrient") {
-            nutrinetAdvice = comment
-        } else if (from == "calorie") {
-            calorieAdvice = comment
-        }
-
-        if (calorieAdvice.isNullOrEmpty()) {
-            totalComment = "$nutrinetAdvice"
-        } else {
-            totalComment = "$nutrinetAdvice\n$calorieAdvice"
-        }
-
-        binding.dreportTvComment.text = totalComment
-    }
-
 
     private fun insertDiet(dietMap: DietMap?, timeString: String?) {
         val currentDate = LocalDate.now()
