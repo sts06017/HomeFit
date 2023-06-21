@@ -141,8 +141,10 @@ class DAddActivity : AppCompatActivity() {
         if(weight.isNullOrEmpty() || calorie.isNullOrEmpty() || carbohydrate.isNullOrEmpty() || protein.isNullOrEmpty() || fat.isNullOrEmpty()){
             Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             return true
+        }else if(weight == "0" || calorie == "0" || carbohydrate == "0" || protein == "0" || fat == "0"){
+            Toast.makeText(this, "0 이상의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
         }
-
         return false
     }
 

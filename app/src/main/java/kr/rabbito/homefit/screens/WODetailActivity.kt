@@ -155,8 +155,10 @@ class WODetailActivity : AppCompatActivity() {
         if (setCount.isNullOrEmpty() || repsFerSet.isNullOrEmpty()) {
             Toast.makeText(this, "세트 수와 세트당 횟수를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             return true
+        }else if(setCount == "0" || repsFerSet == "0"){
+            Toast.makeText(this, "0 이상의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
         }
-
         return false
     }
 }
