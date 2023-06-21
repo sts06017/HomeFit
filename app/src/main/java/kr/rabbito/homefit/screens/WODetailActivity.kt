@@ -107,7 +107,7 @@ class WODetailActivity : AppCompatActivity() {
             var repsFerSet = binding.wodetailEtRepsFerSet
             if(!repsFerSet.text.isNullOrEmpty() && repsFerSet.text.toString().toInt() > 0) {
                 repsFerSet.setText((repsFerSet.text.toString().toInt()-1).toString())
-                WorkoutState.count = repsFerSet.text.toString().toInt()
+                WorkoutState.setCondition = repsFerSet.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
@@ -124,7 +124,7 @@ class WODetailActivity : AppCompatActivity() {
             else{
                 repsFerSet.setText("1")
             }
-            WorkoutState.count = repsFerSet.text.toString().toInt()
+            WorkoutState.setCondition = repsFerSet.text.toString().toInt()
         }
         binding.wodetailEtSetCount.doAfterTextChanged {
             try {
