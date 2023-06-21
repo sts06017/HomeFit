@@ -125,11 +125,11 @@ class RoutineActivity : AppCompatActivity() {
             if(!count.text.isNullOrEmpty() && count.text.toString().toInt() > 0) {
                 count.setText((count.text.toString().toInt()-1).toString())
                 routine.set = (count.text.toString().toInt())
+                WorkoutState.setTotal = count.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다", Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.setTotal = count.text.toString().toInt()
         }
 
         binding.routineBtnRepsFerSetAdd.setOnClickListener {
@@ -154,25 +154,23 @@ class RoutineActivity : AppCompatActivity() {
             if(!repsFerSet.text.isNullOrEmpty() && repsFerSet.text.toString().toInt() > 0) {
                 repsFerSet.setText((repsFerSet.text.toString().toInt()-1).toString())
                 routine.count = repsFerSet.text.toString().toInt()
+                WorkoutState.count = repsFerSet.text.toString().toInt()
             }
             else{
                 Toast.makeText(this, "더 낮출 수 없습니다",Toast.LENGTH_SHORT).show()
             }
-            WorkoutState.count = repsFerSet.text.toString().toInt()
         }
 
         binding.routineBtnAddSet.setOnClickListener {
-            if (binding.routineEtSetName.text.isNullOrEmpty()) {
-                // 텍스트가 비어 있는 경우에 대한 처리
-                Toast.makeText(this, "세트 이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (isFieldsEmpty()) { // 텍스트가 비어 있는 경우에 대한 처리
             } else {
                 // 텍스트가 비어 있지 않은 경우에 대한 처리
                 if (binding.routineBtnAddSet.text == "세트설정 변경") {
                     // 세트 수정
                     routine.id = routineId
                     routine.setName = binding.routineEtSetName.text.toString()
-                    routine.set = binding.routineEtSetCount.text.toString().toInt()
-                    routine.count = binding.routineEtRepsFerSet.text.toString().toInt()
+                    routine.set = binding.routineEtSetCount.text.toString().toIntOrNull() ?: 0
+                    routine.count = binding.routineEtRepsFerSet.text.toString().toIntOrNull() ?: 0
                     CoroutineScope(Dispatchers.IO).launch {
                         // DB에 세트 추가
                         routineDB!!.routineDAO().update(routine)
@@ -205,5 +203,17 @@ class RoutineActivity : AppCompatActivity() {
         super.onBackPressed()
         startActivity(Intent(this, RoutineListActivity::class.java))
         finish()
+    }
+    private fun isFieldsEmpty(): Boolean {
+        val setName = binding.routineEtSetName.text.toString()
+        val repsFerSet = binding.routineEtRepsFerSet.text.toString()
+        val setCount = binding.routineEtSetCount.text.toString()
+
+        if (setName.isNullOrEmpty() || repsFerSet.isNullOrEmpty() || setCount.isNullOrEmpty()) {
+            Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        return false
     }
 }

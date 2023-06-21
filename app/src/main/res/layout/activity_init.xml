@@ -152,7 +152,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -205,7 +206,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -259,7 +261,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/init_btn_meal_count_add"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/init_btn_meal_count_sub"

@@ -10,6 +10,7 @@ import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
@@ -79,23 +80,28 @@ class DAddActivity : AppCompatActivity() {
     }
     private fun addDietButton(){
         binding.daddBtnAddDiet.setOnClickListener {
-            val newDiet = NewDiet(null, FOOD_CLASSES[FOOD_NAMES_KR.indexOf(foodName)], weight.toDouble(), calorie.toDouble(), carbohydrate.toDouble(), protein.toDouble(), fat.toDouble(), LocalDate.now(), LocalDateTime.now().format(timeFormatter))
-            val gson = Gson()
-            val jsonString = gson.toJson(newDiet)
-            val jsonHash = jsonString.hashCode()
-            val diet = Diet(id = null, foodName = newDiet.foodName, weight = newDiet.weight, calorie = newDiet.calorie, carbohydrate = newDiet.carbohydrate, protein = newDiet.protein, fat = newDiet.fat, dDate = newDiet.dDate, dTime = newDiet.dTime, jsonHash)
-            CoroutineScope(Dispatchers.IO).launch {
-                val existingDiet = dietDB!!.DietDAO().findByJsonHash(jsonHash)
-                if (existingDiet == null) {
-                    dietDB?.DietDAO()?.insert(diet)
+            if (isEditTextEmpty()) {
+                // Show an error message or perform appropriate action when any of the fields are empty
+                return@setOnClickListener
+            }else{
+                val newDiet = NewDiet(null, FOOD_CLASSES[FOOD_NAMES_KR.indexOf(foodName)], weight.toDouble(), calorie.toDouble(), carbohydrate.toDouble(), protein.toDouble(), fat.toDouble(), LocalDate.now(), LocalDateTime.now().format(timeFormatter))
+                val gson = Gson()
+                val jsonString = gson.toJson(newDiet)
+                val jsonHash = jsonString.hashCode()
+                val diet = Diet(id = null, foodName = newDiet.foodName, weight = newDiet.weight, calorie = newDiet.calorie, carbohydrate = newDiet.carbohydrate, protein = newDiet.protein, fat = newDiet.fat, dDate = newDiet.dDate, dTime = newDiet.dTime, jsonHash)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val existingDiet = dietDB!!.DietDAO().findByJsonHash(jsonHash)
+                    if (existingDiet == null) {
+                        dietDB?.DietDAO()?.insert(diet)
+                    }
                 }
+                Log.d("최승호","insert Diet ${diet.foodName}, ${diet.weight}")
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("VIEW_PAGER_INDEX",1)
+                intent.putExtra("DATE",diet.dDate.toString())
+                startActivity(intent)
+                finish()
             }
-            Log.d("최승호","insert Diet ${diet.foodName}, ${diet.weight}")
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",1)
-            intent.putExtra("DATE",diet.dDate.toString())
-            startActivity(intent)
-            finish()
         }
     }
     private fun addToChange(){
@@ -111,16 +117,35 @@ class DAddActivity : AppCompatActivity() {
 
         binding.daddBtnAddDiet.setOnClickListener {
             // db업데이트 기능 수행
-            Log.d("최승호","update fd:$foodName, w:$weight, cal:$calorie, car:$carbohydrate, pro:$protein, fat:$fat")
-            CoroutineScope(Dispatchers.IO).launch{ updateDiet() }
+            if (isEditTextEmpty()) {
+                // Show an error message or perform appropriate action when any of the fields are empty
+                return@setOnClickListener
+            }else{
+                Log.d("최승호","update fd:$foodName, w:$weight, cal:$calorie, car:$carbohydrate, pro:$protein, fat:$fat")
+                CoroutineScope(Dispatchers.IO).launch{ updateDiet() }
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",1)
-            intent.putExtra("DATE",diet.dDate.toString())
-            startActivity(intent)
-            finish()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("VIEW_PAGER_INDEX",1)
+                intent.putExtra("DATE",diet.dDate.toString())
+                startActivity(intent)
+                finish()
+            }
         }
     }
+    private fun isEditTextEmpty(): Boolean {
+        val weight = binding.daddEtFixWeight.text.toString().trim()
+        val calorie = binding.daddEtFixCalorie.text.toString().trim()
+        val carbohydrate = binding.daddEtFixCarbohydrate.text.toString().trim()
+        val protein = binding.daddEtFixProtein.text.toString().trim()
+        val fat = binding.daddEtFixFat.text.toString().trim()
+        if(weight.isNullOrEmpty() || calorie.isNullOrEmpty() || carbohydrate.isNullOrEmpty() || protein.isNullOrEmpty() || fat.isNullOrEmpty()){
+            Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        return false
+    }
+
     private fun initSpinner(){
         dietItems = resources.getStringArray(R.array.diet_items)
         binding.daddVDropdown.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dietItems).apply {

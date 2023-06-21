@@ -163,7 +163,7 @@ class InitActivity : AppCompatActivity() {
 
     private fun isAllTextNotEmpty(vararg texts: String): Boolean {
         for (text in texts) {
-            if (text.isEmpty()) {
+            if (text.isNullOrEmpty()) {
                 return false
             }
         }

@@ -199,7 +199,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/routine_btn_set_count_add"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/routine_btn_set_count_sub"
@@ -258,7 +259,8 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/routine_btn_reps_fer_set_add"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:inputType="number"/>
 
                     <Button
                         android:id="@+id/routine_btn_reps_fer_set_sub"
