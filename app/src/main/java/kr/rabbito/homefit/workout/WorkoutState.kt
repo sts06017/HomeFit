@@ -38,6 +38,6 @@ class WorkoutState {
 
         // 음성 출력 딜레이
         var ttsDelay = 0
-        var ttsDelayLimit = 5
+        var ttsDelayLimit = 3
     }
 }

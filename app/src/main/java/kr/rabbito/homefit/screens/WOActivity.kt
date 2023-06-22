@@ -251,7 +251,7 @@ class WOActivity : AppCompatActivity() {
 
         ttsRunnable = object : Runnable {
             override fun run() {
-                if (WorkoutState.ttsDelay < WorkoutState.ttsDelayLimit) WorkoutState.ttsDelay++
+                if (WorkoutState.ttsDelay < WorkoutState.ttsDelayLimit && WorkoutState.count >= 1) WorkoutState.ttsDelay++
                 ttsHandler?.postDelayed(this, 1000)
             }
         }
