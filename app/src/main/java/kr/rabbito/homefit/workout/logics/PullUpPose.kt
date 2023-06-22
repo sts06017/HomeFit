@@ -61,7 +61,7 @@ class PullUpPose(context: Context, tts: PoseAdviceTTS): WorkoutPose(context, tts
                 if(!ttsArmFlag
                     && getAngle(c.rightHand, c.rightElbow, c.rightShoulder) > 170
                     && getAngle(c.leftHand, c.leftElbow, c.leftShoulder) > 170){
-                    tts.understretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
+                    tts.underStretchArmTTS() // 팔을 내릴 때 너무 쭉 핀 경우 tts
                     ttsArmFlag = true
                 }
             }

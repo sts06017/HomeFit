@@ -43,7 +43,10 @@ class WOActivity : AppCompatActivity() {
     private var restStartTime = 0L
     private var workoutIdx = 0
     private val woStartTime = LocalDateTime.now().format(timeFormatter)
+
     private lateinit var tts: PoseAdviceTTS
+    private var ttsHandler: Handler? = null
+    private var ttsRunnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -244,14 +247,18 @@ class WOActivity : AppCompatActivity() {
     }
 
     private fun startTTSDelay() {
-        val handler = Handler(Looper.getMainLooper())
-        val runnable: Runnable = object : Runnable {
+        ttsHandler = Handler(Looper.getMainLooper())
+
+        ttsRunnable = object : Runnable {
             override fun run() {
                 if (WorkoutState.ttsDelay < WorkoutState.ttsDelayLimit) WorkoutState.ttsDelay++
-                handler.postDelayed(this, 1000)
+                ttsHandler?.postDelayed(this, 1000)
             }
         }
-        handler.post(runnable)
+
+        if (ttsRunnable != null) {
+            ttsHandler?.post(ttsRunnable!!)
+        }
     }
 
     private fun startNextActivity() {
@@ -297,5 +304,12 @@ class WOActivity : AppCompatActivity() {
             cameraSource?.release()
         }
         tts.finish()
+    }
+
+    override fun finish() {
+        super.finish()
+        if (ttsRunnable != null) {
+            ttsHandler?.removeCallbacks(ttsRunnable!!)
+        }
     }
 }

@@ -30,6 +30,7 @@ class PoseAdviceTTS(val context: Context) {
 
     private fun checkCondition(): Boolean {
         // 지정한 제한 시간 지난 후에만 음성 출력
+        Log.d("ttsDelay", WorkoutState.ttsDelay.toString())
         if (WorkoutState.ttsDelay >= WorkoutState.ttsDelayLimit && WorkoutState.count >= 1) {
             WorkoutState.ttsDelay = 0
             return true
@@ -58,7 +59,7 @@ class PoseAdviceTTS(val context: Context) {
         if (checkCondition()) tts?.speak("팔을 앞으로 펴주세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
     
-    fun understretchArmTTS(){
+    fun underStretchArmTTS(){
         if (checkCondition()) tts?.speak("팔을 너무 쭉 피지 마세요.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
