@@ -149,12 +149,14 @@ class InitActivity : AppCompatActivity() {
                         User(0, userName, height, weight, mealCount, favWorkout, basicDiet)
                     insertUser(newUser)
                     startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 } else {    // 사용자 정보를 불러온 경우
                     Log.e("favWorkout", favWorkout)
                     updateUserById(userId!!, userName, height, weight, mealCount, favWorkout, basicDiet)
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("VIEW_PAGER_INDEX", 2)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -267,6 +269,15 @@ class InitActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             userDB?.userDAO()
                 ?.updateUserById(id, userName, height, weight, mealCount, favWorkout, basicDiet)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (user != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX", 2)
+            startActivity(intent)
+            finish()
         }
     }
 }

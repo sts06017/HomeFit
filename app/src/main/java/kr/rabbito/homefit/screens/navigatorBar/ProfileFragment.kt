@@ -58,10 +58,11 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.profileBtnEditProfile.setOnClickListener {
+        binding.profileBtnEditProfile.setOnClickListener {  // 프로필 수정 버튼
             val intent = Intent(activity, InitActivity::class.java)
             intent.putExtra("INIT_FROM", "ProfileFragment")
             startActivity(intent)
+            activity?.finish()
         }
 
         return binding.root

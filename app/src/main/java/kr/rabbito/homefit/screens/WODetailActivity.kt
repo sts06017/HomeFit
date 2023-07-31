@@ -67,6 +67,7 @@ class WODetailActivity : AppCompatActivity() {
                 val intent = Intent(this, WOActivity::class.java)
                 intent.putExtra("workoutIndex", workoutIndex)
                 startActivity(intent)
+                finish()
             }
         }
         binding.wodetailBtnLoad.setOnClickListener {
