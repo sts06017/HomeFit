@@ -15,8 +15,8 @@ import kotlin.math.roundToInt
 class Converter {
     companion object {
         fun resizeBitmap(bitmap: Bitmap): Bitmap {
-            val newWidth: Int = bitmap.width / 8
-            val newHeight: Int = bitmap.height / 8
+            val newWidth: Int = bitmap.width / 4
+            val newHeight: Int = bitmap.height / 4
 
             val resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
 
@@ -26,9 +26,9 @@ class Converter {
         fun bitmapToByteArray(bitmap: Bitmap, ext: String): ByteArray {
             val stream = ByteArrayOutputStream()
             if (ext == "png") {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             } else if (ext == "jpeg") {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             }
 
             val result = stream.toByteArray()
