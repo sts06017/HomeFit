@@ -1,18 +1,13 @@
 package kr.rabbito.homefit.screens
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +19,8 @@ import kr.rabbito.homefit.client.FOOD_NAMES_KR
 import kr.rabbito.homefit.data.Diet
 import kr.rabbito.homefit.data.DietDB
 import kr.rabbito.homefit.databinding.ActivityDaddBinding
+import kr.rabbito.homefit.screens.calendar.makeInVisible
+import kr.rabbito.homefit.screens.calendar.makeVisible
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -105,8 +102,12 @@ class DAddActivity : AppCompatActivity() {
         }
     }
     private fun addToChange(){
+        binding.daddBtnAddDiet.makeInVisible()
+        binding.daddBtnChangeDiet.makeVisible()
+        binding.daddBtnDeleteDiet.makeVisible()
+
         binding.daddTvTitle.text = "식단정보 변경"
-        binding.daddBtnAddDiet.text = "식단정보 변경"
+//        binding.daddBtnAddDiet.text = "식단정보 변경"
 
         selectecSpinner(diet.foodName!!)
         binding.daddEtFixWeight.setText(diet.weight!!.toInt().toString())
@@ -115,7 +116,7 @@ class DAddActivity : AppCompatActivity() {
         binding.daddEtFixProtein.setText(diet.protein!!.toInt().toString())
         binding.daddEtFixFat.setText(diet.fat!!.toInt().toString())
 
-        binding.daddBtnAddDiet.setOnClickListener {
+        binding.daddBtnChangeDiet.setOnClickListener {
             // db업데이트 기능 수행
             if (isEditTextEmpty()) {
                 // Show an error message or perform appropriate action when any of the fields are empty
@@ -130,6 +131,16 @@ class DAddActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+        }
+        binding.daddBtnDeleteDiet.setOnClickListener {
+            // db삭제기능 수행
+            CoroutineScope(Dispatchers.IO).launch { deleteDiet() }
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("VIEW_PAGER_INDEX",1)
+            intent.putExtra("DATE",diet.dDate.toString())
+            startActivity(intent)
+            finish()
         }
     }
     private fun isEditTextEmpty(): Boolean {
@@ -202,5 +213,8 @@ class DAddActivity : AppCompatActivity() {
     }
     suspend fun updateDiet(){
         dietDB!!.DietDAO().updateDietById(diet.id!!, FOOD_CLASSES[FOOD_NAMES_KR.indexOf(foodName)], weight.toDouble(), calorie.toDouble(), carbohydrate.toDouble(), protein.toDouble(), fat.toDouble())
+    }
+    suspend fun deleteDiet(){
+        dietDB!!.DietDAO().deleteRecord(diet.id!!)
     }
 }

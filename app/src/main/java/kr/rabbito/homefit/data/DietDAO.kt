@@ -31,6 +31,8 @@ interface DietDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(diet: Diet)
 
+    @Query("DELETE FROM Diet WHERE id = :id")
+    suspend fun deleteRecord(id: Int)
     @Delete
     fun delete(diet: Diet)
 

@@ -392,9 +392,40 @@
                 android:text="식단정보 추가"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/dadd_btn_change_diet"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/wodetail_btn_load"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="식단정보 변경"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/dadd_btn_delete_diet"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/wodetail_btn_load"
+                android:fontFamily="@font/pretendard_semibold"
+                android:includeFontPadding="false"
+                android:text="식단정보 삭제"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
