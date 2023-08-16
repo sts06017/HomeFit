@@ -97,7 +97,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dreport_rv_foods"
-        android:layout_width="312dp"
+        android:layout_width="296dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:paddingTop="16dp"
