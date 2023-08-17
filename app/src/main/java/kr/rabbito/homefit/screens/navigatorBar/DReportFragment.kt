@@ -219,7 +219,7 @@ class DReportFragment : Fragment() {
             } else {
                 commentList.clear()
                 commentList.add("입력된 정보가 없습니다.\n우측 하단의 버튼을 터치해 새로운 식단 정보를 추가해보세요.")
-                binding.dreportTvComment.text = commentList.takeLast(2).joinToString("\n") // 결과가 너무 길게 나오지 않도록, 최대 2문장만 출력되도록 설정
+                binding.dreportTvComment.text = commentList.takeLast(2).joinToString("\n")
 
                 binding.dreportVGraph1.visibility = View.GONE
                 binding.dreportVGraph2.visibility = View.GONE
@@ -230,8 +230,11 @@ class DReportFragment : Fragment() {
             }
 
             if (commentList.size == 0) {
+                Log.d("comment", "check")
                 commentList.clear()
                 commentList.add(getString(R.string.dreport_comment_basic))   // 기본 코멘트
+                binding.dreportTvComment.text = commentList.takeLast(2)
+                    .joinToString("\n")
             }
         }
     }
