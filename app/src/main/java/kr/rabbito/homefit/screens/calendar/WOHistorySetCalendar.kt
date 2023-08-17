@@ -130,7 +130,7 @@ class WOHistorySetCalendar(calendarView_: CalendarView, title_ : TextView, conte
                         }
 
                         selectedDate -> {
-                            textView.setTextColorRes(R.color.calendar_blue)
+                            textView.setTextColorRes(R.color.calendar_selected_text)
                             textView.setBackgroundResource(R.drawable.calendar_bg_selected)
                         }
 
