@@ -70,11 +70,17 @@ class RoutineActivity : AppCompatActivity() {
             }
             binding.routineTvTitle.setText("세트설정 변경")
             binding.routineBtnAddSet.setText("세트설정 변경")
+
+            showBtn(binding.routineTvTitle.text as String)
+
         } catch (e: NullPointerException) {
             // routine이 null인 경우에 대한 처리
             // 예를 들어, 초기 값을 설정하거나 에러 메시지를 표시할 수 있습니다.
             binding.routineTvTitle.setText("세트설정 추가")
             binding.routineBtnAddSet.setText("세트설정 추가")
+
+            showBtn(binding.routineTvTitle.text as String)
+
             Log.e("null routine", "routine 객체를 받지 않음")
         } catch (e: Exception) {
             // Parcelable 객체 읽기 실패에 대한 처리
@@ -166,18 +172,18 @@ class RoutineActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else {
                 // 텍스트가 비어 있지 않은 경우에 대한 처리
-                if (binding.routineBtnAddSet.text == "세트설정 변경") {
+                if (binding.routineTvTitle.text == "세트설정 변경") {
                     // 세트 수정
-                    routine.id = routineId
-                    routine.setName = binding.routineEtSetName.text.toString()
-                    routine.set = binding.routineEtSetCount.text.toString().toIntOrNull() ?: 0
-                    routine.count = binding.routineEtRepsFerSet.text.toString().toIntOrNull() ?: 0
-                    CoroutineScope(Dispatchers.IO).launch {
-                        // DB에 세트 추가
-                        routineDB!!.routineDAO().update(routine)
-                    }
-                    startActivity(Intent(this, RoutineListActivity::class.java))
-                    finish()
+//                    routine.id = routineId
+//                    routine.setName = binding.routineEtSetName.text.toString()
+//                    routine.set = binding.routineEtSetCount.text.toString().toIntOrNull() ?: 0
+//                    routine.count = binding.routineEtRepsFerSet.text.toString().toIntOrNull() ?: 0
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        // DB에 세트 추가
+//                        routineDB!!.routineDAO().update(routine)
+//                    }
+//                    startActivity(Intent(this, RoutineListActivity::class.java))
+//                    finish()
                 } else {
                     // 세트 추가
                     val newRoutine = Routine(
@@ -197,6 +203,46 @@ class RoutineActivity : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+
+        binding.routineBtnChangeSet.setOnClickListener{// 세트 수정
+            if(isFieldsEmpty()){ // 텍스트가 비어 있는 경우에 대한 처리
+                return@setOnClickListener
+            }else{ // 텍스트가 비어 있지 않은 경우에 대한 처리
+                routine.id = routineId
+                routine.setName = binding.routineEtSetName.text.toString()
+                routine.set = binding.routineEtSetCount.text.toString().toIntOrNull() ?: 0
+                routine.count = binding.routineEtRepsFerSet.text.toString().toIntOrNull() ?: 0
+                CoroutineScope(Dispatchers.IO).launch {
+                    // DB에 수정된 세트 정보 적용
+                    routineDB!!.routineDAO().update(routine)
+                }
+                startActivity(Intent(this, RoutineListActivity::class.java))
+                finish()
+            }
+        }
+
+        binding.routineBtnDeleteSet.setOnClickListener {// 세트 삭제
+            CoroutineScope(Dispatchers.IO).launch {
+                // DB에 해당 세트 정보 삭제
+                routineDB!!.routineDAO().deleteRecord(routineId)
+            }
+            startActivity(Intent(this, RoutineListActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun showBtn(settings: String){
+        if(settings == "세트설정 변경"){
+            binding.routineBtnAddSet.visibility = View.GONE
+
+            binding.routineBtnChangeSet.visibility = View.VISIBLE
+            binding.routineBtnDeleteSet.visibility = View.VISIBLE
+        }else{
+            binding.routineBtnAddSet.visibility = View.VISIBLE
+
+            binding.routineBtnChangeSet.visibility = View.GONE
+            binding.routineBtnDeleteSet.visibility = View.GONE
         }
     }
 
