@@ -133,24 +133,19 @@ class WOReportActivity : AppCompatActivity() {
             testEntries.add(PieEntry(i.value, i.key))
         }
 
-        //------chart colors (chart 색조합 저장)------
-        val colorsItems = ArrayList<Int>()
-//        for(c in ColorTemplate.VORDIPLOM_COLORS) colorsItems.add(c)
-//        for(c in ColorTemplate.JOYFUL_COLORS) colorsItems.add(c)
-        for (c in COLORFUL_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.LIBERTY_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.PASTEL_COLORS) colorsItems.add(c)
-
         //------chart data 폰트 불러오기------
         val typeface = ResourcesCompat.getFont(this, R.font.pretendard_regular)!!
 
         //------chart dataset 설정------
         val pieDataSet = PieDataSet(testEntries, "")
         pieDataSet.apply {
-            colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 11f
         }
+        pieDataSet.setColors(this.getColor(R.color.pie_chart_1)
+            , this.getColor(R.color.pie_chart_2)
+            , this.getColor(R.color.pie_chart_3)
+            , this.getColor(R.color.pie_chart_4))
         pieDataSet.setDrawValues(false)
         val pieData = PieData(pieDataSet)
 

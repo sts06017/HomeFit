@@ -18,4 +18,9 @@
     <color name="calendar_selected_bg">#EEEEEE</color>
     <color name="calendar_black">#D9191919</color>
     <color name="calendar_white">#D9FEFEFE</color>
+
+    <color name="pie_chart_1">#A3F299</color>
+    <color name="pie_chart_2">#6DB0F4</color>
+    <color name="pie_chart_3">#EEA9A4</color>
+    <color name="pie_chart_4">#999999</color>
 </resources>

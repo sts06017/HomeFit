@@ -67,7 +67,7 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/dreport_v_graph_1"
             android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_height="136dp"
             android:layout_marginTop="44dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dreport_tv_date"  />

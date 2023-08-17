@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -351,21 +352,16 @@ class DReportFragment : Fragment() {
             testEntries.add(PieEntry(i.value, i.key))
         }
 
-        //------chart colors (chart 색조합 저장)------
-        val colorsItems = ArrayList<Int>()
-//        for(c in ColorTemplate.VORDIPLOM_COLORS) colorsItems.add(c)
-//        for(c in ColorTemplate.JOYFUL_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.COLORFUL_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.LIBERTY_COLORS) colorsItems.add(c)
-        for (c in ColorTemplate.PASTEL_COLORS) colorsItems.add(c)
-
         //------chart dataset 설정------
         val pieDataSet = PieDataSet(testEntries, "")
         pieDataSet.apply {
-            colors = colorsItems
             valueTextColor = Color.WHITE
             valueTextSize = 9f
         }
+        pieDataSet.setColors(context?.getColor(R.color.pie_chart_1)!!
+            , context?.getColor(R.color.pie_chart_2)!!
+            , context?.getColor(R.color.pie_chart_3)!!
+            , context?.getColor(R.color.pie_chart_4)!!)
         pieDataSet.setDrawValues(false)
         val pieData = PieData(pieDataSet)
 
@@ -383,6 +379,7 @@ class DReportFragment : Fragment() {
             legend.textColor = Color.WHITE
             holeRadius = 80f
             transparentCircleRadius = 0f
+            legend.form = Legend.LegendForm.CIRCLE
         }
     }
 
