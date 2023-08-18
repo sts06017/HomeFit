@@ -48,10 +48,8 @@ class RoutineListActivity : AppCompatActivity() {
                 intent.putExtra("workoutIndex", workoutIndex)
                 startActivity(intent)
                 finish()
-            } else{
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("VIEW_PAGER_INDEX", 2)
-                startActivity(intent)
+            } else {
+                finish()
             }
         }
 
