@@ -1,6 +1,7 @@
 package kr.rabbito.homefit.screens
 
 import android.content.Intent
+import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ import kr.rabbito.homefit.databinding.ActivityDaddBinding
 import kr.rabbito.homefit.screens.calendar.makeInVisible
 import kr.rabbito.homefit.screens.calendar.makeVisible
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
+import kr.rabbito.homefit.utils.setWidthPercentage
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -122,7 +125,7 @@ class DAddActivity : AppCompatActivity() {
                 // Show an error message or perform appropriate action when any of the fields are empty
                 return@setOnClickListener
             }else{
-                Log.d("최승호","update fd:$foodName, w:$weight, cal:$calorie, car:$carbohydrate, pro:$protein, fat:$fat")
+//                Log.d("최승호","update fd:$foodName, w:$weight, cal:$calorie, car:$carbohydrate, pro:$protein, fat:$fat")
                 CoroutineScope(Dispatchers.IO).launch{ updateDiet() }
 
                 val intent = Intent(this, MainActivity::class.java)
@@ -133,14 +136,21 @@ class DAddActivity : AppCompatActivity() {
             }
         }
         binding.daddBtnDeleteDiet.setOnClickListener {
-            // db삭제기능 수행
-            CoroutineScope(Dispatchers.IO).launch { deleteDiet() }
+            val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
+            builder.setMessage("정보를 삭제하시겠습니까?")
+                .setPositiveButton("삭제") { dialog, _ ->
+                    // db삭제기능 수행
+                    CoroutineScope(Dispatchers.IO).launch { deleteDiet() }
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",1)
-            intent.putExtra("DATE",diet.dDate.toString())
-            startActivity(intent)
-            finish()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("VIEW_PAGER_INDEX",1)
+                    intent.putExtra("DATE",diet.dDate.toString())
+                    startActivity(intent)
+                    finish()
+                }.create().apply {
+                    show()
+                    setWidthPercentage(0.8)
+                }
         }
     }
     private fun isEditTextEmpty(): Boolean {

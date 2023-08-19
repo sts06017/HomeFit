@@ -17,4 +17,11 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="elevation">0dp</item>
     </style>
+
+    <style name="DeleteAlertDialog"  parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
 </resources>
