@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Room
 import com.github.mikephil.charting.animation.Easing
@@ -29,6 +30,7 @@ import kr.rabbito.homefit.data.WorkoutDB
 import kr.rabbito.homefit.databinding.ActivityWoreportBinding
 import kr.rabbito.homefit.utils.calc.Converter.Companion.dateFormatter_ko
 import kr.rabbito.homefit.utils.calc.TimeCalc
+import kr.rabbito.homefit.utils.setWidthPercentage
 import kr.rabbito.homefit.workout.logics.getCalories
 import java.lang.Math.abs
 import java.time.LocalDate
@@ -90,14 +92,21 @@ class WOReportActivity : AppCompatActivity() {
             finish()
         }
         binding.woreportBtnDeleteReport.setOnClickListener {
-            // 운동 결과 DB삭제
-            if (workout.id != null) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
+            val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
+            builder.setMessage("정보를 삭제하시겠습니까?")
+                .setPositiveButton("삭제") { dialog, _ ->
+                    // 운동 결과 DB삭제
+                    if (workout.id != null) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
+                        }
+                    }
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }.create().apply {
+                    show()
+                    setWidthPercentage(0.8)
                 }
-            }
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
         }
 
     }

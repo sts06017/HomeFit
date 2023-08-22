@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import kr.rabbito.homefit.data.RoutineDB
 import kr.rabbito.homefit.data.UserDB
 import kr.rabbito.homefit.databinding.ActivityRoutineBinding
 import kr.rabbito.homefit.screens.navigatorBar.SettingFragment
+import kr.rabbito.homefit.utils.setWidthPercentage
 import kr.rabbito.homefit.workout.WorkoutState
 import kotlin.properties.Delegates
 
@@ -223,12 +225,19 @@ class RoutineActivity : AppCompatActivity() {
         }
 
         binding.routineBtnDeleteSet.setOnClickListener {// 세트 삭제
-            CoroutineScope(Dispatchers.IO).launch {
-                // DB에 해당 세트 정보 삭제
-                routineDB!!.routineDAO().deleteRecord(routineId)
-            }
-            startActivity(Intent(this, RoutineListActivity::class.java))
-            finish()
+            val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
+            builder.setMessage("정보를 삭제하시겠습니까?")
+                .setPositiveButton("삭제") { dialog, _ ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        // DB에 해당 세트 정보 삭제
+                        routineDB!!.routineDAO().deleteRecord(routineId)
+                    }
+                    startActivity(Intent(this, RoutineListActivity::class.java))
+                    finish()
+                }.create().apply {
+                    show()
+                    setWidthPercentage(0.8)
+                }
         }
     }
 
