@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.room.Room
@@ -91,6 +92,7 @@ class WOReportActivity : AppCompatActivity() {
             startActivity(Intent(this, WOHistoryActivity::class.java))
             finish()
         }
+
         binding.woreportBtnDeleteReport.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
             builder.setMessage("정보를 삭제하시겠습니까?")
@@ -109,6 +111,23 @@ class WOReportActivity : AppCompatActivity() {
                 }
         }
 
+        binding.woreportBtnLongDeleteReport.setOnClickListener {
+            val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
+            builder.setMessage("정보를 삭제하시겠습니까?")
+                .setPositiveButton("삭제") { dialog, _ ->
+                    // 운동 결과 DB삭제
+                    if (workout.id != null) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
+                        }
+                    }
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }.create().apply {
+                    show()
+                    setWidthPercentage(0.8)
+                }
+        }
     }
 
     private fun initView() {
@@ -119,10 +138,15 @@ class WOReportActivity : AppCompatActivity() {
         binding.woreportTvDate.text = workout.date!!.format(dateFormatter_ko) // 임시
 
         if (workout.id != null) {
-            binding.woreportBtnSaveReport.text = "뒤로가기"
-            binding.woreportBtnSaveReport.setOnClickListener {
-                finish()
-            }
+            binding.woreportBtnLongDeleteReport.visibility = View.VISIBLE
+
+            binding.woreportBtnSaveReport.visibility = View.GONE
+            binding.woreportBtnDeleteReport.visibility = View.GONE
+        }else{
+            binding.woreportBtnLongDeleteReport.visibility = View.GONE
+
+            binding.woreportBtnSaveReport.visibility = View.VISIBLE
+            binding.woreportBtnDeleteReport.visibility = View.VISIBLE
         }
 
         if (workout.id == null) {

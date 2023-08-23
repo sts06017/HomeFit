@@ -291,6 +291,22 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/woreport_btn_long_delete_report"
+        android:layout_width="312dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/init_btn_basic"
+        android:fontFamily="@font/pretendard_semibold"
+        android:includeFontPadding="false"
+        android:text="결과 삭제"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/woreport_cl_bot"
         android:layout_width="312dp"
