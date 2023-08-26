@@ -37,6 +37,7 @@ import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.math.max
 
 // 기존의 DReportActivity.kt 파일
 data class DietInfo(
@@ -412,9 +413,10 @@ class DReportFragment : Fragment() {
         chart.xAxis.position = XAxis.XAxisPosition.TOP
         chart.xAxis.granularity = 5f
 
+        val maxCalorie = entries.maxByOrNull { it.y }
         val leftAxis = chart.axisLeft
         leftAxis.axisMinimum = 0f
-        leftAxis.axisMaximum = 5000f
+        leftAxis.axisMaximum = roundToNearestHundred(maxCalorie?.y ?: 5000f).toFloat()
         leftAxis.textColor = Color.WHITE
 
 
@@ -451,5 +453,10 @@ class DReportFragment : Fragment() {
 
         chart.invalidate()
 
+    }
+    private fun roundToNearestHundred(input: Float): Int {
+        val intInput = input.toInt()
+        val remainder = intInput % 100
+        return intInput + (100 - remainder)
     }
 }
