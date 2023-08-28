@@ -13,6 +13,8 @@ interface WorkoutDAO {
 
     @Query("SELECT count FROM Workout WHERE id <= :id ORDER BY id  DESC LIMIT 4")
     fun getCurrentCounts(id: Int): List<Int>
+    @Query("SELECT count FROM Workout WHERE workoutName = :workoutName AND id <= :id ORDER BY id DESC LIMIT 4")
+    fun getCurrentCountsByWOName(workoutName: String, id: Int): List<Int>
 
     @Query("SELECT count FROM Workout WHERE id = :id")
     fun getCountById(id: Int): Int
