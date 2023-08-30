@@ -149,14 +149,13 @@ class WOReportActivity : AppCompatActivity() {
             binding.woreportBtnDeleteReport.visibility = View.VISIBLE
         }
 
-        if (workout.id == null) {
-            CoroutineScope(Dispatchers.Main).launch {
-                // 운동 코멘트를 생성하는 함수
-                setWorkoutComment()
-                binding.woreportTvComment.text = commentList.takeLast(2).joinToString("\n")
+        CoroutineScope(Dispatchers.Main).launch {
+            // 운동 코멘트를 생성하는 함수
+            setWorkoutComment()
+            binding.woreportTvComment.text = commentList.takeLast(2).joinToString("\n")
 //            Log.d("check text", binding.woreportTvComment.text.toString())
-            }
         }
+
     }
 
     private fun createPieGraph(data: Map<String, Float>, chart: PieChart) {
