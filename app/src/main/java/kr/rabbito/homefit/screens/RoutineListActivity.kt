@@ -23,6 +23,7 @@ class RoutineListActivity : AppCompatActivity() {
 
     private var workoutIndex = 0
     private var Screen_Type: String = ""
+    private var Workout_Name: String = ""
 
     private var routine: List<Routine>? = null
     private var db: RoutineDB? = null
@@ -35,6 +36,7 @@ class RoutineListActivity : AppCompatActivity() {
 
         if (Screen_Type == "from_WODetailActivity") { // 세트 불러오기
             workoutIndex = intent.getIntExtra("workoutIndex", 0)
+            Workout_Name = intent.getStringExtra("Workout Name").toString()
             binding.routinelistTvTitle.text = "세트설정 선택"
             binding.dreportBtnAdd.visibility = View.GONE
         }else{ // 세트 추가하기
@@ -64,10 +66,18 @@ class RoutineListActivity : AppCompatActivity() {
 
         // 어댑터 연결 및 데이터베이스 작업
         GlobalScope.launch(Dispatchers.IO) {
-            routine = db!!.routineDAO().getAll()
-            withContext(Dispatchers.Main) {
-                binding.routineRvList.layoutManager = LinearLayoutManager(this@RoutineListActivity)
-                binding.routineRvList.adapter = RoutineListAdapter(routine!!, Screen_Type, workoutIndex)
+            if(Screen_Type == "from_WODetailActivity"){
+                routine = db!!.routineDAO().getRoutineByWorkoutName(Workout_Name)
+                withContext(Dispatchers.Main) {
+                    binding.routineRvList.layoutManager = LinearLayoutManager(this@RoutineListActivity)
+                    binding.routineRvList.adapter = RoutineListAdapter(routine!!, Screen_Type, workoutIndex)
+                }
+            }else{
+                routine = db!!.routineDAO().getAll()
+                withContext(Dispatchers.Main) {
+                    binding.routineRvList.layoutManager = LinearLayoutManager(this@RoutineListActivity)
+                    binding.routineRvList.adapter = RoutineListAdapter(routine!!, Screen_Type, workoutIndex)
+               }
             }
         }
     }

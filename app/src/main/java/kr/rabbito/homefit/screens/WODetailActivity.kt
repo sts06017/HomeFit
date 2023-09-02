@@ -75,6 +75,7 @@ class WODetailActivity : AppCompatActivity() {
             val intent = Intent(this, RoutineListActivity::class.java)
             intent.putExtra("Starting Point", Screen_Type) // 화면 시작 위치
             intent.putExtra("workoutIndex", workoutIndex)
+            intent.putExtra("Workout Name", binding.wodetailTvTitle.text)
             startActivity(intent)
             finish()
         }
