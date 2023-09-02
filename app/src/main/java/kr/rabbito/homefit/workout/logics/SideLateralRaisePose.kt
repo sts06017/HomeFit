@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import kr.rabbito.homefit.workout.WorkoutState
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic
+import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.greenPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.redPaint
 import kr.rabbito.homefit.workout.poseDetection.PoseGraphic.Companion.whitePaint
 import kr.rabbito.homefit.workout.tts.PoseAdviceTTS
@@ -42,9 +43,9 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
                 Log.d("사레레 팔 각도", "${getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder)}")
                 if (
                     getAngle(c.rightElbow, c.rightShoulder, c.leftShoulder) < 140
-                ) {   // 팔을 너무 낮게 들면 안내선 빨갛게
-                    PoseGraphic.rightShoulderToRightElbowPaint = redPaint
-                    PoseGraphic.rightElbowToRightWristPaint = redPaint
+                ) {   // 한 동작 완료되었음을 안내
+                    PoseGraphic.rightShoulderToRightElbowPaint = greenPaint
+                    PoseGraphic.rightElbowToRightWristPaint = greenPaint
                 } else {
                     PoseGraphic.rightShoulderToRightElbowPaint = whitePaint
                     PoseGraphic.rightElbowToRightWristPaint = whitePaint
@@ -53,8 +54,8 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
                 if (
                     getAngle(c.leftElbow, c.leftShoulder, c.rightShoulder) < 140
                 ) {
-                    PoseGraphic.leftShoulderToLeftElbowPaint = redPaint
-                    PoseGraphic.leftElbowToLeftWristPaint = redPaint
+                    PoseGraphic.leftShoulderToLeftElbowPaint = greenPaint
+                    PoseGraphic.leftElbowToLeftWristPaint = greenPaint
                 } else {
                     PoseGraphic.leftShoulderToLeftElbowPaint = whitePaint
                     PoseGraphic.leftElbowToLeftWristPaint = whitePaint

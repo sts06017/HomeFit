@@ -86,7 +86,7 @@ class PoseGraphic internal constructor(
     whitePaint.textSize = IN_FRAME_LIKELIHOOD_TEXT_SIZE
 
     greenPaint.strokeWidth = STROKE_WIDTH
-    greenPaint.color = Color.GREEN
+    greenPaint.color = Color.parseColor("#A5D6A7")
 
     yellowPaint.strokeWidth = STROKE_WIDTH
     yellowPaint.color = Color.YELLOW
