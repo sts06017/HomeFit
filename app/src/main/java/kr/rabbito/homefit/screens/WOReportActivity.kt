@@ -67,7 +67,7 @@ class WOReportActivity : AppCompatActivity() {
 
         workout = intent.getParcelableExtra("workout")!!
 
-        getCurrentCounts(workout.id)    // 최근 운동기록의 횟수 가져오고, lineChart에 출력
+        getCurrentCountsByWOName(workout.workoutName!!,workout.id)    // 최근 운동기록의 횟수 가져오고, lineChart에 출력
 
         val woTimeData = mutableMapOf<String, Float>()
         woTimeData["운동"] = workout.woDuration!!.toFloat() / 60000
@@ -276,7 +276,7 @@ class WOReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentCounts(id: Int?) {
+    private fun getCurrentCountsByWOName(workoutName: String, id: Int?) {
         var woId = id
         CoroutineScope(Dispatchers.IO).launch {
             if (id == null) {
@@ -286,7 +286,7 @@ class WOReportActivity : AppCompatActivity() {
             }
 
             val currentCounts =
-                workoutDB?.workoutDAO()?.getCurrentCounts(woId!!)?.reversed()?.toMutableList()
+                workoutDB?.workoutDAO()?.getCurrentCountsByWOName(workoutName,woId!!)?.reversed()?.toMutableList()
             woId?.let {
                 currentCounts?.let {
                     currentCounts.add(workout.count!!)
