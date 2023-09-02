@@ -13,7 +13,7 @@ interface RoutineDAO {
 
     // 각 운동명에 따른 정보 가져오기
     @Query("SELECT * FROM Routine WHERE workoutName = :workoutName")
-    fun getRoutineByWorkoutName(workoutName: LocalDate): List<Routine>
+    fun getRoutineByWorkoutName(workoutName: String): List<Routine>
 
     @Query("SELECT count FROM Routine WHERE id <= :id ORDER BY id  DESC LIMIT 4")
     fun getCurrentCounts(id: Int): List<Int>
