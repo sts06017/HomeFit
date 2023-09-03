@@ -102,7 +102,7 @@ class WOActivity : AppCompatActivity() {
 //        binding.woBtnCount.setOnClickListener {
 //            WorkoutState.count += 1
 //            WorkoutState.totalCount += 1
-//            SquatPose().checkSetCondition()
+//            SquatPose(this,tts).checkSetCondition()
 //        }
 
         // 운동 세트 충족시 운동 종료
