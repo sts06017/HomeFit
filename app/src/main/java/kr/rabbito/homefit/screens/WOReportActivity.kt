@@ -223,9 +223,11 @@ class WOReportActivity : AppCompatActivity() {
         chart.xAxis.position = XAxis.XAxisPosition.TOP
         chart.xAxis.granularity = 5f
 
+        val maxWOCount = entries.maxByOrNull { it.y }
         val leftAxis = chart.axisLeft
         leftAxis.axisMinimum = 0f
-        leftAxis.axisMaximum = 50f
+        leftAxis.axisMaximum = roundToNearestTen(maxWOCount?.y ?: 50f).toFloat()
+        Log.d("최승호","leftAxis : ${leftAxis.axisMaximum}")
         leftAxis.textColor = Color.WHITE
 
 
@@ -248,6 +250,7 @@ class WOReportActivity : AppCompatActivity() {
             axisLeft.setDrawAxisLine(false)     // 좌측 y축 선 제거
             axisRight.setDrawAxisLine(false)    // 우측 y축 선 제거
             axisLeft.gridColor = Color.WHITE    // 가로 선 색 변경
+//            axisLeft.setLabelCount(5, true)
             axisRight.isEnabled = false
             setTouchEnabled(false)
             description.isEnabled = false
@@ -363,7 +366,13 @@ class WOReportActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun roundToNearestTen(input: Float): Int {
+        val intInput = input.toInt()
+        Log.d("최승호","$intInput")
+        val remainder = intInput % 10
+        Log.d("최승호","$remainder, ${intInput + (10 - remainder)}")
+        return intInput + (10 - remainder)
+    }
 
     override fun onResume() {
         super.onResume()
