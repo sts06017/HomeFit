@@ -26,10 +26,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val pageNum = intent.getIntExtra("VIEW_PAGER_INDEX",0)
-        configureBottomNavigation(pageNum)
+
+        val check = pageNum == 1 && intent.getBooleanExtra("checkPrev", false)
+        Log.d("checkPrev", check.toString())
+
+        configureBottomNavigation(pageNum, check)
     }
 
-    private fun configureBottomNavigation(pageNum : Int = 0){
+    private fun configureBottomNavigation(pageNum : Int = 0, check: Boolean){
 
         val result = intent.getStringExtra("DATA")
         val date = intent.getStringExtra("DATE")
@@ -47,6 +51,13 @@ class MainActivity : AppCompatActivity() {
         binding.mainTlMenubar.getTabAt(1)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_diet) as RelativeLayout
         binding.mainTlMenubar.getTabAt(2)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_profile) as RelativeLayout
         binding.mainTlMenubar.getTabAt(3)!!.customView = bottomNaviLayout.findViewById(R.id.nvBar_btn_setting) as RelativeLayout
+
+
+        if (check) {
+            binding.mainTlMenubar.visibility = View.GONE
+        } else {
+            binding.mainTlMenubar.visibility = View.VISIBLE
+        }
         binding.mainVpViewpager.currentItem = pageNum
     }
 }

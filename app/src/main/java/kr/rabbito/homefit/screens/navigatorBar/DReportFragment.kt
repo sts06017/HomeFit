@@ -82,6 +82,9 @@ class DReportFragment : Fragment() {
         val timeString = arguments?.getString("TIME")
         if (dateString != null) {
             date = LocalDate.parse(dateString)
+            binding.dreportBtnHistory.visibility = View.INVISIBLE
+        } else {
+            binding.dreportBtnHistory.visibility = View.VISIBLE
         }
 //        var resultDiet = arguments?.getParcelable<Diet>("RESULT_DIET")
 //        Log.d("최승호","$resultDiet")

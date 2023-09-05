@@ -142,11 +142,15 @@ class WOReportActivity : AppCompatActivity() {
 
             binding.woreportBtnSaveReport.visibility = View.GONE
             binding.woreportBtnDeleteReport.visibility = View.GONE
+
+            binding.woreportBtnHistory.visibility = View.INVISIBLE
         }else{
             binding.woreportBtnLongDeleteReport.visibility = View.GONE
 
             binding.woreportBtnSaveReport.visibility = View.VISIBLE
             binding.woreportBtnDeleteReport.visibility = View.VISIBLE
+
+            binding.woreportBtnHistory.visibility = View.VISIBLE
         }
 
         CoroutineScope(Dispatchers.Main).launch {

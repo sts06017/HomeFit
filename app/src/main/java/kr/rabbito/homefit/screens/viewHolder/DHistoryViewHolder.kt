@@ -34,6 +34,7 @@ class DHistoryViewHolder(private val binding: DreportItemBinding)
             val intent = Intent(itemView.context, MainActivity::class.java).apply {
                 putExtra("VIEW_PAGER_INDEX",1)
                 putExtra("DATE", diet!!.dDate.toString())
+                putExtra("checkPrev", true)
             }
             itemView.context.startActivity(intent)
         }
