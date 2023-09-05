@@ -34,9 +34,12 @@ class WODetailActivity : AppCompatActivity() {
             var count = binding.wodetailEtSetCount
             Log.e("setnum",routine.set.toString() )
             routine.set?.let { count.setText(it.toString()) } //
+            WorkoutState.setTotal = routine.set!!
 
             var repsFerSet = binding.wodetailEtRepsFerSet
             routine.count?.let { repsFerSet.setText(it.toString()) }
+            WorkoutState.setCondition = routine.count!!
+
         } catch (e: NullPointerException) {
             // routine이 null인 경우에 대한 처리
             // 예를 들어, 초기 값을 설정하거나 에러 메시지를 표시할 수 있습니다.
