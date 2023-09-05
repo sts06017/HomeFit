@@ -94,7 +94,7 @@ class PoseAdviceTTS(val context: Context) {
     }
 
     fun WorkoutFinish(){
-        tts?.speak("수고하셨습니다.", TextToSpeech.QUEUE_ADD, null, "")
+         tts?.speak("수고하셨습니다.", TextToSpeech.QUEUE_ADD, null, "")
     }
 
     fun customTTS(string: String) {
@@ -102,6 +102,6 @@ class PoseAdviceTTS(val context: Context) {
     }
 
     fun finish() {
-        tts?.shutdown()
+        if (checkCondition()) tts?.shutdown()
     }
 }

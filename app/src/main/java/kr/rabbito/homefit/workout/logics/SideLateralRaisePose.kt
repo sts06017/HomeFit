@@ -168,7 +168,6 @@ class SideLateralRaisePose(context: Context, tts: PoseAdviceTTS) : WorkoutPose(c
         if (WorkoutState.set == WorkoutState.setTotal + 1) {
             // 운동 종료
             Log.d("side lateral raise pose", "운동 종료")
-
             tts.WorkoutFinish() // 운동 종료 tts
         }
     }
