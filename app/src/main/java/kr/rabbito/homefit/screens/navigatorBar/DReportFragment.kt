@@ -83,6 +83,10 @@ class DReportFragment : Fragment() {
         dateString = arguments?.getString("DATE")
         val timeString = arguments?.getString("TIME")
 
+        if (dateString != null) {
+            date = LocalDate.parse(dateString)
+        }
+
         if (dateString != null && dateString != LocalDate.now().toString()) {
             binding.dreportBtnAdd.visibility = View.INVISIBLE
             binding.dreportBtnHistory.visibility = View.INVISIBLE
