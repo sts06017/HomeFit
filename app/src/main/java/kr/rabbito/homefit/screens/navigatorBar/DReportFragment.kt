@@ -3,6 +3,7 @@ package kr.rabbito.homefit.screens.navigatorBar
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.icu.util.LocaleData
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -37,6 +38,7 @@ import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.max
 
 // 기존의 DReportActivity.kt 파일
@@ -80,6 +82,14 @@ class DReportFragment : Fragment() {
         resultJson = arguments?.getString("RESULT_JSON")
         dateString = arguments?.getString("DATE")
         val timeString = arguments?.getString("TIME")
+
+        if (dateString != null && dateString != LocalDate.now().toString()) {
+            binding.dreportBtnAdd.visibility = View.INVISIBLE
+            binding.dreportBtnHistory.visibility = View.INVISIBLE
+        } else {
+            binding.dreportBtnAdd.visibility = View.VISIBLE
+            binding.dreportBtnHistory.visibility = View.VISIBLE
+        }
 
 //        var resultDiet = arguments?.getParcelable<Diet>("RESULT_DIET")
 //        Log.d("최승호","$resultDiet")
@@ -134,11 +144,19 @@ class DReportFragment : Fragment() {
             dietDB = DietDB.getInstance(requireContext())
             val todayDiets = dietDB!!.DietDAO().getDietByDate(date ?: LocalDate.now())
 
+            var formattedDate: String? = null
+            if (dateString != null) {
+                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val outputFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일")
+                val date = LocalDate.parse(dateString, inputFormatter)
+                formattedDate = date.format(outputFormatter)
+            }
+
             todayDiets?.let {
                 Log.d("DReport", "todayDiets: $it")
                 withContext(Dispatchers.Main) {
                     binding.dreportTvDate.text =
-                        date?.format(Converter.dateFormatter_ko) ?: LocalDate.now()
+                        formattedDate?.format(Converter.dateFormatter_ko) ?: LocalDate.now()
                             .format(Converter.dateFormatter_ko)
                     binding.dreportRvFoods.layoutManager = layoutManager
                     binding.dreportRvFoods.adapter = DReportAdapter(it)
