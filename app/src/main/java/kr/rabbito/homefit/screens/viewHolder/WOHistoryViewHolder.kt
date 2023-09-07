@@ -9,6 +9,7 @@ import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.databinding.WohistoryItemBinding
 import kr.rabbito.homefit.screens.WOReportActivity
 import kr.rabbito.homefit.screens.adapter.WOHistoryAdapter
+import kr.rabbito.homefit.utils.calc.Converter
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -22,8 +23,7 @@ class WOHistoryViewHolder(private val binding: WohistoryItemBinding)
     fun bind(workout: Workout){
         this.workout = workout
 
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 dd일")
-        val workoutDate = workout.date?.format(dateFormatter)
+        val workoutDate = workout.date?.format(Converter.dateFormatter_ko)
         val timeFormatter = DateTimeFormatter.ofPattern("a h시 mm분").withLocale(Locale.forLanguageTag("ko"))
         val workoutTime = workout.time?.format(timeFormatter)
 
