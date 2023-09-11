@@ -34,6 +34,14 @@ fun makeMessage(messageNumber: Int, data: Any): ByteArray? {
                 message = start + number + msgSize + ext + fileSize + end
             }
         }
+        3 -> {
+            if (data is String) {
+                val size = (data.length + 4).toByte()
+                val info = data.toByteArray()
+
+                message = start + number + size + info + end
+            }
+        }
     }
 
 
