@@ -13,7 +13,7 @@ import java.net.Socket
 import java.net.SocketException
 
 class HomeFitClient {
-    private var serverIP = "192.168.35.69"
+    private var serverIP = "122.38.179.73"
     private var serverPort = 10001
 
     lateinit var socket: Socket
@@ -51,6 +51,8 @@ class HomeFitClient {
         val resizedBitmap = Converter.resizeBitmap(bitmap)
         val imageByteArray = Converter.bitmapToByteArray(resizedBitmap, "jpeg")
 
+        //val imageByteArray = Converter.bitmapToByteArray(bitmap, "jpeg")
+
         val message = makeMessage(2, imageByteArray)
         try {
             outputStream.write(message)
@@ -58,6 +60,11 @@ class HomeFitClient {
         } catch (e: UninitializedPropertyAccessException) {
             Log.d("connection", "image send failed")
         }
+    }
+
+    fun sendCameraInfo(info : String){
+        val message = makeMessage(3, info)
+        outputStream.write(message)
     }
 
     // 메시지 수신
@@ -88,8 +95,6 @@ class HomeFitClient {
                     }
 
                     val jsonFileString = byteArrayOutputStream.toString()
-//                    Log.d("check json", jsonFileString)
-//                    Log.d("check json", jsonFileString.length.toString())
 
                     return jsonFileString
                 }
@@ -100,9 +105,7 @@ class HomeFitClient {
             // 양 추정 도중에 소켓이 닫힌 경우
             Log.d("connection", "socket closed")
         } catch (e: UninitializedPropertyAccessException) {
-            Log.d("connection", "server not started (data)")
-        } catch (e: java.lang.NullPointerException) {
-            Log.d("connection", "server not started (data)")
+            Log.d("connection", "server not started")
         }
 
         return null

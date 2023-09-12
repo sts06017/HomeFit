@@ -15,8 +15,9 @@ import kotlin.math.roundToInt
 class Converter {
     companion object {
         fun resizeBitmap(bitmap: Bitmap): Bitmap {
-            val newWidth: Int = bitmap.width / 4
-            val newHeight: Int = bitmap.height / 4
+
+            val newWidth: Int = 1920 / 4
+            val newHeight: Int = 1080 / 4
 
             val resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
 
