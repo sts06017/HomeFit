@@ -274,9 +274,9 @@ class InitActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (user != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 2)
-            startActivity(intent)
+//            val intent = Intent(this, MainActivity::class.java)
+//            intent.putExtra("VIEW_PAGER_INDEX", 2)
+//            startActivity(intent)
             finish()
         }
     }

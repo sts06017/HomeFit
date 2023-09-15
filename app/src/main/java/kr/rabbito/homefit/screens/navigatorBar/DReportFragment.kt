@@ -33,6 +33,7 @@ import kr.rabbito.homefit.data.DietDB
 import kr.rabbito.homefit.databinding.FragmentDreportBinding
 import kr.rabbito.homefit.screens.DAddTypeSelectActivity
 import kr.rabbito.homefit.screens.DHistoryActivity
+import kr.rabbito.homefit.screens.MainActivity
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
 import kr.rabbito.homefit.utils.calc.Converter
 import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
@@ -123,10 +124,12 @@ class DReportFragment : Fragment() {
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
+//            activity?.finish()
         }
 
         binding.dreportBtnHistory.setOnClickListener {
             startActivity(Intent(activity, DHistoryActivity::class.java))
+//            activity?.finish()
         }
         return binding.root
     }

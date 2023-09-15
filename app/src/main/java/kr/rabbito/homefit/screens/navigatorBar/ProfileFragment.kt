@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, InitActivity::class.java)
             intent.putExtra("INIT_FROM", "ProfileFragment")
             startActivity(intent)
-            activity?.finish()
+//            activity?.finish()
         }
 
         return binding.root

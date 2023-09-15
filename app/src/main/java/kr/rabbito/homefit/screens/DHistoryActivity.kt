@@ -48,6 +48,7 @@ class DHistoryActivity : AppCompatActivity() {
         binding.dhistoryBtnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("VIEW_PAGER_INDEX", 1)
+            finish()
             startActivity(intent)
         }
 

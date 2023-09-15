@@ -66,8 +66,9 @@ class DAddActivity : AppCompatActivity() {
             if(binding.daddTvTitle.text == "식단정보 변경"){
                 finish()
             }else{
-                val intent = Intent(this, DAddTypeSelectActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, DAddTypeSelectActivity::class.java)
+//                startActivity(intent)
+                finish()
             }
         }
     }
@@ -226,5 +227,10 @@ class DAddActivity : AppCompatActivity() {
     }
     suspend fun deleteDiet(){
         dietDB!!.DietDAO().deleteRecord(diet.id!!)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
