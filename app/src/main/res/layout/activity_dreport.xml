@@ -18,24 +18,43 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dreport_cl_top"
-        android:layout_width="296dp"
+        android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/dreport_btn_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/basic_icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/dreport_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dreport_tv_title" />
+
         <TextView
             android:id="@+id/dreport_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/eulyoo1945_regular"
             android:includeFontPadding="false"
             android:text="식단 분석"
             android:textColor="@color/white"
             android:textSize="32sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/dreport_btn_back" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dreport_cl_top_2"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dreport_cl_top">
 
         <TextView
             android:id="@+id/dreport_tv_date"
@@ -48,7 +67,7 @@
             android:textColor="@color/lightGray"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dreport_tv_title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- 그래프 1 -->
         <com.github.mikephil.charting.charts.PieChart
@@ -94,6 +113,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dreport_cl_top" />
+        app:layout_constraintTop_toBottomOf="@id/dreport_cl_top_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

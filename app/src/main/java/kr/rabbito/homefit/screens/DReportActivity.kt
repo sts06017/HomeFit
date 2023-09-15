@@ -53,6 +53,10 @@ class DReportActivity : AppCompatActivity() {
         if (dateString != null) {
             date = LocalDate.parse(dateString)
         }
+
+        binding.dreportBtnBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {
