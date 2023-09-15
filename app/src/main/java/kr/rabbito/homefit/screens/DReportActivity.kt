@@ -86,7 +86,7 @@ class DReportActivity : AppCompatActivity() {
                         formattedDate?.format(Converter.dateFormatter_ko) ?: LocalDate.now()
                             .format(Converter.dateFormatter_ko)
                     binding.dreportRvFoods.layoutManager = layoutManager
-                    binding.dreportRvFoods.adapter = DReportAdapter(it)
+                    binding.dreportRvFoods.adapter = DReportAdapter(it, true)
                 }
             }
         }

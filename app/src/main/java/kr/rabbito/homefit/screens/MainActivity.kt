@@ -60,4 +60,8 @@ class MainActivity : AppCompatActivity() {
         }
         binding.mainVpViewpager.currentItem = pageNum
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

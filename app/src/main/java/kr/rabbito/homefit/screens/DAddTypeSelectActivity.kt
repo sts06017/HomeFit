@@ -39,12 +39,11 @@ class DAddTypeSelectActivity : AppCompatActivity() {
         binding.daddTypeSelectBtnPassiveInput.setOnClickListener {
             val intent = Intent(this, DAddActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.daddTypeSelectBtnBack.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 1)
-            startActivity(intent)
+            finish()
         }
     }
 }

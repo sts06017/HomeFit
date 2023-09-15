@@ -46,9 +46,7 @@ class DHistoryActivity : AppCompatActivity() {
 //        }
 
         binding.dhistoryBtnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 1)
-            startActivity(intent)
+            finish()
         }
 
         calendar_tv_weekTitles.children
