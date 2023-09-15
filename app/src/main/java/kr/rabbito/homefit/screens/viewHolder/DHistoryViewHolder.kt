@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.data.Diet
 import kr.rabbito.homefit.databinding.DreportItemBinding
+import kr.rabbito.homefit.screens.DReportActivity
 import kr.rabbito.homefit.screens.MainActivity
 import java.time.LocalDate
 
@@ -31,11 +32,9 @@ class DHistoryViewHolder(private val binding: DreportItemBinding)
     override fun onClick(v: View?) {
         Log.d("diet","dHistoryList onCLick")
         if(diet != null){
-            val intent = Intent(itemView.context, MainActivity::class.java).apply {
-                putExtra("VIEW_PAGER_INDEX",1)
-                putExtra("DATE", diet!!.dDate.toString())
-                putExtra("checkPrev", true)
-            }
+            val intent = Intent(itemView.context, DReportActivity::class.java)
+            intent.putExtra("DATE", diet!!.dDate.toString())
+
             itemView.context.startActivity(intent)
         }
     }

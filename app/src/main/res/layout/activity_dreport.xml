@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.DReportActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dreport_cl_top"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/dreport_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/eulyoo1945_regular"
+            android:includeFontPadding="false"
+            android:text="식단 분석"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/dreport_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:includeFontPadding="false"
+            android:text="2023년 4월 12일"
+            android:textColor="@color/lightGray"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dreport_tv_title" />
+
+        <!-- 그래프 1 -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/dreport_v_graph_1"
+            android:layout_width="140dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dreport_tv_date"  />
+
+        <!-- 그래프 2 -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/dreport_v_graph_2"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dreport_tv_date" />
+
+        <TextView
+            android:id="@+id/dreport_tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textColor="@color/lightGray"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dreport_tv_date"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dreport_rv_foods"
+        android:layout_width="296dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        android:paddingTop="10dp"
+        android:scrollbars="none"
+        android:paddingBottom="300dp"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dreport_cl_top" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

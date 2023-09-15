@@ -1,14 +1,12 @@
-package kr.rabbito.homefit.screens.navigatorBar
+package kr.rabbito.homefit.screens
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
@@ -17,120 +15,44 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kr.rabbito.homefit.R
-import kr.rabbito.homefit.client.*
 import kr.rabbito.homefit.data.Diet
 import kr.rabbito.homefit.data.DietDB
-import kr.rabbito.homefit.databinding.FragmentDreportBinding
-import kr.rabbito.homefit.screens.DAddTypeSelectActivity
-import kr.rabbito.homefit.screens.DHistoryActivity
+import kr.rabbito.homefit.databinding.ActivityDreportBinding
 import kr.rabbito.homefit.screens.adapter.DReportAdapter
+import kr.rabbito.homefit.screens.navigatorBar.DietCalorie
+import kr.rabbito.homefit.screens.navigatorBar.DietMap
 import kr.rabbito.homefit.utils.calc.Converter
-import kr.rabbito.homefit.utils.calc.Converter.Companion.timeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-data class DietInfo(
-    @SerializedName("volume(cm^3)") val volume: Double,
-    @SerializedName("weight(g)") val weight: Double,
-    @SerializedName("calorie(kcal)") val calorie: Double,
-    @SerializedName("fat(g)") val fat: Double,
-    @SerializedName("carbohydrate(g)") val carbohydrate: Double,
-    @SerializedName("protein(g)") val protein: Double
-)
-
-data class Nutrient(val carbohydrate: Double?, val protein: Double?, val fat: Double?)
-data class DietCalorie(val dDate: LocalDate, val totalCalorie: Double)
-typealias DietMap = Map<String, DietInfo>
-
-class DReportFragment : Fragment() {
-    private var mBinding: FragmentDreportBinding? = null
+class DReportActivity : AppCompatActivity() {
+    private var mBinding: ActivityDreportBinding? = null
     private val binding get() = mBinding!!
     private var dietDB: DietDB? = null
 
-    private var dietMap: DietMap? = null
-    private var resultJson: String? = null
     private var date: LocalDate? = null
     private var dateString: String? = null
-    private val layoutManager = LinearLayoutManager(this.context)
-
-    private var nutrinetAdvice: String = ""
-    private var calorieAdvice: String = ""
-    private lateinit var totalComment: String
+    private val layoutManager = LinearLayoutManager(this)
 
     private val commentList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        mBinding = ActivityDreportBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        resultJson = arguments?.getString("RESULT_JSON")
-        dateString = arguments?.getString("DATE")
-        val timeString = arguments?.getString("TIME") ?: "None"
-        Log.d("check timeString", timeString + " " + (resultJson == null).toString())
+        dateString = intent.getStringExtra("DATE")
 
         if (dateString != null) {
             date = LocalDate.parse(dateString)
         }
-
-        if (dateString != null && dateString != LocalDate.now().toString()) {
-            binding.dreportBtnAdd.visibility = View.INVISIBLE
-            binding.dreportBtnHistory.visibility = View.INVISIBLE
-        } else {
-            binding.dreportBtnAdd.visibility = View.VISIBLE
-            binding.dreportBtnHistory.visibility = View.VISIBLE
-        }
-
-//        var resultDiet = arguments?.getParcelable<Diet>("RESULT_DIET")
-//        Log.d("최승호","$resultDiet")
-        if (resultJson != null) {
-            Log.d("jsonFile", resultJson!!)
-
-            val resultMap = parseJSONString(resultJson)
-            val gson = Gson()
-            dietMap = gson.fromJson(resultJson, object : TypeToken<DietMap>() {}.type)
-            dietDB = DietDB.getInstance(requireContext())
-            insertDiet(dietMap, timeString)
-            Log.d("jsonFileKeys", resultMap.keys.toString())
-        }
-    }
-
-    // activity와 다르게 onCreateView에 코드 작성
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-
-        mBinding = FragmentDreportBinding.inflate(inflater, container, false)
-
-        val dreportVGraph1 = binding.dreportVGraph1
-        val dreportVGraph2 = binding.dreportVGraph2
-
-        binding.dreportBtnAdd.setOnClickListener {
-            startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
-        }
-
-        binding.dreportBtnHistory.setOnClickListener {
-            startActivity(Intent(activity, DHistoryActivity::class.java))
-        }
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mBinding = null
     }
 
     override fun onResume() {
@@ -142,7 +64,7 @@ class DReportFragment : Fragment() {
 
     private fun initView() {
         CoroutineScope(Dispatchers.IO).launch {
-            dietDB = DietDB.getInstance(requireContext())
+            dietDB = DietDB.getInstance(this@DReportActivity)
             val todayDiets = dietDB!!.DietDAO().getDietByDate(date ?: LocalDate.now())
 
             var formattedDate: String? = null
@@ -329,43 +251,6 @@ class DReportFragment : Fragment() {
         return comment
     }
 
-    private fun insertDiet(dietMap: DietMap?, timeString: String?) {
-        val currentDate = LocalDate.now()
-        val currentTime = LocalDateTime.now().format(timeFormatter)
-        val dietMapString = dietMap.toString() + timeString
-        val dietMapHash = dietMapString.hashCode()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val existingDiet = dietDB!!.DietDAO().findByJsonHash(dietMapHash)
-            if (existingDiet == null) {
-                dietMap?.forEach { (foodName, foodInfo) ->
-                    val diet = Diet(
-                        id = null,
-                        foodName = foodName,
-                        weight = foodInfo.volume,
-                        calorie = foodInfo.calorie,
-                        carbohydrate = foodInfo.carbohydrate,
-                        protein = foodInfo.protein,
-                        fat = foodInfo.fat,
-                        dDate = currentDate,
-                        dTime = currentTime,
-                        jsonHash = dietMapHash//, json = resultJson
-                    )
-                    dietDB?.DietDAO()?.insert(diet)
-                }
-            } else {
-                Log.d(
-                    "DReportFragment",
-                    "같은 해쉬코드의 데이터 저장되어있음\n원인1: dietMap: $dietMap\n원인2:\n이미존재한 객체->${existingDiet.jsonHash}\n새로생성한 해쉬->$dietMapHash"
-                )
-                Log.d(
-                    "DReportFragment",
-                    "이미존재한 음식이름: ${existingDiet.foodName}, w: ${existingDiet.weight}, cal: ${existingDiet.calorie}, fat: ${existingDiet.fat}, car: ${existingDiet.carbohydrate}, pro: ${existingDiet.protein}"
-                )
-            }
-        }
-    }
-
     private fun createPieGraph(data: Map<String, Float>, chart: PieChart) {
         //------입력 데이터 pieEntry로 변환------
         val testEntries = ArrayList<PieEntry>()
@@ -379,10 +264,10 @@ class DReportFragment : Fragment() {
             valueTextColor = Color.WHITE
             valueTextSize = 9f
         }
-        pieDataSet.setColors(context?.getColor(R.color.pie_chart_1)!!
-            , context?.getColor(R.color.pie_chart_2)!!
-            , context?.getColor(R.color.pie_chart_3)!!
-            , context?.getColor(R.color.pie_chart_4)!!)
+        pieDataSet.setColors(this.getColor(R.color.pie_chart_1)
+            , this.getColor(R.color.pie_chart_2)
+            , this.getColor(R.color.pie_chart_3)
+            , this.getColor(R.color.pie_chart_4))
         pieDataSet.setDrawValues(false)
         val pieData = PieData(pieDataSet)
 

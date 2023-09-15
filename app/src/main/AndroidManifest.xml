@@ -25,6 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeFit">
         <activity
+            android:name=".screens.DReportActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".screens.DAddTypeSelectActivity"
             android:exported="false">
             <meta-data
