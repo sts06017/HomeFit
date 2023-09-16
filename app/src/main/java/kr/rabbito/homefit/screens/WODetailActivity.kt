@@ -67,6 +67,12 @@ class WODetailActivity : AppCompatActivity() {
             if (isFieldsEmpty()) {
                 return@setOnClickListener
             }else{
+                var count = binding.wodetailEtSetCount
+                var repsFerSet = binding.wodetailEtRepsFerSet
+
+                WorkoutState.setTotal = count.text.toString().toInt()
+                WorkoutState.setCondition = repsFerSet.text.toString().toInt()
+
                 val intent = Intent(this, WOActivity::class.java)
                 intent.putExtra("workoutIndex", workoutIndex)
                 startActivity(intent)
