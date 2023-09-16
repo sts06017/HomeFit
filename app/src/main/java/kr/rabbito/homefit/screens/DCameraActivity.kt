@@ -89,7 +89,7 @@ class DCameraActivity : AppCompatActivity() {
         }
 
         binding.dcameraBtnCancel.setOnClickListener {
-            finish()
+            onBackPressed()
         }
     }
 
@@ -210,5 +210,10 @@ class DCameraActivity : AppCompatActivity() {
     override fun onDestroy() {
         client?.closeSocket()
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, DAddTypeSelectActivity::class.java)
+        startActivity(intent)
     }
 }

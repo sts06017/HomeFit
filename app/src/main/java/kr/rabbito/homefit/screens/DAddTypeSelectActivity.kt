@@ -25,11 +25,13 @@ class DAddTypeSelectActivity : AppCompatActivity() {
                 intent.putExtra("SELECTED_IMAGE", uri.toString())
 
                 startActivity(intent)
+                finish()
             }
         }
 
         binding.daddTypeSelectBtnCamera.setOnClickListener {
             startActivity(Intent(this, DCameraActivity::class.java))
+            finish()
         }
 
         binding.daddTypeSelectBtnAlbum.setOnClickListener {
@@ -43,8 +45,12 @@ class DAddTypeSelectActivity : AppCompatActivity() {
         }
 
         binding.daddTypeSelectBtnBack.setOnClickListener{
-            startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
-            finish()
+            onBackPressed()
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
+        finish()
     }
 }
