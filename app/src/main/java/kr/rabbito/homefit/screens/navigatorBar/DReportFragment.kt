@@ -120,10 +120,12 @@ class DReportFragment : Fragment() {
 
         binding.dreportBtnAdd.setOnClickListener {
             startActivity(Intent(activity, DAddTypeSelectActivity::class.java))
+            activity?.finish()
         }
 
         binding.dreportBtnHistory.setOnClickListener {
             startActivity(Intent(activity, DHistoryActivity::class.java))
+            activity?.finish()
         }
         return binding.root
     }

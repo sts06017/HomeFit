@@ -43,6 +43,7 @@ class DAddTypeSelectActivity : AppCompatActivity() {
         }
 
         binding.daddTypeSelectBtnBack.setOnClickListener{
+            startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
             finish()
         }
     }

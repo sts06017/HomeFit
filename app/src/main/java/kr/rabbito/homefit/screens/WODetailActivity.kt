@@ -151,6 +151,7 @@ class WODetailActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("VIEW_PAGER_INDEX", 0)
             startActivity(intent)
+            finish()
         }
     }
     private fun isFieldsEmpty(): Boolean {
@@ -165,5 +166,11 @@ class WODetailActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",0))
+        finish()
     }
 }

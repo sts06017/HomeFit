@@ -46,6 +46,7 @@ class DHistoryActivity : AppCompatActivity() {
 //        }
 
         binding.dhistoryBtnBack.setOnClickListener {
+            startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
             finish()
         }
 
@@ -56,5 +57,11 @@ class DHistoryActivity : AppCompatActivity() {
                 val title = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.getDefault())
                 textView.text = title
             }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
+        finish()
     }
 }
