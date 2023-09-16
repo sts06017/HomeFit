@@ -9,7 +9,7 @@ import kr.rabbito.homefit.data.Diet
 import kr.rabbito.homefit.databinding.DreportItemBinding
 import kr.rabbito.homefit.screens.viewHolder.DReportViewHolder
 
-class DReportAdapter(private val results: List<Diet>):
+class DReportAdapter(private val results: List<Diet>, private val fromHistory:Boolean = false):
     RecyclerView.Adapter<DReportViewHolder>() {
 
 //    private val keyList = results.keys.toList()
@@ -26,6 +26,6 @@ class DReportAdapter(private val results: List<Diet>):
 
     override fun onBindViewHolder(holder: DReportViewHolder, position: Int) {
 //        holder.bind(keyList[position], results)
-        holder.bind(results[position])
+        holder.bind(results[position], fromHistory)
     }
 }

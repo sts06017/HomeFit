@@ -46,9 +46,8 @@ class DHistoryActivity : AppCompatActivity() {
 //        }
 
         binding.dhistoryBtnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 1)
-            startActivity(intent)
+            startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
+            finish()
         }
 
         calendar_tv_weekTitles.children
@@ -58,5 +57,11 @@ class DHistoryActivity : AppCompatActivity() {
                 val title = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.getDefault())
                 textView.text = title
             }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))
+        finish()
     }
 }

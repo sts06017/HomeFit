@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -65,6 +66,7 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
                     intent.putExtra("workoutIndex",5)
                 }
             }
+            (context as Activity).finish()
             context.startActivity(intent)
         }
 
