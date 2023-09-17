@@ -76,11 +76,20 @@ class WOReportActivity : AppCompatActivity() {
         createPieGraph(woTimeData, binding.woreportVGraph1)
 
         binding.woreportBtnBack.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
         binding.woreportBtnHistory.setOnClickListener {
-            startActivity(Intent(this, WOHistoryActivity::class.java))
+            val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
+            builder.setMessage("히스토리 창으로 이동하면 정보가 삭제됩니다.")
+                .setPositiveButton("삭제") { dialog, _ ->
+                    startActivity(Intent(this, WOHistoryActivity::class.java))
+                    finish()
+                }.create().apply {
+                    show()
+                    setWidthPercentage(0.8)
+                }
         }
 
         binding.woreportBtnSaveReport.setOnClickListener {
@@ -381,5 +390,10 @@ class WOReportActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         initView()
+    }
+
+    override fun onBackPressed(){
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
