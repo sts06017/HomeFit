@@ -17,8 +17,10 @@ import kr.rabbito.homefit.screens.navigatorBar.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mbinding: ActivityMainBinding
-
     private val binding get() = mbinding
+
+    private val FINISH_INTERVAL_TIME: Long = 2000
+    private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +64,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finish()
+        val tempTime = System.currentTimeMillis()
+        val intervalTime: Long = tempTime - backPressedTime
+        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+            finish()
+        } else {
+            backPressedTime = tempTime
+            Toast.makeText(applicationContext, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

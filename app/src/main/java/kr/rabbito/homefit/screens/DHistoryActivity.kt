@@ -34,16 +34,6 @@ class DHistoryActivity : AppCompatActivity() {
         val calendar_v_monthTitle = binding.dhistoryTvMonth
 
         DHistorySetCalendar(calendar_v, calendar_v_monthTitle, this, binding.dhistoryRvFoods).setting()
-        // 임시
-        binding.dhistoryVCalendar.setOnClickListener {
-//            startActivity(Intent(this, ProfileFragment::class.java))
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",3)
-            startActivity(intent)
-        }
-//        binding.dhistoryBtnDelete.setOnClickListener {
-//            CoroutineScope(Dispatchers.IO).launch{ dietDB!!.DietDAO().deleteAll() }
-//        }
 
         binding.dhistoryBtnBack.setOnClickListener {
             startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",1))

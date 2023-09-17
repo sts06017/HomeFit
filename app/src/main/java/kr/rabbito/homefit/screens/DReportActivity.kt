@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -55,7 +56,7 @@ class DReportActivity : AppCompatActivity() {
         }
 
         binding.dreportBtnBack.setOnClickListener {
-            finish()
+            onBackPressed()
         }
     }
 
@@ -364,5 +365,12 @@ class DReportActivity : AppCompatActivity() {
         val intInput = input.toInt()
         val remainder = intInput % 100
         return intInput + (100 - remainder)
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, DHistoryActivity::class.java)
+        startActivity(intent)
+
+        finish()
     }
 }
