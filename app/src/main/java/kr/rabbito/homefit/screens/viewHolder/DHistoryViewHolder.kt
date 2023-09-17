@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens.viewHolder
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -36,6 +37,7 @@ class DHistoryViewHolder(private val binding: DreportItemBinding)
             intent.putExtra("DATE", diet!!.dDate.toString())
 
             itemView.context.startActivity(intent)
+            (itemView.context as Activity).finish()
         }
     }
 }
