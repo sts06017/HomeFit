@@ -83,7 +83,7 @@ class WOActivity : AppCompatActivity() {
             WorkoutState.rest = !WorkoutState.rest
             if (WorkoutState.rest) {  // 휴식 상태일 때
                 countdownTimer.cancel() // 타이머 일시정지
-                restStartTime = System.currentTimeMillis() // 휴식시작 시간 저장
+                restStartTime = System.currentTimeMillis()
                 WorkoutState.remainSec.value =
                     120 * 1000L - WorkoutState.elapSec.value!! // '남은시간' = 2분 - '경과시간'
 
@@ -102,7 +102,9 @@ class WOActivity : AppCompatActivity() {
         // 운동 종료 버튼
         binding.woBtnStop.setOnClickListener {
             if (WorkoutState.rest) {
+                Log.d("totalRestTime1", WorkoutState.totalRestTime.toString())
                 WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime
+                Log.d("totalRestTime2", WorkoutState.totalRestTime.toString())
             }
             countdownTimer.cancel()
             startNextActivity()
@@ -202,12 +204,7 @@ class WOActivity : AppCompatActivity() {
 
         // 기본 위젯 로드
         Log.d("index", workoutIdx.toString())
-        WorkoutState.count = 0
-        WorkoutState.totalCount = 0
-        WorkoutState.set = 1
-        WorkoutState.mySet.value = 1    // 임시 livedata 초기화
-        WorkoutState.elapSec.value = 0  // 경과 시간 초기화
-        WorkoutState.remainSec.value = 120 * 1000L  // 남은 시간 초기화
+        WorkoutState.initWorkoutState()
 
         binding.woTvTitle.text = WorkoutData.workoutNamesKOR[workoutIdx]
         binding.woTvSet.text = WorkoutState.setTotal.toString()

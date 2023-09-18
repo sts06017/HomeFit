@@ -39,5 +39,38 @@ class WorkoutState {
         // 음성 출력 딜레이
         var ttsDelay = 0
         var ttsDelayLimit = 3
+
+        fun initWorkoutState() {
+            playing = false
+            rest = false
+            finished = true
+
+            // 현재 운동 정보
+            setCondition = 15 // 몇 개가 한 세트인지
+            setTotal = 3 // 총 몇 세트인지
+            restTotal = 3 // 총 몇번 휴식인지
+
+            // 현재 운동 플래그
+            isUp = false
+
+            // 현재 운동 진행 상태
+            set = 1 // 몇 번째 세트인지
+            count = 0   // 몇 개 했는지
+            totalCount = 0  // 총 몇 개 했는지
+            elapSec = MutableLiveData<Long>(0)    // 경과 시간
+            remainSec = MutableLiveData<Long>(120*1000L)  // 남은 시간
+            totalRestTime = 0L  // 총 정지한 시간
+            calorieBurned = 0   // 소모한 칼로리
+
+            // 현재 자세 진행 상태
+            isPrevUp = false
+
+            myCount = MutableLiveData<Int>(0)
+            mySet = MutableLiveData<Int>(1)
+
+            // 음성 출력 딜레이
+            ttsDelay = 0
+            ttsDelayLimit = 3
+        }
     }
 }
