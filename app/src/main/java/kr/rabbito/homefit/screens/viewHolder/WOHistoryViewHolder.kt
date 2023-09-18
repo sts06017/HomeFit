@@ -1,5 +1,6 @@
 package kr.rabbito.homefit.screens.viewHolder
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -44,6 +45,7 @@ class WOHistoryViewHolder(private val binding: WohistoryItemBinding)
                 putExtra("workout", workout) // DB workout 객체
             }
             itemView.context.startActivity(intent)
+            (itemView.context as Activity).finish()
         }
     }
 }

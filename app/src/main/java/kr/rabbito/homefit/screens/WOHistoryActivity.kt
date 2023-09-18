@@ -31,10 +31,7 @@ class WOHistoryActivity : AppCompatActivity() {
 
         WOHistorySetCalendar(caledar_v, calendar_tv_monthTitle,this, binding.wohistoryRvResults).setting()
         binding.wohistoryBtnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX",0)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
 
         calendar_tv_weekTitles.children
@@ -47,8 +44,9 @@ class WOHistoryActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",0))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("VIEW_PAGER_INDEX",0)
+        startActivity(intent)
         finish()
     }
 }

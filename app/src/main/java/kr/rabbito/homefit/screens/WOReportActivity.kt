@@ -76,14 +76,13 @@ class WOReportActivity : AppCompatActivity() {
         createPieGraph(woTimeData, binding.woreportVGraph1)
 
         binding.woreportBtnBack.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         binding.woreportBtnHistory.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DeleteAlertDialog)
-            builder.setMessage("히스토리 창으로 이동하면 정보가 삭제됩니다.")
-                .setPositiveButton("삭제") { dialog, _ ->
+            builder.setMessage("히스토리 창으로 이동하면 현재의 운동 결과는 삭제됩니다.")
+                .setPositiveButton("삭제 후 이동") { dialog, _ ->
                     startActivity(Intent(this, WOHistoryActivity::class.java))
                     finish()
                 }.create().apply {
@@ -393,7 +392,13 @@ class WOReportActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed(){
-        startActivity(Intent(this, MainActivity::class.java))
+        if (workout.id != null) {
+            startActivity(Intent(this, WOHistoryActivity::class.java))
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+            intent.putExtra("VIEW_PAGER_INDEX",0)
+        }
+
         finish()
     }
 }
