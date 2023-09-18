@@ -117,8 +117,7 @@ class InitActivity : AppCompatActivity() {
             }
 
         binding.initBtnBack.setOnClickListener {
-            startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",2))
-            finish()
+            onBackPressed()
         }
 
         binding.initBtnMealCountSub.setOnClickListener {
