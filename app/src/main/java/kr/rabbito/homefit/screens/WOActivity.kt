@@ -6,9 +6,11 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import kr.rabbito.homefit.R
 import kr.rabbito.homefit.data.Workout
 import kr.rabbito.homefit.databinding.ActivityWoBinding
 import kr.rabbito.homefit.screens.workoutView.WorkoutView
@@ -84,9 +86,17 @@ class WOActivity : AppCompatActivity() {
                 restStartTime = System.currentTimeMillis() // 휴식시작 시간 저장
                 WorkoutState.remainSec.value =
                     120 * 1000L - WorkoutState.elapSec.value!! // '남은시간' = 2분 - '경과시간'
+
+                binding.woBtnPause.setBackgroundResource(R.drawable.wo_btn_play)
+                binding.woClPause.visibility = View.VISIBLE
+                onPause()
             } else {
                 WorkoutState.totalRestTime += System.currentTimeMillis() - restStartTime    // 총 휴식시간 계산
                 startTimer()    // 타이머 재개
+
+                binding.woClPause.visibility = View.INVISIBLE
+                binding.woBtnPause.setBackgroundResource(R.drawable.wo_btn_pause)
+                onResume()
             }
         }
         // 운동 종료 버튼
