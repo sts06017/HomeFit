@@ -45,11 +45,6 @@ class WorkoutState {
             rest = false
             finished = true
 
-            // 현재 운동 정보
-            setCondition = 15 // 몇 개가 한 세트인지
-            setTotal = 3 // 총 몇 세트인지
-            restTotal = 3 // 총 몇번 휴식인지
-
             // 현재 운동 플래그
             isUp = false
 

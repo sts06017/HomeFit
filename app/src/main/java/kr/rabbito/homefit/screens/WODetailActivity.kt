@@ -146,7 +146,7 @@ class WODetailActivity : AppCompatActivity() {
         }
         binding.wodetailEtRepsFerSet.doAfterTextChanged {
             try {
-                WorkoutState.count = binding.wodetailEtRepsFerSet.text.toString().toInt()
+                WorkoutState.setCondition = binding.wodetailEtRepsFerSet.text.toString().toInt()
             }catch (e : java.lang.NumberFormatException){
                 Log.d("ed test","ed can't formatting")
 
@@ -154,10 +154,7 @@ class WODetailActivity : AppCompatActivity() {
         }
 
         binding.wodetailBtnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("VIEW_PAGER_INDEX", 0)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
     }
     private fun isFieldsEmpty(): Boolean {
@@ -175,8 +172,9 @@ class WODetailActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this,MainActivity::class.java).putExtra("VIEW_PAGER_INDEX",0))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("VIEW_PAGER_INDEX", 0)
+        startActivity(intent)
         finish()
     }
 }

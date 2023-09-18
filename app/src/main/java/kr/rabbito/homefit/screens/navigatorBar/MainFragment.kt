@@ -41,8 +41,8 @@ class MainFragment : Fragment() {
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.mainBtnHistory.setOnClickListener {
-            activity?.finish()
             startActivity(Intent(activity, WOHistoryActivity::class.java))
+            activity?.finish()
         }
 
         // 운동 태그 리스트
