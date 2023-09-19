@@ -328,14 +328,8 @@ class WOReportActivity : AppCompatActivity() {
         val nowCount = workout.count!!
 
         var prevCount = -1
-        prevCount = if (workout.id == null) {
-            // DB id가 null일 경우 : DB에 가장 최근에 저장된 운동의 count 가져옴
-            val maxId = workoutDB?.workoutDAO()?.getMaxId()!!
-            workoutDB?.workoutDAO()?.getCountById(maxId)!!
-        } else {
-            // DB id가 null이 아닌경우 : DB에 선택한 운동의 전에 저장된 운동의 count 가져옴
-            workoutDB?.workoutDAO()?.getCountById(workout.id!! - 1)!!
-        }
+
+        Log.d("checkRest", workout.woDuration.toString() + " " + workout.restTime.toString())
 
         val userWeight = userDB?.userDAO()?.getWeightById(0)
 
@@ -344,20 +338,6 @@ class WOReportActivity : AppCompatActivity() {
             commentData(prevCount, nowCount, todayCalories) // 이전count, 현재count, 총calorie 정보 객체
 
         commentData.let {   // 정보객체 활용코드 부분 (it->prevCount, newCount, todayCalorie)
-            if (it.prevCount == -1 || it.prevCount == null) {
-//                    return null
-                // 칼로리 또는 이전 운동 데이터가 없는 경우
-                Log.d("null check", "prevCount or Calorie is null")
-                if (it.todayCalorie == null) Log.d("WOReport", "Calorie is null")
-            } else {
-                val gap = abs(it.prevCount - it.nowCount)
-                if (it.prevCount < it.nowCount) {
-                    commentList.add("이전보다 ${gap}회 더 많이 했습니다.")
-                } else if (it.prevCount > it.nowCount) {
-                    commentList.add("이전보다 ${gap}회 더 적게 했습니다.")
-                }
-            }
-
             val lowLimitCal = if (userWeight != null) userWeight * 22 else 1000
             val highLimitCal = if (userWeight != null) userWeight * 40 else 2700
 //            Log.d("cal low", lowLimitCal.toString())
@@ -370,6 +350,18 @@ class WOReportActivity : AppCompatActivity() {
                     commentList.add(getString(R.string.wo_comment_cal_low))
                 } else if (it.todayCalorie < lowLimitCal && nowCount < 3) {
                     commentList.add(getString(R.string.wo_comment_cal_count_low))
+                }
+            }
+
+            if (workout.count != null) {
+                if (workout.count!! < 5) {
+                    commentList.add(getString(R.string.wo_comment_count_low))
+                }
+            }
+
+            if (workout.woDuration != null && workout.restTime != null) {
+                if (workout.woDuration!! < workout.restTime!!) {
+                    commentList.add(getString(R.string.wo_comment_rest_high))
                 }
             }
 
