@@ -301,12 +301,12 @@ class WOActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         countdownTimer.cancel()
-        //운동 도중 뒤로가기 버튼 클릭시 앱 종료되는 오류 수정
-        var intent = Intent(this,WODetailActivity::class.java)
+
+        val intent = Intent(this,WODetailActivity::class.java)
         intent.putExtra("workoutIndex",workoutIdx)
         startActivity(intent)
+        finish()
     }
 
     public override fun onDestroy() {
