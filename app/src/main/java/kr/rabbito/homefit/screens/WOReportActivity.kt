@@ -351,9 +351,9 @@ class WOReportActivity : AppCompatActivity() {
             if (it.todayCalorie != null) {
                 if (it.todayCalorie > highLimitCal) {
                     commentList.add(getString(R.string.wo_comment_cal_high))
-                } else if (it.todayCalorie < lowLimitCal && nowCount > 7) {
+                } else if (it.todayCalorie < lowLimitCal && nowCount > 10) {
                     commentList.add(getString(R.string.wo_comment_cal_low))
-                } else if (it.todayCalorie < lowLimitCal && nowCount < 3) {
+                } else if (it.todayCalorie < lowLimitCal && nowCount < 7) {
                     commentList.add(getString(R.string.wo_comment_cal_count_low))
                 }
             }
