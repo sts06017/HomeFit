@@ -41,7 +41,9 @@ class MainFragment : Fragment() {
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.mainBtnHistory.setOnClickListener {
-            startActivity(Intent(activity, WOHistoryActivity::class.java))
+            val intent = Intent(activity, WOHistoryActivity::class.java)
+            startActivity(intent)
+
             activity?.finish()
         }
 

@@ -111,7 +111,11 @@ class WOReportActivity : AppCompatActivity() {
                             workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
                         }
                     }
+
+
                     startActivity(Intent(this, MainActivity::class.java))
+                    intent.putExtra("VIEW_PAGER_INDEX",0)
+
                     finish()
                 }.create().apply {
                     show()
@@ -129,7 +133,8 @@ class WOReportActivity : AppCompatActivity() {
                             workoutDB!!.workoutDAO().deleteRecord(workout.id!!)
                         }
                     }
-                    startActivity(Intent(this, MainActivity::class.java))
+
+                    startActivity(Intent(this, WOHistoryActivity::class.java))
                     finish()
                 }.create().apply {
                     show()

@@ -66,8 +66,9 @@ class WoImageAdapter(private val context: Context, private val imageList: Array<
                     intent.putExtra("workoutIndex",5)
                 }
             }
-            (context as Activity).finish()
+
             context.startActivity(intent)
+            (context as Activity).finish()
         }
 
         if (hiddenItems.contains(position)) {
